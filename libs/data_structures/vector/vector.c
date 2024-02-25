@@ -83,15 +83,13 @@ void pushBack(vector *v, int x) {
     v->data[v->size++] = x;
 }
 void popBack(vector *v) {
-    int x;
-    if (v->size == v->capacity) {
-        reserve(v, 2 * v->capacity);
-        v->data[v->size--] = x;
-    } else if (v->capacity == 0) {
+        if (v->size > 0) {
+            v->size--;
+        }else
         fprintf(stderr, "bad alloc");
         exit(1);
     }
-}
+
 void vector_print ( vector v ){
     for(int i=0;i<v.size;i++){
         printf("%d\n",v.data[i]);
