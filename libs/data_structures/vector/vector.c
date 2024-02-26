@@ -53,7 +53,7 @@ void reserve(vector *v, size_t new_capacity) {
     v->capacity = new_capacity;
 }
 void shrinkToFit(vector *v){
-    v->data = (int*)realloc(v->data, sizeof(int)*v->size);
+    v->capacity = v->size;
 }
 void deleteVector(vector *v){
     free(&v);

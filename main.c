@@ -52,7 +52,7 @@ void test_at_vector_not_empty_vector() {
     assert(*element == 5);
 }
 
-void test_at_vector_request_to_last_element() {
+void test_atVector_requestToLastElement() {
     int array[] = {1, 2, 3, 4, 5};
     vector v = {array, 5, 5};
 
@@ -60,7 +60,7 @@ void test_at_vector_request_to_last_element() {
     assert(*last_element == 5);
 }
 
-void test_back_one_element_in_vector() {
+void test_back_oneElementInVector() {
     vector v = vector_create(2);
     pushBack(&v, 5);
     pushBack(&v, 6);
@@ -71,7 +71,7 @@ void test_back_one_element_in_vector() {
     assert(*element == 6);
 }
 
-void test_front_one_element_in_vector() {
+void test_front_oneElementInVector() {
     vector v = vector_create(2);
     pushBack(&v, 5);
     pushBack(&v, 6);
