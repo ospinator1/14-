@@ -126,8 +126,14 @@ int* back(vector *v) {
 // Если вектор пуст или указатель неверен, возвращаем nullptr
         return nullptr;
     }
-    return &(v->data[v->capacity]);
+    return &(v->data[v->size-1]);
 }
-
+int* atVector (vector *v, size_t index){
+    if(index<v->size) {
+        return &(v->data[index]);
+    } else
+        fprintf(stderr, "IndexError: a[%d] is not exists\n", index);
+    exit(1);
+}
 
 #endif

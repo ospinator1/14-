@@ -31,5 +31,6 @@ void popBack(vector *v);
 vector vector_array(int* a, int size);
 int* vector_front(vector* v);
 int* back(vector *v);
+int* atVector(vector *v, size_t index);
 void vector_print ( vector v );
 #endif

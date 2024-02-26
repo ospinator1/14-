@@ -42,25 +42,48 @@ void test_popBack_FullVector() {
    printf("%d", vector_front(&v));
 
 }
-void test_front() {
-    int elements[] = {1, 2, 3, 4, 5};
-    vector v = vector_array(elements, 5);
-    int* front = vector_front(&v); // Получаем указатель на первый элемент
-    if (front != nullptr) { // Проверяем, что указатель не нулевой
-        printf("%d\n", *front); // Разыменовываем указатель и печатаем значение
-    } else {
-        printf("Vector is empty or not valid\n");
-    }
-}
-void test_back() {
-    int capacity=9;
-    int elements[] = {1, 2, 3, 4, 6};
-    vector v = vector_array(elements, 5);
-    int *front = back(&v); // Получаем указатель на последний элемент
-    printf("%d\n", *front); // Разыменовываем указатель и печатаем значение
+void test_at_vector_not_empty_vector() {
+    vector v = vector_create(1);
+    pushBack(&v, 5);
+    assert(isFull(&v));
+
+    int* element = atVector(&v, 0);
+
+    assert(*element == 5);
 }
 
+void test_at_vector_request_to_last_element() {
+    int array[] = {1, 2, 3, 4, 5};
+    vector v = {array, 5, 5};
+
+    int *last_element = atVector(&v, v.size - 1);
+    assert(*last_element == 5);
+}
+
+void test_back_one_element_in_vector() {
+    vector v = vector_create(2);
+    pushBack(&v, 5);
+    pushBack(&v, 6);
+    assert(isFull(&v));
+
+    int* element = back(&v);
+
+    assert(*element == 6);
+}
+
+void test_front_one_element_in_vector() {
+    vector v = vector_create(2);
+    pushBack(&v, 5);
+    pushBack(&v, 6);
+    assert(isFull(&v));
+
+    int* element = vector_front(&v);
+
+    assert(*element == 5);
+}
 int main() {
-    test_back();
+
+
+
     return 0;
 }
