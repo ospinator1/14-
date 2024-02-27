@@ -3,7 +3,7 @@
 
 #include <stdio.h> // For UINT32_MAX
 #include <stdint.h>
-#include <windows.h>
+
 #define nullptr NULL
 void test_pushBack_emptyVector() {
     vector v = vector_create(1);
