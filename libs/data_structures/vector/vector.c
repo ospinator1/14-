@@ -84,15 +84,6 @@ void popBack(vector *v) {
     exit(1);
 }
 
-// Функция теперь возвращает указатель на int
-
-
-
-void vector_print ( vector v ){
-    for(int i=0;i<v.size;i++){
-        printf("%d ",v.data[i]);
-    }
-}
 
 int* vector_front(vector* v) {
     if (v == nullptr || v->size == 0) {

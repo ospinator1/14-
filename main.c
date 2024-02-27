@@ -94,13 +94,7 @@ void test_shrink_to_fit(){
     shrinkToFit(&v);
     assert(isFull(&v));
 }
-void test_vector_print(){
-    vector v= vector_create(4);
-    pushBack(&v, 10);
-    pushBack(&v, 421);
-    pushBack(&v, 41);
-    vector_print(v);
-}
+
 void test_delete_vector(){
     vector v= vector_create(4);
     pushBack(&v, 10);
@@ -129,7 +123,6 @@ void TEST(){
     test_front_oneElementInVector();
     test_clear();
     test_shrink_to_fit();
-    test_vector_print();
 }
 int main() {
     TEST();

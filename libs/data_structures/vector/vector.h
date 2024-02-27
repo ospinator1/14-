@@ -45,11 +45,17 @@ int getVectorValue(vector *v, size_t i);
 
 // добавляет элемент x в конец вектора v
 void pushBack(vector *v, int x);
+
 // удаляет последний элемент из вектора
 void popBack(vector *v);
 
-int* vector_front(vector* v);
-int* back(vector *v);
+//возвращает указатель на index-ый элемент вектора
 int* atVector(vector *v, size_t index);
-void vector_print ( vector v );
+
+//возвращает указатель на последний элемент вектора
+int* back(vector *v);
+
+//возвращает указатель на нулевой элемент вектора.
+int* vector_front(vector* v);
+
 #endif
