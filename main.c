@@ -1,9 +1,8 @@
 
-#include "libs/data_structures/vector/vector.h"
 
- // For UINT32_MAX
 #include <stdint.h>
-
+#include "libs/data_structures/vector/vectorVoid.h"
+#include "libs/data_structures/vector/vector.h"
 #define nullptr NULL
 void test_pushBack_emptyVector() {
     vector v = vector_create(1);
@@ -21,7 +20,7 @@ void test_pushBack_fullVector() {
     assert(v.capacity >= 2);
 }
 
-void test() {
+void test_push() {
     test_pushBack_emptyVector();
     test_pushBack_fullVector();
 
@@ -115,8 +114,8 @@ void test_get_vector_value(){
     assert(isFull(&v));
     assert(x==y);
 }
-void TEST(){
-    test();
+void test_vector(){
+    test_push();
     test1();
     test_atVector_notEmptyVector();
     test_atVector_requestToLastElement();
@@ -125,7 +124,66 @@ void TEST(){
     test_clear();
     test_shrink_to_fit();
 }
+void test_pushBackV_empty_vector() {
+    vectorVoid v = createVectorV(0, sizeof(int));
+    v.size = 0;
+    assert(isEmptyV(&v));
+    int x=104;
+    pushBackV(&v, &x);
+    assert(v.size == 1 && v.capacity == 1);
+}
+
+void test_pushBackV_full_vector() {
+    vectorVoid v = createVectorV(1, sizeof(int));
+    v.size = 1;
+    assert(isFull(&v));
+    int x = 2;
+    pushBackV(&v, &x);
+    assert(v.size == 2 && v.capacity == 2);
+}
+void test_getVectorValueV() {
+    int a[] = {5, 3, 7};
+    vectorVoid v = {a, 3, 3, sizeof(float)};
+    int x = 5;
+    float y = 2;
+    getVectorValueV(&v, 2, &x);
+    assert(isFullV(&v));
+    assert(x == y);
+}
+void test_setVectorValueV() {
+    int a[] = {5, 16, 7};
+    vectorVoid v = {a, 3, 3, sizeof(float)};
+    int  x = 8;
+    setVectorValueV(&v, 2, &x);
+    assert(isFullV(&v));
+}
+void test_clearV(){
+    vector v= vector_create(2);
+    pushBack(&v,3);
+    clear(&v);
+    assert(isEmpty(&v));
+}
+void test_shrink_to_fitV(){
+    vector v=vector_create(6);
+    pushBack(&v, 10);
+    pushBack(&v, 421);
+    pushBack(&v, 41);
+    shrinkToFit(&v);
+    assert(isFull(&v));
+}
+void test_vector_void(){
+    test_pushBackV_empty_vector();
+    test_pushBackV_full_vector();
+    test_getVectorValueV();
+    test_setVectorValueV();
+    test_clearV();
+    test_shrink_to_fitV();
+}
+void test(){
+    test_vector();
+    test_vector_void();
+}
 int main() {
-    TEST();
-    return 0;
+
+    test();
 }

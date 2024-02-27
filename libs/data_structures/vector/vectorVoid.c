@@ -1,7 +1,8 @@
 //
 // Created by Assa on 27.02.2024.
-//
-#define INC_VECTORVOID_H
+# ifndef INC_VECTOR_H
+# define INC_VECTOR_H
+
 #include <limits.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -10,13 +11,9 @@
 # include <memory.h>
 # include <stdio.h>
 # include <stdbool.h>
-#include "vectorVoid.h"
-typedef struct vectorVoid {
-    void *data;
-    size_t size;
-    size_t capacity;
-    size_t baseTypeSize;
-} vectorVoid;
+#include "../../data_structures/vector/vectorVoid.h"
+
+
 
 vectorVoid createVectorV(size_t capacity, size_t baseTypeSize){
     if (capacity< UINT32_MAX)
@@ -56,3 +53,46 @@ void clearV(vectorVoid *v){
 void deleteVectorV(vectorVoid *v){
     free(&v);
 }
+bool isEmptyV(vectorVoid *v){
+        return (v->size==0);
+    }
+bool isFullV(vectorVoid *v){
+    return v->size==v->capacity;
+}
+void getVectorValueV(vectorVoid *v, size_t index, void *destination) {
+    if (index > v->size) {
+        fprintf(stderr, "bad alloc");
+        exit(1);
+    } else {
+        char *source = (char *) v->data + index * v->baseTypeSize;
+        memcpy(destination, source, v->baseTypeSize);
+    }
+}
+void setVectorValueV(vectorVoid *v, size_t index, void *source){
+    if(index>v->size){
+        fprintf(stderr, "bad alloc");
+        exit(1);
+    } else{
+        char *destination=(char *) v->data + index * v->baseTypeSize;
+        memcpy(destination, source, v->baseTypeSize);
+    }
+    }
+void popBackV(vectorVoid *v){
+    if (v->size > 0) {
+        v->size--;
+    }else
+        fprintf(stderr, "bad alloc");
+    exit(1);
+}
+void pushBackV(vectorVoid *v, void *source){
+    if (v->capacity == 0) {
+        v->capacity++;
+    } else if (isFullV(v)) {
+        reserveV(v, v->capacity * 2);
+    }
+    char *destination=(char *) v->data + v->size * v->baseTypeSize;
+    memcpy(destination, source, v->baseTypeSize);
+    v->size++;
+}
+
+#endif

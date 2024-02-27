@@ -1,5 +1,5 @@
-# ifndef INC_ORDERED_ARRAY_SET_H
-# define INC_ORDERED_ARRAY_SET_H
+# ifndef INC_VECTOR_H
+# define INC_VECTOR_H
 
 #include <stdio.h> // For UINT32_MAX
 #include <stdint.h>
