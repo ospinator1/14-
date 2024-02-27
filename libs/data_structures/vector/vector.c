@@ -5,7 +5,6 @@
 
 #include <stdio.h> // For UINT32_MAX
 #include <stdint.h>
-#include <windows.h>
 #include <stdbool.h>
 #include <stdlib.h>
 # include "../../algorithms/array/array.h"
@@ -28,8 +27,9 @@ vector vector_create(size_t capacity) {
 }
 
 void clear(vector *v){
-    free((void *) v->data);
+    free( v->data);
 }
+
 void reserve(vector *v, size_t new_capacity) {
     if (new_capacity == 0) {
         free(v->data);
@@ -42,7 +42,6 @@ void reserve(vector *v, size_t new_capacity) {
     if (new_capacity < v->size) {
         v->size = new_capacity;
     }
-
     int *new_data = (int*)realloc(v->data, new_capacity * sizeof(int));
     if (new_data == NULL) {
         fprintf(stderr, "bad alloc");
@@ -52,6 +51,7 @@ void reserve(vector *v, size_t new_capacity) {
     v->data = new_data;
     v->capacity = new_capacity;
 }
+
 void shrinkToFit(vector *v){
     v->capacity = v->size;
 }
@@ -65,6 +65,7 @@ bool isEmpty(vector *v){
 bool isFull(vector *v){
     return v->size==v->capacity;
 }
+
 int getVectorValue(vector *v, size_t i){
     return linearSearch_(v,v->size,v->data[i]);
 }
@@ -91,12 +92,14 @@ int* vector_front(vector* v) {
     }
     return &(v->data[0]);
 }
+
 int* back(vector *v) {
     if (v == NULL || v->size == 0) {
         return NULL;
     }
     return &(v->data[v->size-1]);
 }
+
 int* atVector (vector *v, size_t index){
     if(index<v->size) {
         return &(v->data[index]);
