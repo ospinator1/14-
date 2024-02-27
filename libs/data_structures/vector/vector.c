@@ -1,6 +1,6 @@
 # ifndef INC_ORDERED_ARRAY_SET_H
 # define INC_ORDERED_ARRAY_SET_H
--
+
 #include <stdio.h> // For UINT32_MAX
 #include <stdint.h>
 #include <stdbool.h>
@@ -25,7 +25,7 @@ vector vector_create(size_t capacity) {
 }
 
 void clear(vector *v){
-    free( v->data);
+    v->size=0;
 }
 
 void reserve(vector *v, size_t new_capacity) {
@@ -87,8 +87,8 @@ void popBack(vector *v) {
 
 
 int* vector_front(vector* v) {
-    if (v == nullptr || v->size == 0) {
-        return nullptr;
+    if (v == NULL || v->size == 0) {
+        return NULL;
     }
     return &(v->data[0]);
 }

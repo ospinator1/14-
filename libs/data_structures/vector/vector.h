@@ -7,6 +7,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include "../../algorithms/array/array.h"
+
 typedef struct vector {
     int *data; // указатель на элементы вектора
     size_t size; // размер вектора
