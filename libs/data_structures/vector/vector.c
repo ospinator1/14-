@@ -1,8 +1,6 @@
 # ifndef INC_ORDERED_ARRAY_SET_H
 # define INC_ORDERED_ARRAY_SET_H
-
-#define nullptr NULL
-
+-
 #include <stdio.h> // For UINT32_MAX
 #include <stdint.h>
 #include <stdbool.h>
@@ -55,9 +53,11 @@ void reserve(vector *v, size_t new_capacity) {
 void shrinkToFit(vector *v){
     v->capacity = v->size;
 }
+
 void deleteVector(vector *v){
     free(&v);
 }
+
 bool isEmpty(vector *v){
     return (v->size==0);
 }

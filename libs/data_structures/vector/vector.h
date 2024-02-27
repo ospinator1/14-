@@ -1,9 +1,3 @@
-//
-// Created by Assa on 18.02.2024.
-//
-
-
-
 # ifndef INC_ORDERED_ARRAY_SET_H
 # define INC_ORDERED_ARRAY_SET_H
 
