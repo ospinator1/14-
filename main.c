@@ -123,6 +123,7 @@ void test_vector(){
     test_front_oneElementInVector();
     test_clear();
     test_shrink_to_fit();
+    test_delete_vector();
 }
 void test_pushBackV_empty_vector() {
     vectorVoid v = createVectorV(0, sizeof(int));
@@ -140,6 +141,12 @@ void test_pushBackV_full_vector() {
     int x = 2;
     pushBackV(&v, &x);
     assert(v.size == 2 && v.capacity == 2);
+}
+void test_popBackV() {
+    int array[] = {1, 2, 3};
+    vectorVoid v = {array, 3, 3, sizeof(int)};
+    popBackV(&v);
+    assert(v.size == 2);
 }
 void test_getVectorValueV() {
     int a[] = {5, 3, 7};
@@ -160,7 +167,7 @@ void test_setVectorValueV() {
 void test_clearV(){
     vector v= vector_create(2);
     pushBack(&v,3);
-    clear(&v);
+    clearV(&v);
     assert(isEmpty(&v));
 }
 void test_shrink_to_fitV(){
@@ -168,7 +175,7 @@ void test_shrink_to_fitV(){
     pushBack(&v, 10);
     pushBack(&v, 421);
     pushBack(&v, 41);
-    shrinkToFit(&v);
+    shrinkToFitV(&v);
     assert(isFull(&v));
 }
 void test_vector_void(){

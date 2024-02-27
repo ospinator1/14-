@@ -41,7 +41,7 @@ void reserveV(vectorVoid *v, size_t newCapacity) {
             v->size = newCapacity;
         }
     } else {
-        free(v);
+        deleteVectorV(&v);
     }
 }
 void shrinkToFitV(vectorVoid *v){
