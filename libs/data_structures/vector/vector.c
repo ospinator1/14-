@@ -93,38 +93,16 @@ void vector_print ( vector v ){
         printf("%d ",v.data[i]);
     }
 }
-void vector_add(vector* v, int element) {
-    for (size_t i = 0; i < v->size; i++) {
-        if (v->data[i] == element) {
-            return;
-        }
-    }
-    if (v->size < v->capacity) {
-        v->data[v->size++] = element;
-    }
-}
 
-
-vector vector_array(int* a, size_t size) {
-    vector v = vector_create(size);
-    for (size_t i = 0; i < size; ++i) {
-        vector_add(&v, a[i]);
-    }
-    return v;
-}
-
-// Функция теперь возвращает указатель на int
 int* vector_front(vector* v) {
     if (v == nullptr || v->size == 0) {
-        // Если вектор пуст или указатель неверен, возвращаем nullptr
         return nullptr;
     }
-    return &(v->data[0]); // Возвращаем указатель на первый элемент
+    return &(v->data[0]);
 }
 int* back(vector *v) {
-    if (v == nullptr || v->size == 0) {
-// Если вектор пуст или указатель неверен, возвращаем nullptr
-        return nullptr;
+    if (v == NULL || v->size == 0) {
+        return NULL;
     }
     return &(v->data[v->size-1]);
 }

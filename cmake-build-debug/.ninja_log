@@ -57,3 +57,17 @@
 713	747	7306399915849567	libs/data_structures/libdata_structures.a	5c2d59b9402aaf94
 712	747	7306399915849567	libs/algorithms/libalgorithms.a	4a0dfa421f3de451
 747	798	7306399916329659	untitled7.exe	bad5128466e0ccbd
+3	63	7307401387770772	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
+5	712	7307401394267717	libs/data_structures/CMakeFiles/data_structures.dir/vector/vector.c.obj	941f80b66fb23ad6
+6	713	7307401394257745	libs/algorithms/CMakeFiles/algorithms.dir/__/data_structures/vector/vector.c.obj	2a82413e9a5982f4
+712	759	7307401394736636	libs/data_structures/libdata_structures.a	5c2d59b9402aaf94
+713	759	7307401394736636	libs/algorithms/libalgorithms.a	4a0dfa421f3de451
+759	812	7307401395234966	untitled7.exe	bad5128466e0ccbd
+3	54	7307402795590228	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
+54	107	7307402796088570	untitled7.exe	bad5128466e0ccbd
+2	66	7307413772722288	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
+4	696	7307413779024316	libs/data_structures/CMakeFiles/data_structures.dir/vector/vector.c.obj	941f80b66fb23ad6
+5	697	7307413779024316	libs/algorithms/CMakeFiles/algorithms.dir/__/data_structures/vector/vector.c.obj	2a82413e9a5982f4
+697	732	7307413779399342	libs/algorithms/libalgorithms.a	4a0dfa421f3de451
+696	732	7307413779389376	libs/data_structures/libdata_structures.a	5c2d59b9402aaf94
+732	783	7307413779877782	untitled7.exe	bad5128466e0ccbd

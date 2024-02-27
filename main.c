@@ -1,7 +1,7 @@
 
 #include "libs/data_structures/vector/vector.h"
 
-#include <stdio.h> // For UINT32_MAX
+ // For UINT32_MAX
 #include <stdint.h>
 
 #define nullptr NULL
@@ -39,23 +39,26 @@ void test_popBack_FullVector() {
     pushBack(&v, 10);
     pushBack(&v, 421);
     pushBack(&v, 41);
-   printf("%d", vector_front(&v));
-
+    assert(v.size==3);
+    popBack(&v);
+    assert(v.size==2);
+    assert(v.capacity==3);
 }
-void test_at_vector_not_empty_vector() {
+void test1(){
+    test_popBack_emptyVector();
+    test_popBack_FullVector();
+}
+void test_atVector_notEmptyVector(){
     vector v = vector_create(1);
     pushBack(&v, 5);
     assert(isFull(&v));
-
     int* element = atVector(&v, 0);
-
     assert(*element == 5);
 }
 
 void test_atVector_requestToLastElement() {
     int array[] = {1, 2, 3, 4, 5};
     vector v = {array, 5, 5};
-
     int *last_element = atVector(&v, v.size - 1);
     assert(*last_element == 5);
 }
@@ -65,9 +68,7 @@ void test_back_oneElementInVector() {
     pushBack(&v, 5);
     pushBack(&v, 6);
     assert(isFull(&v));
-
     int* element = back(&v);
-
     assert(*element == 6);
 }
 
@@ -76,14 +77,61 @@ void test_front_oneElementInVector() {
     pushBack(&v, 5);
     pushBack(&v, 6);
     assert(isFull(&v));
-
     int* element = vector_front(&v);
-
     assert(*element == 5);
 }
+void test_clear(){
+    vector v= vector_create(2);
+    pushBack(&v,3);
+    clear(&v);
+    assert(isEmpty(&v));
+}
+void test_shrink_to_fit(){
+    vector v=vector_create(6);
+    pushBack(&v, 10);
+    pushBack(&v, 421);
+    pushBack(&v, 41);
+    shrinkToFit(&v);
+    assert(isFull(&v));
+}
+void test_vector_print(){
+    vector v= vector_create(4);
+    pushBack(&v, 10);
+    pushBack(&v, 421);
+    pushBack(&v, 41);
+    vector_print(v);
+}
+void test_delete_vector(){
+    vector v= vector_create(4);
+    pushBack(&v, 10);
+    pushBack(&v, 421);
+    pushBack(&v, 41);
+    deleteVector(&v);
+    assert(isEmpty(&v));
+}
+void test_get_vector_value(){
+    vector v= vector_create(4);
+    pushBack(&v, 10);
+    pushBack(&v, 421);
+    pushBack(&v, 41);
+    int x=41;
+    int y=421;
+    getVectorValue(&v,2);
+    assert(isFull(&v));
+    assert(x==y);
+}
+void TEST(){
+    test();
+    test1();
+    test_atVector_notEmptyVector();
+    test_atVector_requestToLastElement();
+    test_back_oneElementInVector();
+    test_front_oneElementInVector();
+    test_clear();
+    test_shrink_to_fit();
+    test_vector_print();
+}
 int main() {
-
-
-
+    TEST();
     return 0;
 }
