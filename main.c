@@ -3,8 +3,9 @@
 
 
 int main () {
-        matrix *m = getMemArrayOfMatrices(1,3,3);
+        matrix *m = getMemArrayOfMatrices(2,3,3);
         inputMatrix(m);
+         swapRows(*m,2,1);
         outputMatrix(m);
 
     return 0;
