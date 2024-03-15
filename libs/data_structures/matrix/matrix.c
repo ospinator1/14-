@@ -30,8 +30,44 @@ matrix *getMemArrayOfMatrices(int nMatrices,int nRows, int nCols) {
 void freeMemMatrix(matrix *m){
     free(&m);
 }
-void freeMemMatrices(matrix *ms, int nMatrices){
+void freeMemMatrices(matrix *ms, int nMatrices) {
     for (int i = 0; i < nMatrices; ++i) {
-        freeMemMatrix(ms+i);
+        freeMemMatrix(ms + i);
     }
+}
+
+void inputMatrix(matrix *m) {
+    for (int i = 0; i < m->nRows; i++) {
+        printf("input %d row:", i + 1);
+        for (int j = 0; j < m->nCols; j++) {
+            scanf("%d", &m->values[i][j]);
+        }
+    }
+}
+
+void inputMatrices(matrix *ms, int nMatrices) {
+    for (int i = 0; i < nMatrices; i++) {
+        printf("input %lld matrix\n", i + 1);
+        inputMatrix(ms + i);
+        printf("\n");
+    }
+}
+
+void outputMatrix(matrix *m) {
+    for (int i = 0; i < m->nRows; i++) {
+        for (int j = 0; j < m->nCols; j++) {
+            printf("%d ", m->values[i][j]);
+        }
+
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void outputMatrices(matrix *ms, int nMatrices) {
+    for (int i = 0; i < nMatrices; i++) {
+        outputMatrix(ms + i);
+    }
+}
+
 #endif
