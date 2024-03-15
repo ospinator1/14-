@@ -32,5 +32,9 @@ void outputMatrices(matrix *ms, int nMatrices);//вывод массива из 
 
 void swapRows(matrix m, int i1, int i2);//обмен строк с порядковыми номерами i1 и i2 в матрице m
 
-void swapColumns(matrix m, int j1, int j2)// обмен колонок с порядковыми номерами j1 и j2 в матрице m.
+void swapColumns(matrix m, int j1, int j2);// обмен колонок с порядковыми номерами j1 и j2 в матрице m.
+
+void insertionSortRowsMatrixByRowCriteria(matrix *m, int (*criteria)(int*, int));//выполняет сортировку вставками строк матрицы m по неубыванию значения функции criteria применяемой для строк
+
+void selectionSortColsMatrixByColCriteria(matrix *m, int (*criteria)(int*, int));//– выполняет сортировку выбором столбцов матрицы m по неубыванию значения функции criteria применяемой для столбцов
 #endif //UNTITLED7_MATRIX_H

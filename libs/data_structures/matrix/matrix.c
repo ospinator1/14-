@@ -81,5 +81,53 @@ void swapColumns(matrix *m, int j1, int j2) {
         *(&m->values[i][j2]) = t;
     }
 }
+void insertionSortRowsMatrixByRowCriteria(matrix *m, int (*criteria)(int*, int)) {
+    int res_criteria[m->nRows];
+
+    for(int i = 0; i < m->nRows; i++)
+        res_criteria[i] = criteria(m->values[i], m->nCols);
+
+    for (int i = 1; i < m->nRows; i++) {
+        int key = res_criteria[i];
+        int *address_key = m->values[i];
+        int j = i - 1;
+
+        while (j >= 0 && res_criteria[j] > key) {
+            res_criteria[j + 1] = res_criteria[j];
+            swapRows(m, j + 1, j);
+
+            j -= 1;
+        }
+
+        res_criteria[j + 1] = key;
+        m->values[j + 1] = address_key;
+    }
+}
+void selectionSortColsMatrixByColCriteria(matrix *m, int (*criteria)(int*, int)) {
+    int res_criteria[m->nCols];
+
+    for (size_t i = 0; i < m->nCols; i++) {
+        int temp[m->nRows];
+        for (size_t j = 0; j < m->nRows; j++)
+            temp[j] = m->values[j][i];
+
+        res_criteria[i] = criteria(temp, m->nRows);
+    }
+
+    int value_min_idx;
+    for (int i = 0; i < m->nCols; i++) {
+        value_min_idx = i;
+
+        for (int j = i + 1; j < m->nCols; j++)
+            if (res_criteria[j] < res_criteria[value_min_idx])
+                value_min_idx = j;
+
+        int temp = *(&res_criteria[value_min_idx]);
+        *(&res_criteria[value_min_idx]) = *(&res_criteria[i]);
+        *(&res_criteria[i]) = temp;
+
+        swapColumns(m, value_min_idx, i);
+    }
+}
 
 #endif
