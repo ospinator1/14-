@@ -5,6 +5,7 @@
 #ifndef UNTITLED7_MATRIX_H
 #define UNTITLED7_MATRIX_H
 #include <stdbool.h>
+#include <stdio.h>
 typedef struct matrix {
     int **values; // элементы матрицы
     int nRows; // количество рядов
@@ -54,4 +55,8 @@ void transposeMatrix(matrix *m);// транспонирует матрицу m
 position getMinValuePos(matrix m);//возвращает позицию минимального элемента матрицы m
 
 position getMaxValuePos(matrix m);//возвращает позицию максимального элемента матрицы m.
+
+matrix createMatrixFromArray(const int *a,int nRows, int nCols);//возвращает матрицу размера nRows на nCols, построенную из элементов массива a
+
+matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t nRows, size_t nCols);//возвращает указатель на нулевую матрицу массива из nMatrices матриц, размещенных в динамической памяти, построенных из элементов массива a
 #endif //UNTITLED7_MATRIX_H

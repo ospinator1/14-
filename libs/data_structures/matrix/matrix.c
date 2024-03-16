@@ -1,10 +1,12 @@
 
 #ifndef UNTITLED7_MATRIX_С
 #define UNTITLED7_MATRIX_С
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <malloc.h>
 # include "../../algorithms/basic_functions/basic_functions.h"
+
 typedef struct matrix {
     int **values; // элементы матрицы
     int nRows; // количество рядов
@@ -16,20 +18,23 @@ typedef struct position {
 } position;
 
 matrix getMemMatrix(int nRows, int nCols) {
-        int **values = (int **) malloc(sizeof(int*) * nRows);
-        for (int i = 0; i < nRows; i++)
-            values[i] = (int *) malloc(sizeof(int) * nCols);
-        return (matrix){values, nRows, nCols};
-    }
-matrix *getMemArrayOfMatrices(int nMatrices,int nRows, int nCols) {
-    matrix *ms = (matrix*) malloc(sizeof(matrix) * nMatrices);
+    int **values = (int **) malloc(sizeof(int *) * nRows);
+    for (int i = 0; i < nRows; i++)
+        values[i] = (int *) malloc(sizeof(int) * nCols);
+    return (matrix) {values, nRows, nCols};
+}
+
+matrix *getMemArrayOfMatrices(int nMatrices, int nRows, int nCols) {
+    matrix *ms = (matrix *) malloc(sizeof(matrix) * nMatrices);
     for (int i = 0; i < nMatrices; i++)
         ms[i] = getMemMatrix(nRows, nCols);
     return ms;
 }
-void freeMemMatrix(matrix *m){
+
+void freeMemMatrix(matrix *m) {
     free(&m);
 }
+
 void freeMemMatrices(matrix *ms, int nMatrices) {
     for (int i = 0; i < nMatrices; ++i) {
         freeMemMatrix(ms + i);
@@ -69,11 +74,13 @@ void outputMatrices(matrix *ms, int nMatrices) {
         outputMatrix(ms + i);
     }
 }
-void swapRows(matrix *m, int i1, int i2){
-    int *t=m->values[i1];
-    m->values[i1]=m->values[i2];
-    m->values[i2]=t;
+
+void swapRows(matrix *m, int i1, int i2) {
+    int *t = m->values[i1];
+    m->values[i1] = m->values[i2];
+    m->values[i2] = t;
 }
+
 void swapColumns(matrix *m, int j1, int j2) {
     for (int i = 0; i < m->nRows; i++) {
         int t = *(&m->values[i][j1]);
@@ -81,90 +88,90 @@ void swapColumns(matrix *m, int j1, int j2) {
         *(&m->values[i][j2]) = t;
     }
 }
-void insertionSortRowsMatrixByRowCriteria(matrix *m, int (*criteria)(int*, int)) {
-    int res_criteria[m->nRows];
 
-    for(int i = 0; i < m->nRows; i++)
-        res_criteria[i] = criteria(m->values[i], m->nCols);
+void insertionSortRowsMatrixByRowCriteria(matrix *m, int (*criteria)(int *, int)) {
+    int result_criteria[m->nRows];
+
+    for (int i = 0; i < m->nRows; i++)
+        result_criteria[i] = criteria(m->values[i], m->nCols);
 
     for (int i = 1; i < m->nRows; i++) {
-        int key = res_criteria[i];
+        int k = result_criteria[i];
         int *address_key = m->values[i];
         int j = i - 1;
-
-        while (j >= 0 && res_criteria[j] > key) {
-            res_criteria[j + 1] = res_criteria[j];
+        while (j >= 0 && result_criteria[j] > k) {
+            result_criteria[j + 1] = result_criteria[j];
             swapRows(m, j + 1, j);
 
             j -= 1;
         }
 
-        res_criteria[j + 1] = key;
+        result_criteria[j + 1] = k;
         m->values[j + 1] = address_key;
     }
 }
-void selectionSortColsMatrixByColCriteria(matrix *m, int (*criteria)(int*, int)) {
-    int res_criteria[m->nCols];
+
+void selectionSortColsMatrixByColCriteria(matrix *m, int (*criteria)(int *, int)) {
+    int result_criteria[m->nCols];
 
     for (size_t i = 0; i < m->nCols; i++) {
         int temp[m->nRows];
         for (size_t j = 0; j < m->nRows; j++)
             temp[j] = m->values[j][i];
 
-        res_criteria[i] = criteria(temp, m->nRows);
+        result_criteria[i] = criteria(temp, m->nRows);
     }
 
-    int value_min_idx;
+    int value_minimum_index;
     for (int i = 0; i < m->nCols; i++) {
-        value_min_idx = i;
+        value_minimum_index = i;
 
         for (int j = i + 1; j < m->nCols; j++)
-            if (res_criteria[j] < res_criteria[value_min_idx])
-                value_min_idx = j;
+            if (result_criteria[j] < result_criteria[value_minimum_index])
+                value_minimum_index = j;
 
-        int temp = *(&res_criteria[value_min_idx]);
-        *(&res_criteria[value_min_idx]) = *(&res_criteria[i]);
-        *(&res_criteria[i]) = temp;
-
-        swapColumns(m, value_min_idx, i);
+        int temp = *(&result_criteria[value_minimum_index]);
+        *(&result_criteria[value_minimum_index]) = *(&result_criteria[i]);
+        *(&result_criteria[i]) = temp;
+        swapColumns(m, value_minimum_index, i);
     }
 }
 
-bool isSquareMatrix(matrix *m){
-    return m->nRows==m->nCols;
+bool isSquareMatrix(matrix *m) {
+    return m->nRows == m->nCols;
 }
 
-bool areTwoMatricesEqual(matrix *m1, matrix *m2){
-    if(m1->nRows!=m2->nRows){
+bool areTwoMatricesEqual(matrix *m1, matrix *m2) {
+    if (m1->nRows != m2->nRows) {
         return false;
     }
     for (int i = 0; i < m1->nRows; ++i) {
         for (int j = 0; j < m2->nCols; ++j) {
-            if(m1->values[i][j]==m2->values[i][j]){
+            if (m1->values[i][j] == m2->values[i][j]) {
                 return true;
             }
         }
     }
     return false;
-    }
+}
 
-bool isEMatrix(matrix *m){
-    if(m->nRows!=m->nCols){
+bool isEMatrix(matrix *m) {
+    if (m->nRows != m->nCols) {
         return false;
     }
     for (int i = 0; i < m->nRows; ++i) {
         for (int j = 0; j < m->nCols; ++j) {
-           if(i==j && m->values[i][j]!=1){
-               return false;
-           }else if(i!=j && m->values[i][j]!=0){
-               return false;
-           }
+            if (i == j && m->values[i][j] != 1) {
+                return false;
+            } else if (i != j && m->values[i][j] != 0) {
+                return false;
+            }
         }
     }
     return true;
 }
 
-bool isSymmetricMatrix(matrix *m){
+bool isSymmetricMatrix(matrix *m) {
     for (int i = 0; i < m->nRows; ++i) {
         for (int j = 0; j < m->nCols; ++j) {
             if (m->values[i][j] == m->values[j][i]) {
@@ -175,24 +182,24 @@ bool isSymmetricMatrix(matrix *m){
     return false;
 }
 
-void transposeSquareMatrix(matrix *m){
-    if(m->nRows!=m->nCols) {
+void transposeSquareMatrix(matrix *m) {
+    if (m->nRows != m->nCols) {
         fprintf(stderr, "a non-square matrix");
         exit(1);
     }
-        for (int i = 0; i < m->nRows; ++i) {
-            for (int j = i+1; j < m->nCols; ++j) {
-                if(i!=j){
-                swap(&m->values[i][j],&m->values[j][i]);
+    for (int i = 0; i < m->nRows; ++i) {
+        for (int j = i + 1; j < m->nCols; ++j) {
+            if (i != j) {
+                swap(&m->values[i][j], &m->values[j][i]);
             }
         }
     }
 }
 
 void transposeMatrix(matrix *m) {
-    int **new_value = (int**) malloc(sizeof(int*) * m->nCols);
+    int **new_value = (int **) malloc(sizeof(int *) * m->nCols);
     for (int i = 0; i < m->nCols; i++) {
-        new_value[i] = (int*) malloc(sizeof(int) * m->nRows);
+        new_value[i] = (int *) malloc(sizeof(int) * m->nRows);
         for (int j = 0; j < m->nRows; j++) {
             new_value[i][j] = m->values[j][i];
         }
@@ -218,9 +225,10 @@ position getMinValuePos(matrix m) {
     }
     return position;
 }
-position getMaxValuePos(matrix m){
-    int maximum_values=m.values[0][0];
-    position position={0,0};
+
+position getMaxValuePos(matrix m) {
+    int maximum_values = m.values[0][0];
+    position position = {0, 0};
     for (int i = 1; i < m.nRows; ++i) {
         for (int j = 1; j < m.nCols; ++j) {
             if (m.values[i][j] > maximum_values) {
@@ -231,6 +239,25 @@ position getMaxValuePos(matrix m){
         }
     }
     return position;
+}
+
+matrix createMatrixFromArray(const int *a, int nRows, int nCols) {
+    matrix m = getMemMatrix(nRows, nCols);
+    int k = 0;
+    for (int i = 0; i < nRows; i++)
+        for (int j = 0; j < nCols; j++)
+            m.values[i][j] = a[k++];
+    return m;
+}
+
+matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t nRows, size_t nCols) {
+    matrix *ms = getMemArrayOfMatrices(nMatrices, nRows, nCols);
+    int l = 0;
+    for (size_t k = 0; k < nMatrices; k++)
+        for (size_t i = 0; i < nRows; i++)
+            for (size_t j = 0; j < nCols; j++)
+                ms[k].values[i][j] = values[l++];
+    return ms;
 }
 
 #endif
