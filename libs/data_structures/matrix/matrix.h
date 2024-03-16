@@ -46,4 +46,12 @@ bool areTwoMatricesEqual(matrix *m1, matrix *m2);//возвращает знач
 bool isEMatrix(matrix *m);//возвращает значение ’истина’, если матрица m является единичной, ложь – в противном случае
 
 bool isSymmetricMatrix(matrix *m);//возвращает значение ’истина’, если матрица m является симметричной, ложь – в противном случае
+
+void transposeSquareMatrix(matrix *m);//транспонирует квадратную матрицу m
+
+void transposeMatrix(matrix *m);// транспонирует матрицу m
+
+position getMinValuePos(matrix m);//возвращает позицию минимального элемента матрицы m
+
+position getMaxValuePos(matrix m);//возвращает позицию максимального элемента матрицы m.
 #endif //UNTITLED7_MATRIX_H

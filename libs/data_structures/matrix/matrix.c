@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <malloc.h>
-# include "../../algorithms/array/array.h"
+# include "../../algorithms/basic_functions/basic_functions.h"
 typedef struct matrix {
     int **values; // элементы матрицы
     int nRows; // количество рядов
@@ -141,11 +141,11 @@ bool areTwoMatricesEqual(matrix *m1, matrix *m2){
     for (int i = 0; i < m1->nRows; ++i) {
         for (int j = 0; j < m2->nCols; ++j) {
             if(m1->values[i][j]==m2->values[i][j]){
-                return false;
+                return true;
             }
         }
     }
-    return true;
+    return false;
     }
 
 bool isEMatrix(matrix *m){
@@ -174,4 +174,63 @@ bool isSymmetricMatrix(matrix *m){
     }
     return false;
 }
+
+void transposeSquareMatrix(matrix *m){
+    if(m->nRows!=m->nCols) {
+        fprintf(stderr, "a non-square matrix");
+        exit(1);
+    }
+        for (int i = 0; i < m->nRows; ++i) {
+            for (int j = i+1; j < m->nCols; ++j) {
+                if(i!=j){
+                swap(&m->values[i][j],&m->values[j][i]);
+            }
+        }
+    }
+}
+
+void transposeMatrix(matrix *m) {
+    int **new_value = (int**) malloc(sizeof(int*) * m->nCols);
+    for (int i = 0; i < m->nCols; i++) {
+        new_value[i] = (int*) malloc(sizeof(int) * m->nRows);
+        for (int j = 0; j < m->nRows; j++) {
+            new_value[i][j] = m->values[j][i];
+        }
+    }
+    for (int i = 0; i < m->nRows; i++)
+        m->values = new_value;
+    swap(&m->nRows, &m->nCols);
+}
+
+position getMinValuePos(matrix m) {
+    position position = {0, 0};
+    int minimum_values = m.values[0][0];
+
+    for (int i = 1; i < m.nRows; ++i) {
+        for (int j = 1; j < m.nCols; ++j) {
+            if (m.values[i][j] < minimum_values) {
+                minimum_values = m.values[i][j];
+                position.rowIndex = i;
+                position.colIndex = j;
+            }
+        }
+
+    }
+    return position;
+}
+position getMaxValuePos(matrix m){
+    int maximum_values=m.values[0][0];
+    position position={0,0};
+    for (int i = 1; i < m.nRows; ++i) {
+        for (int j = 1; j < m.nCols; ++j) {
+            if (m.values[i][j] > maximum_values) {
+                maximum_values = m.values[i][j];
+                position.rowIndex = i;
+                position.colIndex = j;
+            }
+        }
+    }
+    return position;
+}
+
 #endif

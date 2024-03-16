@@ -5,4 +5,6 @@ add_library(algorithms
         ../data_structures/vector/vector.c
         array/unordered.h
         ../data_structures/vector/vector.h
+        basic_functions/basic_functions.c
+        basic_functions/basic_functions.h
 )
