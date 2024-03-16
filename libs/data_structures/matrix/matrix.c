@@ -130,4 +130,48 @@ void selectionSortColsMatrixByColCriteria(matrix *m, int (*criteria)(int*, int))
     }
 }
 
+bool isSquareMatrix(matrix *m){
+    return m->nRows==m->nCols;
+}
+
+bool areTwoMatricesEqual(matrix *m1, matrix *m2){
+    if(m1->nRows!=m2->nRows){
+        return false;
+    }
+    for (int i = 0; i < m1->nRows; ++i) {
+        for (int j = 0; j < m2->nCols; ++j) {
+            if(m1->values[i][j]==m2->values[i][j]){
+                return false;
+            }
+        }
+    }
+    return true;
+    }
+
+bool isEMatrix(matrix *m){
+    if(m->nRows!=m->nCols){
+        return false;
+    }
+    for (int i = 0; i < m->nRows; ++i) {
+        for (int j = 0; j < m->nCols; ++j) {
+           if(i==j && m->values[i][j]!=1){
+               return false;
+           }else if(i!=j && m->values[i][j]!=0){
+               return false;
+           }
+        }
+    }
+    return true;
+}
+
+bool isSymmetricMatrix(matrix *m){
+    for (int i = 0; i < m->nRows; ++i) {
+        for (int j = 0; j < m->nCols; ++j) {
+            if (m->values[i][j] == m->values[j][i]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 #endif
