@@ -56,4 +56,8 @@ position getMaxValuePos(matrix m);//возвращает позицию макс
 matrix createMatrixFromArray(const int *a,int nRows, int nCols);//возвращает матрицу размера nRows на nCols, построенную из элементов массива a
 
 matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t nRows, size_t nCols);//возвращает указатель на нулевую матрицу массива из nMatrices матриц, размещенных в динамической памяти, построенных из элементов массива a
+
+int getMinElementRow(matrix m);// возвращает строку с наименьшим элементом
+
+int getMaxElementRow(matrix m);// возвращает строку с наибольшим элементом
 #endif

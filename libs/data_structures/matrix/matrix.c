@@ -262,5 +262,31 @@ matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t
                 ms[k].values[i][j] = values[l++];
     return ms;
 }
+int getMinElementRow(matrix m) {
+    int min = m.values[0][0];
+    int row = 0;
+    for (int i = 0; i < m.nRows; i++) {
+        for (int j = 0; j < m.nCols; j++) {
+            if (m.values[i][j] < min) {
+                min = m.values[i][j];
+                row = i; // Обновляем row вместе с min
+            }
+        }
+    }
+    return row; // Возвращаем после полного просмотра матрицы
+}
+
+int getMaxElementRow(matrix m) {
+    int max = m.values[0][0];
+    int row = 0;
+    for (int i = 0; i < m.nRows; i++) {
+        for (int j = 0; j < m.nCols; j++) {
+            if (m.values[i][j] > max)
+                max = m.values[i][j];
+            row = i;
+        }
+    }
+    return row;
+}
 
 #endif

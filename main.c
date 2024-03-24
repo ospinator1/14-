@@ -2,22 +2,8 @@
 #include "libs/data_structures/matrix//matrix.h"
 #include "libs/algorithms/basic_functions/basic_functions.h"
 #include <stdio.h>
-int getMinElementRow(matrix m) {
-    int min = m.values[0][0];
-    int row = 0;
-    for (int i = 0; i < m.nRows; i++) {
-        for (int j = 0; j < m.nCols; j++) {
-            if (m.values[i][j] < min) {
-                min = m.values[i][j];
-                row = i; // Обновляем row вместе с min
-            }
-        }
-    }
-    return row; // Возвращаем после полного просмотра матрицы
-}
-
-int getMaxElementRow(matrix m) {
-    int max = m.values[0][0];
+int getMaxElementRow1(matrix m,int firstRow) {
+    int max = m.values[firstRow][0];
     int row = 0;
     for (int i = 0; i < m.nRows; i++) {
         for (int j = 0; j < m.nCols; j++) {
@@ -28,23 +14,26 @@ int getMaxElementRow(matrix m) {
     }
     return row;
 }
-
-
-
+void sortRowsByMinElement(matrix m) {
+    for (int i = 0; i < m.nRows - 1; ++i) {
+        int row = getMaxElementRow1(m, i);
+        if (i != row) {
+            swapRows(&m, i, row);
+        }
+    }
+}
 int main() {
-
     matrix m = createMatrixFromArray(
             (int[]) {
-                    1, 2, 3,
-                    4, 5, 6,
-                    7, 8, 9
+                    7,1,2,
+                    1,8,1,
+                    3,2,3
+
 
             },
             3, 3
     );
-    int minRows= getMinElementRow(m);
-    int maxRows= getMaxElementRow(m);
-    swapRows(&m, minRows,maxRows);
+    sortRowsByMinElement(m);
     outputMatrix(&m);
     return 0;
 }
