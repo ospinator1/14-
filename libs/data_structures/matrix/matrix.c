@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <malloc.h>
-# include "../../algorithms/basic_functions/basic_functions.h"
+
 
 typedef struct matrix {
     int **values; // элементы матрицы
@@ -16,7 +16,11 @@ typedef struct position {
     int rowIndex;
     int colIndex;
 } position;
-
+static void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
 matrix getMemMatrix(int nRows, int nCols) {
     int **values = (int **) malloc(sizeof(int *) * nRows);
     for (int i = 0; i < nRows; i++)
@@ -75,12 +79,11 @@ void outputMatrices(matrix *ms, int nMatrices) {
     }
 }
 
-void swapRows(matrix *m, int i1, int i2) {
-    int *t = m->values[i1];
-    m->values[i1] = m->values[i2];
-    m->values[i2] = t;
+void swapRows(matrix *m, int row1, int row2) {
+for (int j = 0; j < m->nCols; j++) {
+swap(& m->values[row1][j], & m->values[row2][j]);
 }
-
+}
 void swapColumns(matrix *m, int j1, int j2) {
     for (int i = 0; i < m->nRows; i++) {
         int t = *(&m->values[i][j1]);
@@ -142,17 +145,17 @@ bool isSquareMatrix(matrix *m) {
 }
 
 bool areTwoMatricesEqual(matrix *m1, matrix *m2) {
-    if (m1->nRows != m2->nRows) {
+    if (m1->nRows != m2->nRows ||m1->nCols != m2->nCols ) {
         return false;
     }
     for (int i = 0; i < m1->nRows; ++i) {
         for (int j = 0; j < m2->nCols; ++j) {
-            if (m1->values[i][j] == m2->values[i][j]) {
-                return true;
+            if (m1->values[i][j] != m2->values[i][j]) {
+                return false;
             }
         }
     }
-    return false;
+    return true;
 }
 
 bool isEMatrix(matrix *m) {
@@ -174,12 +177,12 @@ bool isEMatrix(matrix *m) {
 bool isSymmetricMatrix(matrix *m) {
     for (int i = 0; i < m->nRows; ++i) {
         for (int j = 0; j < m->nCols; ++j) {
-            if (m->values[i][j] == m->values[j][i]) {
-                return true;
+            if (m->values[i][j] != m->values[j][i]) {
+                return false;
             }
         }
     }
-    return false;
+    return true;
 }
 
 void transposeSquareMatrix(matrix *m) {
@@ -190,7 +193,7 @@ void transposeSquareMatrix(matrix *m) {
     for (int i = 0; i < m->nRows; ++i) {
         for (int j = i + 1; j < m->nCols; ++j) {
             if (i != j) {
-                swap(&m->values[i][j], &m->values[j][i]);
+                swap((int *) m->values[i][j], (int *) m->values[j][i]);
             }
         }
     }
@@ -206,7 +209,7 @@ void transposeMatrix(matrix *m) {
     }
     for (int i = 0; i < m->nRows; i++)
         m->values = new_value;
-    swap(&m->nRows, &m->nCols);
+    swap((int *) m->nRows, (int *) m->nCols);
 }
 
 position getMinValuePos(matrix m) {
@@ -229,8 +232,8 @@ position getMinValuePos(matrix m) {
 position getMaxValuePos(matrix m) {
     int maximum_values = m.values[0][0];
     position position = {0, 0};
-    for (int i = 1; i < m.nRows; ++i) {
-        for (int j = 1; j < m.nCols; ++j) {
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 0; j < m.nCols; ++j) {
             if (m.values[i][j] > maximum_values) {
                 maximum_values = m.values[i][j];
                 position.rowIndex = i;

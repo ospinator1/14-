@@ -9,7 +9,7 @@ float abs1(float z);
 int max2(int a, int b);
 int max3(int a, int b, int c);
 int isDigit(int x);
-void swap(int *a,int *b);
+void swap(int a,int b);
 void sort2(float *a,float *b);
 void sort3(float *a,float *b,float *c);
 int isPrime(int x);

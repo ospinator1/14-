@@ -1,6 +1,3 @@
-//
-// Created by Assa on 05.03.2024.
-//
 
 #ifndef UNTITLED7_MATRIX_H
 #define UNTITLED7_MATRIX_H
@@ -32,9 +29,9 @@ void outputMatrix(matrix *m); // вывод матрицы m
 
 void outputMatrices(matrix *ms, int nMatrices);//вывод массива из nMatrices матриц, хранящейся по адресу ms
 
-void swapRows(matrix m, int i1, int i2);//обмен строк с порядковыми номерами i1 и i2 в матрице m
+void swapRows(matrix *m, int i1, int i2);//обмен строк с порядковыми номерами i1 и i2 в матрице m
 
-void swapColumns(matrix m, int j1, int j2);// обмен колонок с порядковыми номерами j1 и j2 в матрице m.
+void swapColumns(matrix *m, int j1, int j2);// обмен колонок с порядковыми номерами j1 и j2 в матрице m.
 
 void insertionSortRowsMatrixByRowCriteria(matrix *m, int (*criteria)(int*, int));//выполняет сортировку вставками строк матрицы m по неубыванию значения функции criteria применяемой для строк
 
@@ -59,4 +56,4 @@ position getMaxValuePos(matrix m);//возвращает позицию макс
 matrix createMatrixFromArray(const int *a,int nRows, int nCols);//возвращает матрицу размера nRows на nCols, построенную из элементов массива a
 
 matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t nRows, size_t nCols);//возвращает указатель на нулевую матрицу массива из nMatrices матриц, размещенных в динамической памяти, построенных из элементов массива a
-#endif //UNTITLED7_MATRIX_H
+#endif
