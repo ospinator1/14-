@@ -1,7 +1,8 @@
 
 #include "libs/data_structures/matrix//matrix.h"
-
+#include <malloc.h>
 #include <stdio.h>
+#define N 3
 int getMin(int *a,int n){
     int min=a[0];
     for (int i = 0; i < n; ++i) {
@@ -38,7 +39,31 @@ void getSquareOfMatrixIfSymmetric(matrix m) {
                 outputMatrix(&m);
 
 }
+long long getSum(int *a,int n){
+    int i, sum = 0;
+    for (i=0; i < n; i++)
+        sum += a[i];
+    return sum;
+}
+bool isUnique(int *a, int n){
+    for (int i = 0; i < n - 1; i++)
+        for (int j = i + 1; j < n; j++)
+            if (a[i] == a[j])
+                return 0;
 
+    return 1;
+}
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m){
+    int *sum= (int *)(malloc(sizeof(int) * m.nRows));
+
+    for (int i = 0; i < m.nRows; i++)
+        sum[i] = getSum(m.values[i], m.nCols);
+
+    if (isUnique(sum, m.nRows)) {
+        transposeSquareMatrix(&m);
+    } else
+        outputMatrix(&m);
+}
 int main() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
@@ -60,8 +85,8 @@ int main() {
             },
             3, 3
     );
-    getSquareOfMatrixIfSymmetric(m2);
 
+    transposeIfMatrixHasNotEqualSumOfRows(m1);
 
     return 0;
 }
