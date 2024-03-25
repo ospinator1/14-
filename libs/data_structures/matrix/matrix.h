@@ -60,4 +60,8 @@ matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t
 int getMinElementRow(matrix m);// возвращает строку с наименьшим элементом
 
 int getMaxElementRow(matrix m);// возвращает строку с наибольшим элементом
+
+void sortRowsByMinElement(matrix m);//упорядочивает строки матрицы по неубыванию наибольших элементов строк
+
+
 #endif
