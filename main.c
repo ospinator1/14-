@@ -16,7 +16,7 @@ void sortColsByMinElement(matrix m){
     selectionSortColsMatrixByColCriteria(&m, getMin);
 }
 
-matrix mulMatrices(matrix m1, matrix m2){
+struct matrix mulMatrices(matrix m1, matrix m2){
     printf("Resultant Matrix is:\n");
 
     int result[m1.nRows][m2.nCols];
@@ -64,29 +64,35 @@ void transposeIfMatrixHasNotEqualSumOfRows(matrix m){
     } else
         outputMatrix(&m);
 }
+bool isMutuallyInverseMatrices(matrix m1, matrix m2) {
+    matrix result_mul = mulMatrices(m1, m2);
+    matrix result_mul1= mulMatrices(m2,m1);
+    bool E= isEMatrix(&result_mul1) && isEMatrix(&result_mul) ;
+
+    return E;
+
+}
 int main() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
-                    1,2,3,
-                    4,5,6,
-                    7,8,9
+                    1,0,
+                    0,1,
 
 
             },
-            3, 3
+            2, 2
     );
     matrix m2 = createMatrixFromArray(
             (int[]) {
-                    1,3,0,
-                    3,2,6,
-                    0,6,5
+                    1,0,
+                    0,1,
+
 
 
             },
-            3, 3
+            2, 2
     );
 
-    transposeIfMatrixHasNotEqualSumOfRows(m1);
-
+    printf("%d", isMutuallyInverseMatrices(m1,m2));
     return 0;
 }
