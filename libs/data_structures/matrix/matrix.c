@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <malloc.h>
-
+# include "../../algorithms/basic_functions/basic_functions.h"
 
 typedef struct matrix {
     int **values; // элементы матрицы
@@ -16,11 +16,7 @@ typedef struct position {
     int rowIndex;
     int colIndex;
 } position;
-static void swap(int* a, int* b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
+
 matrix getMemMatrix(int nRows, int nCols) {
     int **values = (int **) malloc(sizeof(int *) * nRows);
     for (int i = 0; i < nRows; i++)
@@ -81,7 +77,7 @@ void outputMatrices(matrix *ms, int nMatrices) {
 
 void swapRows(matrix *m, int row1, int row2) {
 for (int j = 0; j < m->nCols; j++) {
-swap(& m->values[row1][j], & m->values[row2][j]);
+swap( m->values[row1][j],  m->values[row2][j]);
 }
 }
 void swapColumns(matrix *m, int j1, int j2) {
@@ -193,7 +189,7 @@ void transposeSquareMatrix(matrix *m) {
     for (int i = 0; i < m->nRows; ++i) {
         for (int j = i + 1; j < m->nCols; ++j) {
             if (i != j) {
-                swap((int *) m->values[i][j], (int *) m->values[j][i]);
+                swap( m->values[i][j],  m->values[j][i]);
             }
         }
     }
@@ -209,7 +205,7 @@ void transposeMatrix(matrix *m) {
     }
     for (int i = 0; i < m->nRows; i++)
         m->values = new_value;
-    swap((int *) m->nRows, (int *) m->nCols);
+    swap( m->nRows, m->nCols);
 }
 
 position getMinValuePos(matrix m) {
@@ -310,4 +306,5 @@ void sortRowsByMinElement(matrix m) {
         }
     }
 }
+
 #endif

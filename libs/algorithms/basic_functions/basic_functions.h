@@ -17,4 +17,5 @@ int isPerfectNumber(long long x);
 int reverseDigit(int x);
 int amountPolindromes(int n);
 int countDigit (int x);
+int getMin(int *a, int n);
 #endif //UNTITLED7_BASIC_FUNCTIONS_H
