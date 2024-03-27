@@ -1,16 +1,15 @@
 
 #include "libs/data_structures/matrix//matrix.h"
 #include <malloc.h>
-
+#include <windows.h>
 #include "libs/algorithms/basic_functions/basic_functions.h"
-
 
 
 void sortColsByMinElement(matrix m) {
     selectionSortColsMatrixByColCriteria(&m, getMin);
 }
 
- matrix mulMatrices(matrix m1, matrix m2) {
+matrix mulMatrices(matrix m1, matrix m2) {
     printf("Resultant Matrix is:\n");
 
     int result[m1.nRows][m2.nCols];
@@ -26,9 +25,9 @@ void sortColsByMinElement(matrix m) {
     }
 }
 
-void getSquareOfMatrixIfSymmetric(matrix m) {
+void getSquareOfMatrixIfSymmetric(matrix *m) {
     if (isSymmetricMatrix(&m) == 1) {
-        mulMatrices(m, m);
+        mulMatrices(*m, *m);
     } else
         outputMatrix(&m);
 
@@ -126,13 +125,67 @@ int getNSpecialElement(matrix m) {
     return 0;
 }
 
+int countZeroRows(matrix m) {
+    int count = 0;
+    for (int i = 0; i < m.nRows; i++)
+        for (int j = 0; j < m.nCols; ++j)
+            if (m.values[i][j] == 0) {
+                count++;
+            }
+    printf("%d", count);
+    getchar();
+    return 0;
+}
+
+int getNSpecialElement2(matrix m) {
+    int count = 0;
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 1; j < m.nCols - 1; ++j) {
+            for (int k = 0; k < i; ++k) {
+                bool flag = m.values[i][k] > m.values[i][j];
+                if (flag == 1)
+                    count++;
+            }
+        }
+    }
+    printf("%d", count);
+}
+
+int NormaMatrix(matrix m) {
+    int count=0;
+    for (int i = 0; i < m.nRows; ++i){
+        for (int j = 0; j < m.nCols; ++j)
+            count++;
+}
+    return count;
+}
+
+int Sum_Dioganal(matrix m){
+    int* max= (int*) malloc(sizeof (int)* (m.nRows+m.nCols-1));
+    for (int i = 0; i < m.nRows+m.nCols-1; ++i) {
+        max[i] = 0;
+    }
+        for (int j = 0; j < m.nRows; ++j) {
+            for (int k = 0; k < m.nCols; ++k) {
+                if(j!=k){
+                    max[j-k + m.nCols - 1] = max2(max[j-k + m.nCols - 1],m.values[j][k]);
+            }
+        }
+    }
+        int sum=0;
+    for (int i = 0; i < m.nRows+m.nCols-1; ++i) {
+        sum+=max[i];
+
+    }
+    return sum;
+}
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
     matrix m1 = createMatrixFromArray(
             (int[]) {
-                    3, 5, 5, 4,
-                    2, 3, 6, 7,
-                    12, 2, 1, 2
-
+                    3,2,5,4,
+                    1,3,6,3,
+                    3,2,1,2
 
             },
             3, 4
@@ -140,14 +193,22 @@ int main() {
     matrix m2 = createMatrixFromArray(
             (int[]) {
                     1, 2, 3,
-                    4, 5, 6,
+                    6, 1, 4,
                     7, 8, 9
 
 
             },
             3, 3
     );
+    matrix m3 = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 5, 5,
+                    6, 1, 3, 8,
+                    7, 8, 9, 10,
+                    6, 4, 1, 4
 
-    printf("%d", getNSpecialElement(m1));
-    return 0;
+            },
+            4, 4
+    );
+    printf("%d", Sum_Dioganal(m1));
 }

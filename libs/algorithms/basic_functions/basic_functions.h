@@ -18,4 +18,5 @@ int reverseDigit(int x);
 int amountPolindromes(int n);
 int countDigit (int x);
 int getMin(int *a, int n);
+int min2(int a,int b);
 #endif //UNTITLED7_BASIC_FUNCTIONS_H

@@ -21,7 +21,13 @@ int max2(int a, int b) {
 int max3(int a, int b, int c){
     return max2(max2( a,b),c);
 }
-
+int min2(int a,int b){
+    if(a<b){
+        return a;
+    }else{
+        return b;
+    }
+}
 double getDistance(int x1,int y1,int x2,int y2){
     double length=x2-x1;
     double width=y2-y1;
@@ -46,14 +52,14 @@ int isDigit(int x){
     }
     return digit;
 }
-void swap(int a,int b){
-    int t=a;
+void swap(int *a,int *b){
+    int *t=a;
     a=b;
     b=t;
 }
-void sort2(float *a,float *b){
+void sort2(int *a,int *b){
     if (*a>*b)
-        swap(a,b);
+        swap( a, b);
 }
 void sort3(float *a, float *b, float *c) {
     sort2(a, b);
