@@ -4,7 +4,7 @@
 #include <windows.h>
 #include "libs/algorithms/basic_functions/basic_functions.h"
 #include <assert.h>
-
+#include <math.h>
 void sortColsByMinElement(matrix m) {
     selectionSortColsMatrixByColCriteria(&m, getMin);
 }
@@ -214,6 +214,16 @@ int countEqClassesByRowsSum(matrix m) {
         int count = countNUnique(sum, m.nRows);
         return count;
 
+}
+float getDistance(int *a, int n){
+    float d=0;
+    for (int i = 0; i < n; ++i) {
+         d+=sqrt(pow(a[i],2));
+    }
+    return d;
+}
+void sortByDistances(matrix m){
+    insertionSortRowsMatrixByRowCriteria1(&m,  getDistance);
 }
 int main() {
     SetConsoleOutputCP(CP_UTF8);

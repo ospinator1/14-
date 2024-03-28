@@ -81,3 +81,6 @@
 806	858	7333191546371484	untitled7.exe	bad5128466e0ccbd
 2	656	7333191795929596	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
 656	710	7333191796449145	untitled7.exe	bad5128466e0ccbd
+5	83	7333387093693731	libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.obj	a1e0c4ccdb272b73
+83	124	7333387094113738	libs/data_structures/libdata_structures.a	ff8a02fe0b9f68a5
+2	681	7333387099680347	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
