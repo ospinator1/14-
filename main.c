@@ -9,6 +9,7 @@ void sortColsByMinElement(matrix m) {
     selectionSortColsMatrixByColCriteria(&m, getMin);
 }
 
+
 matrix mulMatrices(matrix m1, matrix m2) {
     printf("Resultant Matrix is:\n");
 
@@ -32,7 +33,6 @@ void getSquareOfMatrixIfSymmetric(matrix *m) {
         outputMatrix(m);
 
 }
-
 long long getSum(int *a, int n) {
     int i, sum = 0;
     for (i = 0; i < n; i++)
