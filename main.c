@@ -3,7 +3,7 @@
 #include <malloc.h>
 #include <windows.h>
 #include "libs/algorithms/basic_functions/basic_functions.h"
-
+#include <assert.h>
 
 void sortColsByMinElement(matrix m) {
     selectionSortColsMatrixByColCriteria(&m, getMin);
@@ -87,23 +87,22 @@ void findSumOfMaxesOfPseudoDiagonal(matrix m) {
         printf("%d\n", sum1);
     }
 }
-
+bool value_is_in_the_area(position posit,int i,int j){
+    position new={i-posit.rowIndex,j-posit.colIndex};
+    return (new.rowIndex<=new.colIndex) ;
+}
 int getMinInArea(matrix m) {
-    int min = m.values[0][0];
+position max= getMaxValuePos(m);
+int min=INT_MAX;
     for (int i = 0; i < m.nRows; ++i) {
         for (int j = 0; j < m.nCols; ++j) {
-            if (i < m.nRows / 2 && j >= i && j < m.nRows - i) {
-                if (m.values[i][j] < min)
-                    min = m.values[i][j];
-
-            } else if (i >= m.nRows / 2 && j <= i && j >= m.nRows - i - 1) {
-                if (m.values[i][j] < min)
-                    min = m.values[i][j];
+            if (value_is_in_the_area(max,i,j)&&m.values[i][j]<min) {
+                min=m.values[i][j];
             }
 
         }
     }
-    printf("%d\n", min);
+   return min;
 }
 
 int getNSpecialElement(matrix m) {
@@ -210,5 +209,7 @@ int main() {
             },
             4, 4
     );
-    printf("%d", Sum_Dioganal(m1));
+    int result = getMinInArea(m1);
+
+    assert(result == 2);
 }
