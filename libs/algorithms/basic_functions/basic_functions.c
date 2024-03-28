@@ -28,11 +28,7 @@ int min2(int a,int b){
         return b;
     }
 }
-double getDistance(int x1,int y1,int x2,int y2){
-    double length=x2-x1;
-    double width=y2-y1;
-    return sqrt(pow(length,2)+pow(width,2));
-}
+
 double solveX2(int a, int b, int c) {
     double D = b * b - 4 * a * c;
     double sqrtD = sqrt(D);

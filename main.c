@@ -26,10 +26,10 @@ matrix mulMatrices(matrix m1, matrix m2) {
 }
 
 void getSquareOfMatrixIfSymmetric(matrix *m) {
-    if (isSymmetricMatrix(&m) == 1) {
+    if (isSymmetricMatrix(m) == 1) {
         mulMatrices(*m, *m);
     } else
-        outputMatrix(&m);
+        outputMatrix(m);
 
 }
 
@@ -124,6 +124,36 @@ int getNSpecialElement(matrix m) {
     return 0;
 }
 
+ int countValues(const int *a, int n, int value){
+    int count=0;
+     for (int i = 0; i < n; ++i) {
+         if(a[i==value])
+             count++;
+     }
+     return count;
+}
+int getMaxValue(int a[]){
+    int n;
+    int max=0;
+    for (int i = 0; i < n; ++i) {
+        if(a[i]>max)
+            max=a[i];
+    }
+    return max;
+}
+void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix){
+    int min=INT_MAX;
+    for (int i = 0; i < nMatrix; ++i) {
+        int norma= getMaxValue((int *) &ms[i]);
+        min=min2(norma,min);
+    }
+    for (int i = 0; i < nMatrix; ++i) {
+        int norma = getMaxValue((int *) &ms[i]);
+
+        if (norma == min)
+            outputMatrix(&ms[i]);
+    }
+    }
 int countZeroRows(matrix m) {
     int count = 0;
     for (int i = 0; i < m.nRows; i++)
@@ -208,7 +238,7 @@ int countNUnique(long long *a, int n){
     return count_of_unique;
 }
 int countEqClassesByRowsSum(matrix m) {
-    long long *sum = (int *) malloc(sizeof(long long) * m.nRows);
+    long long *sum = (long long int *) (int *) malloc(sizeof(long long) * m.nRows);
     for (size_t i = 0; i < m.nRows; ++i)
         sum[i] = getSum(m.values[i], m.nCols);
         int count = countNUnique(sum, m.nRows);
@@ -229,16 +259,12 @@ int main() {
     SetConsoleOutputCP(CP_UTF8);
     matrix m1 = createMatrixFromArray(
             (int[]) {
-                7,1,
-                2,7,
-                5,4,
-                4,3,
-                1,6,
-                8,0
-
+                0,1,
+                0,0,
+                1,0
 
             },
-            6, 2
+            3, 2
     );
     matrix m2 = createMatrixFromArray(
             (int[]) {
@@ -260,5 +286,5 @@ int main() {
             },
             4, 4
     );
-    printf("%d", countEqClassesByRowsSum(m1));
+  printMatrixWithMaxZeroRows(&m1,3);
 }
