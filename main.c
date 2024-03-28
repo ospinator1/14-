@@ -178,16 +178,57 @@ int Sum_Dioganal(matrix m){
     }
     return sum;
 }
+int cmp_long_long(const void *pa, const void *pb){
+    return *(long long *)pa - *(long long *)pb;
+}
+int countNUnique(long long *a, int n){
+
+    qsort(a,n, sizeof(long long),cmp_long_long);
+    int count_of_unique = n == 0 ? 1 : 0 ;
+    int i=0;
+
+    while(i<n){
+        int left=0;
+        int right=n-1;
+        while(left<=right){
+        int middle=left+(right-left)/2;
+            if (a[middle] == a[i]) {
+                i = middle;
+                left = middle + 1;
+            }
+            else if (a[middle] > a[i])
+                right = middle- 1;
+            else
+                left = middle + 1;
+        }
+
+        i++;
+        count_of_unique++;
+    }
+    return count_of_unique;
+}
+int countEqClassesByRowsSum(matrix m) {
+    long long *sum = (int *) malloc(sizeof(long long) * m.nRows);
+    for (size_t i = 0; i < m.nRows; ++i)
+        sum[i] = getSum(m.values[i], m.nCols);
+        int count = countNUnique(sum, m.nRows);
+        return count;
+
+}
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     matrix m1 = createMatrixFromArray(
             (int[]) {
-                    3,2,5,4,
-                    1,3,6,3,
-                    3,2,1,2
+                7,1,
+                2,7,
+                5,4,
+                4,3,
+                1,6,
+                8,0
+
 
             },
-            3, 4
+            6, 2
     );
     matrix m2 = createMatrixFromArray(
             (int[]) {
@@ -209,7 +250,5 @@ int main() {
             },
             4, 4
     );
-    int result = getMinInArea(m1);
-
-    assert(result == 2);
+    printf("%d", countEqClassesByRowsSum(m1));
 }
