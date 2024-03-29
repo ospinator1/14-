@@ -208,24 +208,34 @@ int test_transposeIfMatrixHasNotEqualSumOfRows(){
     transposeIfMatrixHasNotEqualSumOfRows(m1);
     assert(areTwoMatricesEqual(&m1,&m2));
 }
-int main(){
-    SetConsoleOutputCP(CP_UTF8);
-    matrix m1 = createMatrixFromArray((int[]) {1, 2, 3,
-                                                 0, 1, 1,
-                                                 3, 6, 9}, 3, 3);
 
-    matrix m2= createMatrixFromArray((int[]) {1, 0, 3,
+bool isMutuallyInverseMatrices(matrix m1, matrix m2){
+    matrix result1= mulMatrices(m1,m2);
+    matrix result2= mulMatrices(m2,m1);
+    bool E=isEMatrix(&result1)&& isEMatrix(&result2);
+    return E;
+}
+void test_isMutuallyInverseMatrices(){
+    matrix m1 = createMatrixFromArray((int[]) {2, 0, 1,
+                                               1, 5, -4,
+                                               -1, 1, 0}, 3, 3);
+
+    matrix m2= createMatrixFromArray((int[]) {-4, 0, 3,
+                                              2, 1, 6,
+                                              3, 1, 9}, 3, 3);
+
+    assert(!isMutuallyInverseMatrices(m1,m2));
+}
+int main(){
+
+    matrix m1 = createMatrixFromArray((int[]) {2, 0, 1,
+                                                 1, 5, -4,
+                                                 -1, 1, 0}, 3, 3);
+
+    matrix m2= createMatrixFromArray((int[]) {-4, 0, 3,
                                                      2, 1, 6,
                                                      3, 1, 9}, 3, 3);
-    int a[5]={1,2,3,4,5};
-    int result= getSum(&a,5);
-    printf("%d", isUnique(a,5));
-    if(result==15) {
-        return true;
-    }else{
-        return false;
-    }
-    transposeIfMatrixHasNotEqualSumOfRows(m1);
-    assert(areTwoMatricesEqual(&m1,&m2));
+
+    assert(!isMutuallyInverseMatrices(m1,m2));
 
 }
