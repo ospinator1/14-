@@ -5,6 +5,7 @@
 #include "libs/algorithms/basic_functions/basic_functions.h"
 #include <assert.h>
 #include <math.h>
+#include "libs/algorithms/array/array.h"
 int getMaxElementRow(matrix m) {
     int max = m.values[0][0];
     int row = 0;
@@ -111,7 +112,7 @@ void sortColsByMinElement(matrix m){
 }
 void test_sortColsByMinElement(){
     int a={1,2,3,4,5};
-    assert(getMin(&a,1));
+    assert(getMin(&a,5));
     matrix m1 = createMatrixFromArray((int[]) {3, 5, 2, 1, 3, 1,
                                                2, 5, 1, 8, 1, 7,
                                                1, 1, 4, 1, 8, 3}, 3, 6);
@@ -146,18 +147,85 @@ void getSquareOfMatrixIfSymmetric(matrix *m){
     else
         outputMatrix(&m);
 }
-int main(){
-    SetConsoleOutputCP(CP_UTF8);
+void test_getSquareOfMatrixIfSymmetric(){
     matrix m = createMatrixFromArray((int[]) {1, 2, 3,
-                                                 2, 5, 6,
-                                                 3, 6, 9}, 3, 3);
+                                              2, 5, 6,
+                                              3, 6, 9}, 3, 3);
 
-    matrix check = createMatrixFromArray((int[]) {14, 30, 42,
-                                                     30, 65, 90,
-                                                     42, 90, 126}, 3, 3);
+    matrix m2= createMatrixFromArray((int[]) {14, 30, 42,
+                                              30, 65, 90,
+                                              42, 90, 126}, 3, 3);
 
     getSquareOfMatrixIfSymmetric(&m);
 
-    assert(areTwoMatricesEqual(&m, &check));
+    assert(areTwoMatricesEqual(&m, &m2));
+
+}
+
+bool isUnique(int *a,int n) {
+    for (int i = 0; i < n; ++i) {
+            if (a[i] == a[i+1]) {
+                return false;
+
+        }
+
+    }
+    return true;
+}
+int getSum(int *a,int n){
+    int sum=0;
+    for (int i = 0; i < n; ++i) {
+        sum += a[i];
+    }
+    return sum;
+}
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m){
+    int *sum=(int *)(malloc(sizeof(int)*m.nRows));
+    for (int i = 0; i < m.nRows; ++i)
+        sum[i]= getSum(m.values[i],m.nCols);
+    if(isUnique(sum,m.nRows)){
+        transposeSquareMatrix(&m);
+    }else
+        outputMatrix(&m);
+}
+int test_transposeIfMatrixHasNotEqualSumOfRows(){
+    SetConsoleOutputCP(CP_UTF8);
+    matrix m1 = createMatrixFromArray((int[]) {1, 2, 3,
+                                               0, 1, 1,
+                                               3, 6, 9}, 3, 3);
+
+    matrix m2= createMatrixFromArray((int[]) {1, 0, 3,
+                                              2, 1, 6,
+                                              3, 1, 9}, 3, 3);
+    int a[5]={1,2,3,4,5};
+    int result= getSum(&a,5);
+    printf("%d", isUnique(a,5));
+    if(result==15) {
+        return true;
+    }else{
+        return false;
+    }
+    transposeIfMatrixHasNotEqualSumOfRows(m1);
+    assert(areTwoMatricesEqual(&m1,&m2));
+}
+int main(){
+    SetConsoleOutputCP(CP_UTF8);
+    matrix m1 = createMatrixFromArray((int[]) {1, 2, 3,
+                                                 0, 1, 1,
+                                                 3, 6, 9}, 3, 3);
+
+    matrix m2= createMatrixFromArray((int[]) {1, 0, 3,
+                                                     2, 1, 6,
+                                                     3, 1, 9}, 3, 3);
+    int a[5]={1,2,3,4,5};
+    int result= getSum(&a,5);
+    printf("%d", isUnique(a,5));
+    if(result==15) {
+        return true;
+    }else{
+        return false;
+    }
+    transposeIfMatrixHasNotEqualSumOfRows(m1);
+    assert(areTwoMatricesEqual(&m1,&m2));
 
 }
