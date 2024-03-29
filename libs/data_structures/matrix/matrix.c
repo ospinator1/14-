@@ -76,10 +76,11 @@ void outputMatrices(matrix *ms, int nMatrices) {
 }
 
 void swapRows(matrix *m, int row1, int row2) {
-for (int j = 0; j < m->nCols; j++) {
-swap( &m->values[row1][j],  &m->values[row2][j]);
+    for (int j = 0; j < m->nCols; j++) {
+        swap(&m->values[row1][j], &m->values[row2][j]);
+    }
 }
-}
+
 void swapColumns(matrix *m, int j1, int j2) {
     for (int i = 0; i < m->nRows; i++) {
         int t = *(&m->values[i][j1]);
@@ -88,27 +89,27 @@ void swapColumns(matrix *m, int j1, int j2) {
     }
 }
 
-void insertionSortRowsMatrixByRowCriteria(matrix *m, int (*criteria)(int *, int)) {
-    int result_criteria[m->nRows];
+void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int)) {
+    float *criteria_array = (int *) malloc(sizeof(int) * m.nRows);
 
-    for (int i = 0; i < m->nRows; i++)
-        result_criteria[i] = criteria(m->values[i], m->nCols);
+    for (int i = 0; i < m.nRows; i++)
+        criteria_array[i] = criteria(m.values[i], m.nCols);
 
-    for (int i = 1; i < m->nRows; i++) {
-        int k = result_criteria[i];
-        int *address_key = m->values[i];
-        int j = i - 1;
-        while (j >= 0 && result_criteria[j] > k) {
-            result_criteria[j + 1] = result_criteria[j];
-            swapRows(m, j + 1, j);
+    for (int i = 1; i < m.nRows; i++) {
+        int t = criteria_array[i];
+        int j = i;
 
-            j -= 1;
+        while (j > 0 && criteria_array[j - 1] > t) {
+            criteria_array[j] = criteria_array[j - 1];
+            swapRows(&m, j, j - 1);
+            j--;
         }
 
-        result_criteria[j + 1] = k;
-        m->values[j + 1] = address_key;
+        criteria_array[j] = t;
     }
+
 }
+
 void insertionSortRowsMatrixByRowCriteria1(matrix *m, float (*criteria)(int *, int)) {
     float result_criteria[m->nRows];
 
@@ -162,7 +163,7 @@ bool isSquareMatrix(matrix *m) {
 }
 
 bool areTwoMatricesEqual(matrix *m1, matrix *m2) {
-    if (m1->nRows != m2->nRows ||m1->nCols != m2->nCols ) {
+    if (m1->nRows != m2->nRows || m1->nCols != m2->nCols) {
         return false;
     }
     for (int i = 0; i < m1->nRows; ++i) {
@@ -210,7 +211,7 @@ void transposeSquareMatrix(matrix *m) {
     for (int i = 0; i < m->nRows; ++i) {
         for (int j = i + 1; j < m->nCols; ++j) {
             if (i != j) {
-                swap( &m->values[i][j],  &m->values[j][i]);
+                swap(&m->values[i][j], &m->values[j][i]);
             }
         }
     }
@@ -226,7 +227,7 @@ void transposeMatrix(matrix *m) {
     }
     for (int i = 0; i < m->nRows; i++)
         m->values = new_value;
-    swap( &m->nRows, &m->nCols);
+    swap(&m->nRows, &m->nCols);
 }
 
 position getMinValuePos(matrix m) {
@@ -266,8 +267,8 @@ matrix createMatrixFromArray(const int *a,
     matrix m = getMemMatrix(nRows, nCols);
     int k = 0;
     for (int i = 0; i < nRows; i++)
-    for (int j = 0; j < nCols; j++)
-        m.values[i][j] = a[k++];
+        for (int j = 0; j < nCols; j++)
+            m.values[i][j] = a[k++];
     return m;
 }
 

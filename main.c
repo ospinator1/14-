@@ -5,7 +5,7 @@
 #include "libs/algorithms/basic_functions/basic_functions.h"
 #include <assert.h>
 #include <math.h>
-
+#include "libs/algorithms/array/array.h"
 int getMaxElementRow(matrix m) {
     int max = m.values[0][0];
     int row = 0;
@@ -34,22 +34,28 @@ int getMinElementRow(matrix m) {
     return row;
 }
 
-void swapRows1(matrix m, int row1, int row2) {
-    for (int j = 0; j < m.nCols; j++) {
-        swap(&m.values[row1][j], &m.values[row2][j]);
+int getMax(int *a, int n){
+    int max=0;
+    for (int i = 0; i < n; ++i) {
+        if(a[i]>max)
+            max=a[i];
     }
+    return max;
 }
-int main(){
-    SetConsoleOutputCP(CP_UTF8);
+
+void sortRowsByMinElement(matrix m){
+    insertionSortRowsMatrixByRowCriteria(&m, getMax);
+}
+void test_sortRowsMaxAndMinElement(){
     matrix m1= createMatrixFromArray(
             (int[]) {
-                1,2,3,
-              4,5,6,
-              7,8,9
+                    1,2,3,
+                    4,5,6,
+                    7,8,9
 
 
-    },
-    3, 3
+            },
+            3, 3
     );
 
     matrix m2= createMatrixFromArray(
@@ -66,5 +72,57 @@ int main(){
     int maxRow = getMaxElementRow(m1);
     swapRows(&m1,minRow,maxRow);
     assert(areTwoMatricesEqual(&m1,&m2));
+}
+void test_sortRowsByMinElement(){
+    int a={1,2,3,4,5};
+    assert(getMax(&a,5));
+    matrix m1= createMatrixFromArray(
+            (int[]) {
+                    7,1,2,
+                    1,8,1,
+                    3,2,3
 
+
+            },
+            3, 3
+    );
+    matrix m2= createMatrixFromArray(
+            (int[]) {
+                    3,2,3,
+                    7,1,2,
+                    1,8,1
+
+
+            },
+            3, 3
+    );
+    sortRowsByMinElement(m1);
+    assert(areTwoMatricesEqual(&m1,&m2));
+}
+int main(){
+    SetConsoleOutputCP(CP_UTF8);
+    int a={1,2,3,4,5};
+    assert(getMax(&a,5));
+    matrix m1= createMatrixFromArray(
+            (int[]) {
+                    7,1,2,
+                    1,8,1,
+                    3,2,3
+
+
+            },
+            3, 3
+    );
+    matrix m2= createMatrixFromArray(
+            (int[]) {
+                    3,2,3,
+                    7,1,2,
+                    1,8,1
+
+
+            },
+            3, 3
+    );
+    sortRowsByMinElement(m1);
+    assert(areTwoMatricesEqual(&m1,&m2));
 }
