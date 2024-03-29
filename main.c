@@ -110,7 +110,6 @@ void sortColsByMinElement(matrix m){
     selectionSortColsMatrixByColCriteria(&m,getMin);
 }
 void test_sortColsByMinElement(){
-    SetConsoleOutputCP(CP_UTF8);
     int a={1,2,3,4,5};
     assert(getMin(&a,1));
     matrix m1 = createMatrixFromArray((int[]) {3, 5, 2, 1, 3, 1,
@@ -125,19 +124,40 @@ void test_sortColsByMinElement(){
 
     assert(areTwoMatricesEqual(&m1, &m2));
 }
+
+matrix mulMatrices(matrix m1, matrix m2) {
+    printf("Resultant Matrix is:\n");
+
+    int result[m1.nRows][m2.nCols];
+    for (int i = 0; i < m1.nRows; ++i) {
+        for (int j = 0; j < m2.nCols; ++j) {
+            result[i][j] = 0;
+            for (int k = 0; k < m2.nRows; ++k) {
+                result[i][j] += m1.values[i][k] * m2.values[k][j];
+            }
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
+}
+void getSquareOfMatrixIfSymmetric(matrix *m){
+    if(isSymmetricMatrix(m)==1)
+        mulMatrices(*m,*m);
+    else
+        outputMatrix(&m);
+}
 int main(){
     SetConsoleOutputCP(CP_UTF8);
-    int a={1,2,3,4,5};
-    assert(getMin(&a,1));
-    matrix m1 = createMatrixFromArray((int[]) {3, 5, 2, 1, 3, 1,
-                                                 2, 5, 1, 8, 1, 7,
-                                                 1, 1, 4, 1, 8, 3}, 3, 6);
+    matrix m = createMatrixFromArray((int[]) {1, 2, 3,
+                                                 2, 5, 6,
+                                                 3, 6, 9}, 3, 3);
 
-    matrix m2 = createMatrixFromArray((int[]) {3, 5, 2, 1, 3, 1,
-                                                     2, 5, 1, 8, 1, 7,
-                                                     1, 1, 4, 1, 8, 3}, 3, 6);
+    matrix check = createMatrixFromArray((int[]) {14, 30, 42,
+                                                     30, 65, 90,
+                                                     42, 90, 126}, 3, 3);
 
-   sortColsByMinElement(m1);
+    getSquareOfMatrixIfSymmetric(&m);
 
-    assert(areTwoMatricesEqual(&m1, &m2));
+    assert(areTwoMatricesEqual(&m, &check));
+
 }
