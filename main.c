@@ -5,7 +5,6 @@
 #include "libs/algorithms/basic_functions/basic_functions.h"
 #include <assert.h>
 #include <math.h>
-#include "libs/algorithms/array/array.h"
 int getMaxElementRow(matrix m) {
     int max = m.values[0][0];
     int row = 0;
@@ -99,30 +98,46 @@ void test_sortRowsByMinElement(){
     sortRowsByMinElement(m1);
     assert(areTwoMatricesEqual(&m1,&m2));
 }
+int getMin(int *a, int n){
+    int min=a[0];
+    for (int i = 1; i < n; ++i) {
+        if(a[i]<min)
+            min=a[i];
+    }
+    return min;
+}
+void sortColsByMinElement(matrix m){
+    selectionSortColsMatrixByColCriteria(&m,getMin);
+}
+void test_sortColsByMinElement(){
+    SetConsoleOutputCP(CP_UTF8);
+    int a={1,2,3,4,5};
+    assert(getMin(&a,1));
+    matrix m1 = createMatrixFromArray((int[]) {3, 5, 2, 1, 3, 1,
+                                               2, 5, 1, 8, 1, 7,
+                                               1, 1, 4, 1, 8, 3}, 3, 6);
+
+    matrix m2 = createMatrixFromArray((int[]) {3, 5, 2, 1, 3, 1,
+                                               2, 5, 1, 8, 1, 7,
+                                               1, 1, 4, 1, 8, 3}, 3, 6);
+
+    sortColsByMinElement(m1);
+
+    assert(areTwoMatricesEqual(&m1, &m2));
+}
 int main(){
     SetConsoleOutputCP(CP_UTF8);
     int a={1,2,3,4,5};
-    assert(getMax(&a,5));
-    matrix m1= createMatrixFromArray(
-            (int[]) {
-                    7,1,2,
-                    1,8,1,
-                    3,2,3
+    assert(getMin(&a,1));
+    matrix m1 = createMatrixFromArray((int[]) {3, 5, 2, 1, 3, 1,
+                                                 2, 5, 1, 8, 1, 7,
+                                                 1, 1, 4, 1, 8, 3}, 3, 6);
 
+    matrix m2 = createMatrixFromArray((int[]) {3, 5, 2, 1, 3, 1,
+                                                     2, 5, 1, 8, 1, 7,
+                                                     1, 1, 4, 1, 8, 3}, 3, 6);
 
-            },
-            3, 3
-    );
-    matrix m2= createMatrixFromArray(
-            (int[]) {
-                    3,2,3,
-                    7,1,2,
-                    1,8,1
+   sortColsByMinElement(m1);
 
-
-            },
-            3, 3
-    );
-    sortRowsByMinElement(m1);
-    assert(areTwoMatricesEqual(&m1,&m2));
+    assert(areTwoMatricesEqual(&m1, &m2));
 }

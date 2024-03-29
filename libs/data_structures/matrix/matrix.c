@@ -133,30 +133,32 @@ void insertionSortRowsMatrixByRowCriteria1(matrix *m, float (*criteria)(int *, i
 }
 
 void selectionSortColsMatrixByColCriteria(matrix *m, int (*criteria)(int *, int)) {
-    int result_criteria[m->nCols];
+    int res_criteria[m->nCols];
 
     for (size_t i = 0; i < m->nCols; i++) {
         int temp[m->nRows];
-        for (size_t j = 0; j < m->nRows; j++)
+        for (size_t j = 0; j < m->nRows; j++) {
             temp[j] = m->values[j][i];
+        }
 
-        result_criteria[i] = criteria(temp, m->nRows);
+        res_criteria[i] = criteria(temp, m->nRows);
     }
 
-    int value_minimum_index;
+    int value_min_idx;
     for (int i = 0; i < m->nCols; i++) {
-        value_minimum_index = i;
+        value_min_idx = i;
 
-        for (int j = i + 1; j < m->nCols; j++)
-            if (result_criteria[j] < result_criteria[value_minimum_index])
-                value_minimum_index = j;
+        for (int j = i + 1; j < m->nCols; j++) {
+            if (res_criteria[j] < res_criteria[value_min_idx]) {
+                value_min_idx = j;
+            }
+        }
 
-        int temp = *(&result_criteria[value_minimum_index]);
-        *(&result_criteria[value_minimum_index]) = *(&result_criteria[i]);
-        *(&result_criteria[i]) = temp;
-        swapColumns(m, value_minimum_index, i);
+        swap(&res_criteria[value_min_idx], &res_criteria[i]);
+        swapColumns(m, value_min_idx, i);
     }
 }
+
 
 bool isSquareMatrix(matrix *m) {
     return m->nRows == m->nCols;
