@@ -48,10 +48,10 @@ int isDigit(int x){
     }
     return digit;
 }
-void swap(int *a,int *b){
-    int *t=a;
-    a=b;
-    b=t;
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 void sort2(int *a,int *b){
     if (*a>*b)

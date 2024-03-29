@@ -77,7 +77,7 @@ void outputMatrices(matrix *ms, int nMatrices) {
 
 void swapRows(matrix *m, int row1, int row2) {
 for (int j = 0; j < m->nCols; j++) {
-swap( m->values[row1][j],  m->values[row2][j]);
+swap( &m->values[row1][j],  &m->values[row2][j]);
 }
 }
 void swapColumns(matrix *m, int j1, int j2) {
@@ -210,7 +210,7 @@ void transposeSquareMatrix(matrix *m) {
     for (int i = 0; i < m->nRows; ++i) {
         for (int j = i + 1; j < m->nCols; ++j) {
             if (i != j) {
-                swap( m->values[i][j],  m->values[j][i]);
+                swap( &m->values[i][j],  &m->values[j][i]);
             }
         }
     }
@@ -226,7 +226,7 @@ void transposeMatrix(matrix *m) {
     }
     for (int i = 0; i < m->nRows; i++)
         m->values = new_value;
-    swap( m->nRows, m->nCols);
+    swap( &m->nRows, &m->nCols);
 }
 
 position getMinValuePos(matrix m) {
@@ -281,51 +281,6 @@ matrix createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t 
                 ms[k].values[i][j] = values[l++];
     return *ms;
 }
-int getMinElementRow(matrix m) {
-    int min = m.values[0][0];
-    int row = 0;
-    for (int i = 0; i < m.nRows; i++) {
-        for (int j = 0; j < m.nCols; j++) {
-            if (m.values[i][j] < min) {
-                min = m.values[i][j];
-                row = i; // Обновляем row вместе с min
-            }
-        }
-    }
-    return row; // Возвращаем после полного просмотра матрицы
-}
 
-int getMaxElementRow(matrix m) {
-    int max = m.values[0][0];
-    int row = 0;
-    for (int i = 0; i < m.nRows; i++) {
-        for (int j = 0; j < m.nCols; j++) {
-            if (m.values[i][j] > max)
-                max = m.values[i][j];
-            row = i;
-        }
-    }
-    return row;
-}
-int getMaxElementRow1(matrix m,int firstRow) {
-    int max = m.values[firstRow][0];
-    int row = 0;
-    for (int i = 0; i < m.nRows; i++) {
-        for (int j = 0; j < m.nCols; j++) {
-            if (m.values[i][j] > max)
-                max = m.values[i][j];
-            row = i;
-        }
-    }
-    return row;
-}
-void sortRowsByMinElement(matrix m) {
-    for (int i = 0; i < m.nRows - 1; ++i) {
-        int row = getMaxElementRow1(m, i);
-        if (i != row) {
-            swapRows(&m, i, row);
-        }
-    }
-}
 
 #endif
