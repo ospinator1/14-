@@ -408,7 +408,8 @@ int getNSpecialElement(matrix m) {
 
     return count;
 }
-void test_getNSpecialElement(){
+
+void test_getNSpecialElement() {
     matrix m1 = createMatrixFromArray((int[]) {3, 5, 5, 4,
                                                2, 3, 6, 7,
                                                12, 2, 1, 2
@@ -419,15 +420,53 @@ void test_getNSpecialElement(){
 
     assert(result == 2);
 }
+
+position getLeftMin(matrix m) {
+    return getMinValuePos(m);
+}
+
+void swapPenultimateRow(matrix m) {
+    position left_min_pos = getLeftMin(m);
+    int *col = (int *) malloc(sizeof(int) * m.nRows);
+    for (int i = 0; i < m.nRows; i++)
+        col[i] = m.values[i][left_min_pos.colIndex];
+    int pre_last_row = m.nRows - 2;
+    for (int i = left_min_pos.colIndex; i <= left_min_pos.colIndex; i++)
+        for (int j = 0; j < m.nRows; j++)
+            m.values[pre_last_row][j] = col[j];
+
+}
+
+void test_swapPenultimateRow(){
+    matrix m1 = createMatrixFromArray((int[]) {1, 2, 3,
+                                               4, 5, 6,
+                                               7, 8, 9
+    }, 3, 3);
+
+    matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
+                                               1, 4, 7,
+                                               7, 8, 9
+    }, 3, 3);
+    position result = getLeftMin(m1);
+
+    assert(result.rowIndex == 0 && result.colIndex == 0);
+    swapPenultimateRow(m1);
+    assert(areTwoMatricesEqual(&m1, &m2));
+}
 int main() {
 
-    matrix m1 = createMatrixFromArray((int[]) {3, 5, 5, 4,
-                                               2, 3, 6, 7,
-                                               12, 2, 1, 2
-    }, 3, 4);
+    matrix m1 = createMatrixFromArray((int[]) {1, 2, 3,
+                                               4, 5, 6,
+                                               7, 8, 9
+    }, 3, 3);
 
+    matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
+                                               1, 4, 7,
+                                               7, 8, 9
+    }, 3, 3);
+    position result = getLeftMin(m1);
 
-    int result = getNSpecialElement(m1);
-
-    assert(result == 2);
+    assert(result.rowIndex == 0 && result.colIndex == 0);
+    swapPenultimateRow(m1);
+    assert(areTwoMatricesEqual(&m1, &m2));
 }
