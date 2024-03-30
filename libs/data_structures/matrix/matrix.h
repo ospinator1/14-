@@ -65,5 +65,75 @@ int getMaxElementRow(matrix m);// возвращает строку с наиб�
 
 void sortRowsByMinElement(matrix m);//упорядочивает строки матрицы по неубыванию наибольших элементов строк
 
+int getMax(int *a, int n);
 
+int getMin(int *a, int n);
+
+void sortColsByMinElement(matrix m);
+
+matrix mulMatrices(matrix m1, matrix m2);
+
+void getSquareOfMatrixIfSymmetric(matrix *m);
+
+int getSum(int *a, int n);
+
+bool isUnique(int *a, int n);
+
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m);
+
+bool isMutuallyInverseMatrices(matrix m1, matrix m2);
+
+long long findSumOfMaxesOfPseudoDiagonal(matrix m);
+
+bool value_is_in_the_area(position posit, int i, int j);
+
+int getMinInArea(matrix m);
+
+float getDistance(int *a, int n);
+
+void sortByDistances(matrix m);
+
+int cmp_long_long(const void *pa, const void *pb);
+
+int countNUnique(long long *a, int n);
+
+int countEqClassesByRowsSum(matrix m);
+
+int getNSpecialElement(matrix m);
+
+position getLeftMin(matrix m);
+
+void swapPenultimateRow(matrix m);
+
+bool isNonDescendingSorted(int *a, int n);
+
+bool hasAllNonDescendingRows(matrix m);
+
+int countNonDescendingRowsMatrices(matrix *ms, int nMatrix);
+
+int countZeroRows(matrix m);
+
+int getMaxValue(int a[]);
+
+void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix);
+
+int getMaxValueMatrix(matrix m);
+
+void printMatrixWithMinNorm(matrix *ms, int nMatrix);
+
+int getNSpecialElement2(matrix m);
+
+double getScalarProduct(int *a, int *b, int n);
+
+double getVectorLength(int *a, int n);
+
+double getCosine(int *a, int *b, int n);
+
+double absDouble(double a);
+
+int getVectorIndexWithMaxAngle(matrix m, int *b);
+
+long long getScalarProductRowAndCol(matrix m, int i, int j);
+
+long long getSpecialScalarProduct(matrix m);
 #endif
