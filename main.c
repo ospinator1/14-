@@ -148,7 +148,7 @@ void getSquareOfMatrixIfSymmetric(matrix *m){
         outputMatrix(&m);
 }
 void test_getSquareOfMatrixIfSymmetric(){
-    matrix m = createMatrixFromArray((int[]) {1, 2, 3,
+    matrix m1 = createMatrixFromArray((int[]) {1, 2, 3,
                                               2, 5, 6,
                                               3, 6, 9}, 3, 3);
 
@@ -156,9 +156,9 @@ void test_getSquareOfMatrixIfSymmetric(){
                                               30, 65, 90,
                                               42, 90, 126}, 3, 3);
 
-    getSquareOfMatrixIfSymmetric(&m);
+    getSquareOfMatrixIfSymmetric(&m1);
 
-    assert(areTwoMatricesEqual(&m, &m2));
+    assert(areTwoMatricesEqual(&m1, &m2));
 
 }
 
@@ -249,19 +249,61 @@ long long findSumOfMaxesOfPseudoDiagonal(matrix m){
     }
     return sum;
 }
-int main(){
-
+void test_findSumOfMaxesOfPseudoDiagonal(){
     matrix m1 = createMatrixFromArray((int[]) {3,2,5,4,
-                                                 1, 3,6,3,
-                                                 3,2,1,2}, 3, 4);
+                                               1, 3,6,3,
+                                               3,2,1,2}, 3, 4);
 
-    matrix m2= createMatrixFromArray((int[]) {-4, 0, 3,
-                                                     2, 1, 6,
-                                                     3, 1, 9}, 3, 3);
+
     int a=3;
     int b=5;
     int result= max2(a,b);
     assert(result==5);
     int result1= findSumOfMaxesOfPseudoDiagonal(m1);
     assert(result1=20);
+}
+bool value_is_in_the_area(position posit,int i,int j){
+    position new={i-posit.rowIndex,j-posit.rowIndex};
+    return (new.rowIndex<=new.colIndex);
+}
+int getMinInArea(matrix m){
+    position max= getMaxValuePos(m);
+    int min=INT_MAX;
+
+    for (int i = 0; i <= max.rowIndex; i++) {
+        for (int j = 0; j < m.nCols; j++) {
+            if (value_is_in_the_area(max,i,j) && m.values[i][j] < min) {
+                min = m.values[i][j];
+            }
+        }
+    }
+
+    return min;
+}
+void test_getMinInArea(){
+    matrix m1 = createMatrixFromArray((int[]) {10,7,5,6,
+                                               3,11,8,9,
+                                               4,1,12,2}, 3, 4);
+
+
+    position posit={3,2};
+    int result= value_is_in_the_area(posit,3,3);
+    assert(result==1);
+    int result1= getMinInArea(m1);
+    assert(result1==2);
+}
+int main(){
+
+    matrix m1 = createMatrixFromArray((int[]) {10,7,5,6,
+                                                 3,11,8,9,
+                                                 4,1,12,2}, 3, 4);
+
+    matrix m2= createMatrixFromArray((int[]) {-4, 0, 3,
+                                                     2, 1, 6,
+                                                     3, 1, 9}, 3, 3);
+    position posit={3,2};
+    int result= value_is_in_the_area(posit,3,3);
+    assert(result==1);
+    int result1= getMinInArea(m1);
+    assert(result1==2);
 }
