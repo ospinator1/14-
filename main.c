@@ -292,18 +292,30 @@ void test_getMinInArea(){
     int result1= getMinInArea(m1);
     assert(result1==2);
 }
+float getDistance(int *a, int n){
+    float d=0;
+    for (int i = 0; i < n; ++i) {
+        d+= sqrt(pow(a[i],2));
+    }
+    return d;
+}
+void sortByDistances(matrix m){
+    insertionSortRowsMatrixByRowCriteria1(&m, getDistance);
+}
 int main(){
 
     matrix m1 = createMatrixFromArray((int[]) {10,7,5,6,
                                                  3,11,8,9,
                                                  4,1,12,2}, 3, 4);
 
-    matrix m2= createMatrixFromArray((int[]) {-4, 0, 3,
-                                                     2, 1, 6,
-                                                     3, 1, 9}, 3, 3);
-    position posit={3,2};
-    int result= value_is_in_the_area(posit,3,3);
-    assert(result==1);
-    int result1= getMinInArea(m1);
-    assert(result1==2);
+    matrix m2= createMatrixFromArray((int[]) {3,11,8,9,
+                                              10,7,5,6,
+                                              3,11,8,9
+                                              }, 3, 4);
+    int a[5]={1,1,1,1,1};
+    float result= getDistance(a,5);
+    assert(result=2.23606797749979);
+    sortByDistances(m1);
+    assert(areTwoMatricesEqual(&m1,&m2));
+
 }
