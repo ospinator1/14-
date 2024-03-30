@@ -453,6 +453,28 @@ void test_swapPenultimateRow(){
     swapPenultimateRow(m1);
     assert(areTwoMatricesEqual(&m1, &m2));
 }
+
+ bool isNonDescendingSorted(int *a, int n){
+    for (int i = 0; i < n; ++i) {
+        if(a[i]<a[i+1])
+            return 1;
+    }
+     return 0;
+}
+bool hasAllNonDescendingRows(matrix m){
+    for (int i = 0; i < m.nRows; ++i) {
+        if(isNonDescendingSorted(m.values[i],m.nCols)==0)
+            return 0;
+    }
+    return 1;
+}
+int countNonDescendingRowsMatrices(matrix *ms, int nMatrix){
+    int count=0;
+    for (int i = 0; i < nMatrix; ++i)
+        if(hasAllNonDescendingRows(ms[i]))
+            count++;
+    return count;
+}
 int main() {
 
     matrix m1 = createMatrixFromArray((int[]) {1, 2, 3,
@@ -464,9 +486,12 @@ int main() {
                                                1, 4, 7,
                                                7, 8, 9
     }, 3, 3);
-    position result = getLeftMin(m1);
 
-    assert(result.rowIndex == 0 && result.colIndex == 0);
-    swapPenultimateRow(m1);
-    assert(areTwoMatricesEqual(&m1, &m2));
+    int a[5] = {1, 2, 3, 4, 5};
+    int result= isNonDescendingSorted(a,5);
+    assert(result==1);
+    int result1= hasAllNonDescendingRows(m1);
+    assert(result1==1);
+    int result2= countNonDescendingRowsMatrices(&m1,1);
+    assert(result2==1);
 }
