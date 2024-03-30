@@ -302,20 +302,89 @@ float getDistance(int *a, int n){
 void sortByDistances(matrix m){
     insertionSortRowsMatrixByRowCriteria1(&m, getDistance);
 }
-int main(){
+void test_sortByDistances(){
 
     matrix m1 = createMatrixFromArray((int[]) {10,7,5,6,
-                                                 3,11,8,9,
-                                                 4,1,12,2}, 3, 4);
+                                               3,11,8,9,
+                                               4,1,12,2}, 3, 4);
 
     matrix m2= createMatrixFromArray((int[]) {3,11,8,9,
                                               10,7,5,6,
                                               3,11,8,9
-                                              }, 3, 4);
+    }, 3, 4);
     int a[5]={1,1,1,1,1};
     float result= getDistance(a,5);
     assert(result=2.23606797749979);
     sortByDistances(m1);
     assert(areTwoMatricesEqual(&m1,&m2));
+}
 
+int cmp_long_long(const void *pa, const void *pb){
+    return *(long long *)pa-*(long long *)pb;
+}
+int countNUnique(long long *a, int n){
+    qsort(a,n,sizeof(long long),cmp_long_long);
+    int count_unique=n==0 ? 1:0;
+    int i=0;
+    while(i<n){
+        int left=0;
+        int right=n-1;
+        while(left<=right){
+            int middle=left+(right-left)/2;
+            if(a[middle]==a[i]){
+            i=middle;
+            left=middle+1;
+            }
+            else if(a[middle]>a[i])
+                right=middle-1;
+            else
+                left=middle+1;
+        }
+        i++;
+        count_unique++;
+    }
+    return count_unique;
+}
+int countEqClassesByRowsSum(matrix m){
+    long long *sum = (long long *) malloc(sizeof(long long) * m.nRows);
+    for (int i = 0; i < m.nRows; i++)
+        sum[i] = getSum(m.values[i], m.nCols);
+    int count_of_unique = countNUnique(sum, m.nRows);
+    free(sum);
+    return count_of_unique;
+}
+void test_countEqClassesByRowsSum(){
+    matrix m1 = createMatrixFromArray((int[]) {7,1,
+                                               2,7,
+                                               5,4,
+                                               4,3,
+                                               1,6,
+                                               8,0
+    }, 6, 2);
+
+    int a[5]={1,2,3,1,1};
+    float result= countNUnique(a,5);
+    assert(result==5);
+    int result1= countEqClassesByRowsSum(m1);
+    assert(result1==3);
+}
+int main(){
+
+    matrix m1 = createMatrixFromArray((int[]) {7,1,
+                                               2,7,
+                                               5,4,
+                                               4,3,
+                                               1,6,
+                                               8,0
+                                               }, 6, 2);
+
+    matrix m2= createMatrixFromArray((int[]) {3,11,8,9,
+                                              10,7,5,6,
+                                              3,11,8,9
+                                              }, 3, 4);
+    int a[5]={1,2,3,1,1};
+    float result= countNUnique(a,5);
+    assert(result==5);
+    int result1= countEqClassesByRowsSum(m1);
+    assert(result1==3);
 }
