@@ -598,7 +598,7 @@ void test_getNSpecialElement2() {
     matrix m1 = createMatrixFromArray((int[]) {2, 3, 5, 5, 4,
                                                6, 2, 3, 8, 12,
                                                12, 12, 2, 1, 2
-    }, 3, 3);
+    }, 3, 5);
 
     int result = getNSpecialElement2(m1);
     assert(result == 4);
@@ -664,6 +664,29 @@ void test_getVectorIndexWithMaxAngle(){
     assert(result3 == 1);
 }
 
+long long getScalarProductRowAndCol(matrix m, int i, int j) {
+    int *col = (int *) malloc(sizeof(int) * m.nRows);
+    for (int i = 0; i < m.nRows; ++i)
+        col[i] = m.values[i][j];
+        long long scalar_product = getScalarProduct(m.values[i], col, m.nRows);
+        return scalar_product;
+}
+long long getSpecialScalarProduct(matrix m){
+    position max= getMaxValuePos(m);
+    position min= getMinValuePos(m);
+    return getScalarProductRowAndCol(m,max.rowIndex,min.colIndex);
+}
+void test_getSpecialScalarProduct(){
+    matrix m1 = createMatrixFromArray((int[]) {2, 3, 5, 5, 4,
+                                               6, 2, 3, 8, 12,
+                                               12, 12, 2, 1, 2
+    }, 3, 3);
+
+    int result= getScalarProductRowAndCol(m1,1,2);
+    assert(result==97);
+    int result1= getSpecialScalarProduct(m1);
+    assert(result1=35);
+}
 int main() {
 
     matrix m1 = createMatrixFromArray((int[]) {2, 3, 5, 5, 4,
@@ -676,14 +699,8 @@ int main() {
                                                2, 3, 4
     }, 3, 3);
 
-    int a[5] = {1, 2, 3};
-    int b[5] = {1, 2, 3};
-    int result = getScalarProduct(a, b, 3);
-    assert(result == 14);
-    double result1 = getVectorLength(a, 3);
-    assert(result1 == 3.7416573867739413);
-    double result2 = getCosine(a, b, 3);
-    assert(result2 == 1);
-    int result3 = getVectorIndexWithMaxAngle(m2, b);
-    assert(result3 == 1);
+   int result= getScalarProductRowAndCol(m1,1,2);
+    assert(result==97);
+    int result1= getSpecialScalarProduct(m1);
+    assert(result1=35);
 }
