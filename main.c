@@ -475,17 +475,12 @@ int countNonDescendingRowsMatrices(matrix *ms, int nMatrix){
             count++;
     return count;
 }
-int main() {
-
+void test_countNonDescendingRowsMatrices(){
     matrix m1 = createMatrixFromArray((int[]) {1, 2, 3,
                                                4, 5, 6,
                                                7, 8, 9
     }, 3, 3);
 
-    matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
-                                               1, 4, 7,
-                                               7, 8, 9
-    }, 3, 3);
 
     int a[5] = {1, 2, 3, 4, 5};
     int result= isNonDescendingSorted(a,5);
@@ -494,4 +489,74 @@ int main() {
     assert(result1==1);
     int result2= countNonDescendingRowsMatrices(&m1,1);
     assert(result2==1);
+}
+int countZeroRows(matrix m) {
+    int count = 0;
+    for (int i = 0; i < m.nRows; i++)
+        for (int j = 0; j < m.nCols; ++j)
+            if (m.values[i][j] == 0) {
+                count++;
+            }
+    return count;
+
+}
+
+int getMaxValue(int a[]){
+    int n;
+    scanf("%d",&n);
+    int max=0;
+    for (int i = 0; i < n; ++i) {
+        if(a[i]>max)
+            max=a[i];
+    }
+    return max;
+}
+
+void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix){
+    int min=INT_MAX;
+    for (int i = 0; i < nMatrix; ++i) {
+        int norma= getMaxValue((int *)&ms[i]);
+        min=min2(norma,min);
+    }
+    for (int i = 0; i < nMatrix; ++i) {
+        int norma= getMaxValue((int *)&ms[i]);
+        if(norma==min)
+            outputMatrix(ms);
+    }
+}
+void test_printMatrixWithMaxZeroRows(){
+    matrix m1 = createMatrixFromArray((int[]) {1, 0, 1,
+                                               4, 5, 6,
+                                               7, 0, 9
+    }, 3, 3);
+
+    matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
+                                               1, 4, 7,
+                                               7, 8, 9
+    }, 3, 3);
+    int a[5] = {1, 2, 3, 4, 5};
+    int result= getMaxValue(a);
+    assert(result==5);
+    int result1= countZeroRows(m1);
+    assert(result1==2);
+
+}
+int main() {
+
+    matrix m1 = createMatrixFromArray((int[]) {1, 0, 1,
+                                               4, 5, 6,
+                                               7, 0, 9
+    }, 3, 3);
+
+    matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
+                                               1, 4, 7,
+                                               7, 8, 9
+    }, 3, 3);
+
+    int a[] = {1, 2, 3, 4};
+    int result= getMaxValue(a);
+    assert(result==4);
+    int result1= countZeroRows(m1);
+    assert(result1==2);
+
 }
