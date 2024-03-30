@@ -437,7 +437,7 @@ void swapPenultimateRow(matrix m) {
 
 }
 
-void test_swapPenultimateRow(){
+void test_swapPenultimateRow() {
     matrix m1 = createMatrixFromArray((int[]) {1, 2, 3,
                                                4, 5, 6,
                                                7, 8, 9
@@ -454,28 +454,31 @@ void test_swapPenultimateRow(){
     assert(areTwoMatricesEqual(&m1, &m2));
 }
 
- bool isNonDescendingSorted(int *a, int n){
+bool isNonDescendingSorted(int *a, int n) {
     for (int i = 0; i < n; ++i) {
-        if(a[i]<a[i+1])
+        if (a[i] < a[i + 1])
             return 1;
     }
-     return 0;
+    return 0;
 }
-bool hasAllNonDescendingRows(matrix m){
+
+bool hasAllNonDescendingRows(matrix m) {
     for (int i = 0; i < m.nRows; ++i) {
-        if(isNonDescendingSorted(m.values[i],m.nCols)==0)
+        if (isNonDescendingSorted(m.values[i], m.nCols) == 0)
             return 0;
     }
     return 1;
 }
-int countNonDescendingRowsMatrices(matrix *ms, int nMatrix){
-    int count=0;
+
+int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
+    int count = 0;
     for (int i = 0; i < nMatrix; ++i)
-        if(hasAllNonDescendingRows(ms[i]))
+        if (hasAllNonDescendingRows(ms[i]))
             count++;
     return count;
 }
-void test_countNonDescendingRowsMatrices(){
+
+void test_countNonDescendingRowsMatrices() {
     matrix m1 = createMatrixFromArray((int[]) {1, 2, 3,
                                                4, 5, 6,
                                                7, 8, 9
@@ -483,13 +486,14 @@ void test_countNonDescendingRowsMatrices(){
 
 
     int a[5] = {1, 2, 3, 4, 5};
-    int result= isNonDescendingSorted(a,5);
-    assert(result==1);
-    int result1= hasAllNonDescendingRows(m1);
-    assert(result1==1);
-    int result2= countNonDescendingRowsMatrices(&m1,1);
-    assert(result2==1);
+    int result = isNonDescendingSorted(a, 5);
+    assert(result == 1);
+    int result1 = hasAllNonDescendingRows(m1);
+    assert(result1 == 1);
+    int result2 = countNonDescendingRowsMatrices(&m1, 1);
+    assert(result2 == 1);
 }
+
 int countZeroRows(matrix m) {
     int count = 0;
     for (int i = 0; i < m.nRows; i++)
@@ -501,30 +505,31 @@ int countZeroRows(matrix m) {
 
 }
 
-int getMaxValue(int a[]){
+int getMaxValue(int a[]) {
     int n;
-    scanf("%d",&n);
-    int max=0;
+    scanf("%d", &n);
+    int max = 0;
     for (int i = 0; i < n; ++i) {
-        if(a[i]>max)
-            max=a[i];
+        if (a[i] > max)
+            max = a[i];
     }
     return max;
 }
 
-void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix){
-    int min=INT_MAX;
+void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
+    int min = INT_MAX;
     for (int i = 0; i < nMatrix; ++i) {
-        int norma= getMaxValue((int *)&ms[i]);
-        min=min2(norma,min);
+        int norma = getMaxValue((int *) &ms[i]);
+        min = min2(norma, min);
     }
     for (int i = 0; i < nMatrix; ++i) {
-        int norma= getMaxValue((int *)&ms[i]);
-        if(norma==min)
+        int norma = getMaxValue((int *) &ms[i]);
+        if (norma == min)
             outputMatrix(ms);
     }
 }
-void test_printMatrixWithMaxZeroRows(){
+
+void test_printMatrixWithMaxZeroRows() {
     matrix m1 = createMatrixFromArray((int[]) {1, 0, 1,
                                                4, 5, 6,
                                                7, 0, 9
@@ -535,11 +540,49 @@ void test_printMatrixWithMaxZeroRows(){
                                                7, 8, 9
     }, 3, 3);
     int a[5] = {1, 2, 3, 4, 5};
-    int result= getMaxValue(a);
-    assert(result==5);
-    int result1= countZeroRows(m1);
-    assert(result1==2);
+    int result = getMaxValue(a);
+    assert(result == 5);
+    int result1 = countZeroRows(m1);
+    assert(result1 == 2);
 
+}
+
+int getMaxValueMatrix(matrix m) {
+    int max = INT_MIN;
+    for (int i = 0; i < m.nRows; i++) {
+        int max_row = getMax(m.values[i], m.nCols);
+        max = max(max_row, max);
+    }
+    return max;
+}
+
+void printMatrixWithMinNorm(matrix *ms, int nMatrix) {
+    int min_norm = INT_MAX;
+    for (int i = 0; i < nMatrix; ++i) {
+        int norma = getMaxValueMatrix(ms[i]);
+        min_norm = min2(norma, min_norm);
+    }
+    for (int i = 0; i < nMatrix; ++i) {
+        int norm = getMaxValue(&ms[i]);
+
+        if (norm == min_norm)
+            outputMatrix(ms);
+    }
+}
+void test_printMatrixWithMinNorm(){
+    matrix m1 = createMatrixFromArray((int[]) {1, 0, 1,
+                                               4, 5, 6,
+                                               7, 0, 9
+    }, 3, 3);
+
+    matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
+                                               1, 4, 7,
+                                               7, 8, 9
+    }, 3, 3);
+
+
+    int result1 = getMaxValueMatrix(m1);
+    assert(result1 == 9);
 }
 int main() {
 
@@ -553,10 +596,8 @@ int main() {
                                                7, 8, 9
     }, 3, 3);
 
-    int a[] = {1, 2, 3, 4};
-    int result= getMaxValue(a);
-    assert(result==4);
-    int result1= countZeroRows(m1);
-    assert(result1==2);
+
+    int result1 = getMaxValueMatrix(m1);
+    assert(result1 == 9);
 
 }
