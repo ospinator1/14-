@@ -11,16 +11,8 @@ float abs1(float z) {
     float x = abs(z);
     return x;
 }
-int max2(int a, int b) {
-    if (a > b) {
-        return a;
-    } else {
-        return b;
-    }
-}
-int max3(int a, int b, int c){
-    return max2(max2( a,b),c);
-}
+
+
 int min2(int a,int b){
     if(a<b){
         return a;

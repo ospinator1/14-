@@ -199,12 +199,10 @@ int test_transposeIfMatrixHasNotEqualSumOfRows(){
                                               3, 1, 9}, 3, 3);
     int a[5]={1,2,3,4,5};
     int result= getSum(&a,5);
-    printf("%d", isUnique(a,5));
-    if(result==15) {
-        return true;
-    }else{
-        return false;
-    }
+    assert(result==15);
+    int result1= isUnique(a,5);
+    assert(result1==1);
+
     transposeIfMatrixHasNotEqualSumOfRows(m1);
     assert(areTwoMatricesEqual(&m1,&m2));
 }
@@ -226,16 +224,44 @@ void test_isMutuallyInverseMatrices(){
 
     assert(!isMutuallyInverseMatrices(m1,m2));
 }
+int max2(int a,int b){
+    if(a>b){
+        return a;
+    }
+    return b;
+}
+long long findSumOfMaxesOfPseudoDiagonal(matrix m){
+    int* max_value=(int*) malloc(sizeof(int)*(m.nRows+m.nCols-1));
+    for(int i=0;i<m.nRows+m.nCols-1;i++){
+        max_value[i]=0;
+    }
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 0; j < m.nCols; ++j) {
+             if(i!=j){
+                 max_value[i-j+m.nCols-1]=max(max_value[i-j+m.nCols-1],m.values[i][j]);
+             }
+        }
+    }
+    long long sum=0;
+    for (int i = 0; i < m.nRows+m.nCols-1; ++i) {
+        sum += max_value[i];
+
+    }
+    return sum;
+}
 int main(){
 
-    matrix m1 = createMatrixFromArray((int[]) {2, 0, 1,
-                                                 1, 5, -4,
-                                                 -1, 1, 0}, 3, 3);
+    matrix m1 = createMatrixFromArray((int[]) {3,2,5,4,
+                                                 1, 3,6,3,
+                                                 3,2,1,2}, 3, 4);
 
     matrix m2= createMatrixFromArray((int[]) {-4, 0, 3,
                                                      2, 1, 6,
                                                      3, 1, 9}, 3, 3);
-
-    assert(!isMutuallyInverseMatrices(m1,m2));
-
+    int a=3;
+    int b=5;
+    int result= max2(a,b);
+    assert(result==5);
+    int result1= findSumOfMaxesOfPseudoDiagonal(m1);
+    assert(result1=20);
 }
