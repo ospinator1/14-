@@ -569,26 +569,37 @@ void printMatrixWithMinNorm(matrix *ms, int nMatrix) {
             outputMatrix(ms);
     }
 }
-void test_printMatrixWithMinNorm(){
+
+void test_printMatrixWithMinNorm() {
     matrix m1 = createMatrixFromArray((int[]) {1, 0, 1,
                                                4, 5, 6,
                                                7, 0, 9
     }, 3, 3);
-
-    matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
-                                               1, 4, 7,
-                                               7, 8, 9
-    }, 3, 3);
-
 
     int result1 = getMaxValueMatrix(m1);
     assert(result1 == 9);
 }
+
+int getNSpecialElement2(matrix m) {
+    int count;
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 1; j < m.nCols - 1; ++j) {
+            for (int k = 0; k < i; ++k) {
+                bool flag =m.values[i][k] > m.values[i][j];
+                if (flag == 1)
+                    count++;
+            }
+        }
+    }
+    printf("%d", count);
+}
+
+
 int main() {
 
-    matrix m1 = createMatrixFromArray((int[]) {1, 0, 1,
-                                               4, 5, 6,
-                                               7, 0, 9
+    matrix m1 = createMatrixFromArray((int[]) {2,3,5,5,4,
+                                               6,2,3,8,12,
+                                               12,12,2,1,2
     }, 3, 3);
 
     matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
@@ -597,7 +608,7 @@ int main() {
     }, 3, 3);
 
 
-    int result1 = getMaxValueMatrix(m1);
-    assert(result1 == 9);
+    int result = getNSpecialElement2(m1);
+    assert(result==4);
 
 }
