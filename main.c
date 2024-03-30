@@ -585,7 +585,7 @@ int getNSpecialElement2(matrix m) {
     for (int i = 0; i < m.nRows; ++i) {
         for (int j = 1; j < m.nCols - 1; ++j) {
             for (int k = 0; k < i; ++k) {
-                bool flag =m.values[i][k] > m.values[i][j];
+                bool flag = m.values[i][k] > m.values[i][j];
                 if (flag == 1)
                     count++;
             }
@@ -594,21 +594,96 @@ int getNSpecialElement2(matrix m) {
     printf("%d", count);
 }
 
+void test_getNSpecialElement2() {
+    matrix m1 = createMatrixFromArray((int[]) {2, 3, 5, 5, 4,
+                                               6, 2, 3, 8, 12,
+                                               12, 12, 2, 1, 2
+    }, 3, 3);
+
+    int result = getNSpecialElement2(m1);
+    assert(result == 4);
+
+}
+
+double getScalarProduct(int *a, int *b, int n) {
+    double scalar_product = 0;
+    for (int i = 0; i < n; ++i) {
+        scalar_product += a[i] * b[i];
+    }
+    return scalar_product;
+}
+
+double getVectorLength(int *a, int n) {
+    double vector_length = 0;
+    for (int i = 0; i < n; i++) {
+        vector_length += a[i] * a[i];
+    }
+    return sqrt(vector_length);
+}
+
+double getCosine(int *a, int *b, int n) {
+    double length = (getVectorLength(a, n) * getVectorLength(b, n));
+    assert(length != 0);
+    return getScalarProduct(a, b, n) / length;
+}
+
+double absDouble(double a) {
+    return a < 0 ? -a : a;
+}
+
+int getVectorIndexWithMaxAngle(matrix m, int *b) {
+    int index;
+    double min_cosine = 2;
+
+    for (int i = 0; i < m.nRows; i++) {
+        double abs_cosine = absDouble(getCosine(m.values[i], b, m.nCols));
+
+        if (abs_cosine < min_cosine) {
+            index = i;
+            min_cosine = abs_cosine;
+        }
+    }
+
+    return index;
+}
+void test_getVectorIndexWithMaxAngle(){
+    matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
+                                               1, 4, 7,
+                                               2, 3, 4
+    }, 3, 3);
+
+    int a[5] = {1, 2, 3};
+    int b[5] = {1, 2, 3};
+    int result = getScalarProduct(a, b, 3);
+    assert(result == 14);
+    double result1 = getVectorLength(a, 3);
+    assert(result1 == 3.7416573867739413);
+    double result2 = getCosine(a, b, 3);
+    assert(result2 == 1);
+    int result3 = getVectorIndexWithMaxAngle(m2, b);
+    assert(result3 == 1);
+}
 
 int main() {
 
-    matrix m1 = createMatrixFromArray((int[]) {2,3,5,5,4,
-                                               6,2,3,8,12,
-                                               12,12,2,1,2
+    matrix m1 = createMatrixFromArray((int[]) {2, 3, 5, 5, 4,
+                                               6, 2, 3, 8, 12,
+                                               12, 12, 2, 1, 2
     }, 3, 3);
 
     matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
                                                1, 4, 7,
-                                               7, 8, 9
+                                               2, 3, 4
     }, 3, 3);
 
-
-    int result = getNSpecialElement2(m1);
-    assert(result==4);
-
+    int a[5] = {1, 2, 3};
+    int b[5] = {1, 2, 3};
+    int result = getScalarProduct(a, b, 3);
+    assert(result == 14);
+    double result1 = getVectorLength(a, 3);
+    assert(result1 == 3.7416573867739413);
+    double result2 = getCosine(a, b, 3);
+    assert(result2 == 1);
+    int result3 = getVectorIndexWithMaxAngle(m2, b);
+    assert(result3 == 1);
 }
