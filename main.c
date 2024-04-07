@@ -22,7 +22,12 @@ void test_findLength(){
     test_findLength2();
     test_findLength3();
 }
-
+int strlen_(const char *begin ){
+    char *end=begin;
+    while (*end!='\0')
+        end++;
+    return end-begin;
+}
 void test_strlen1(){
     char s[]="\0";
     char ptr= strlen_(s);
