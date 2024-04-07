@@ -109,6 +109,9 @@
 		},
 		{
 			"path" : "libs/algorithms/CMakeLists.txt"
+		},
+		{
+			"path" : "libs/strings/CMakeLists.txt"
 		}
 	],
 	"kind" : "cmakeFiles",

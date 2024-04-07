@@ -9,3 +9,6 @@ C:/Users/Assa/CLionProjects/untitled7/cmake-build-debug/libs/data_structures/CMa
 C:/Users/Assa/CLionProjects/untitled7/cmake-build-debug/libs/algorithms/CMakeFiles/algorithms.dir
 C:/Users/Assa/CLionProjects/untitled7/cmake-build-debug/libs/algorithms/CMakeFiles/edit_cache.dir
 C:/Users/Assa/CLionProjects/untitled7/cmake-build-debug/libs/algorithms/CMakeFiles/rebuild_cache.dir
+C:/Users/Assa/CLionProjects/untitled7/cmake-build-debug/libs/strings/CMakeFiles/strings.dir
+C:/Users/Assa/CLionProjects/untitled7/cmake-build-debug/libs/strings/CMakeFiles/edit_cache.dir
+C:/Users/Assa/CLionProjects/untitled7/cmake-build-debug/libs/strings/CMakeFiles/rebuild_cache.dir

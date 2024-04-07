@@ -3,7 +3,7 @@ project(untitled7 C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(untitled7 main.c
+add_executable (untitled7 main.c
         libs/algorithms/array/array.c
         libs/algorithms/algorithm.c
         libs/data_structures/bitset/bitset.c
@@ -12,9 +12,11 @@ add_executable(untitled7 main.c
         libs/data_structures/bitset/bitset.c
         libs/data_structures/bitset/bitset.h
         libs/algorithms/algorithm.h
-        libs/test1.h
+        libs/strings/string/string_.c
+        libs/strings/string/string_.h
 )
 
 add_subdirectory(libs)
 target_link_libraries(untitled7 data_structures)
 target_link_libraries(untitled7 algorithms)
+target_link_libraries(strings)

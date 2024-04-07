@@ -1,5 +1,5 @@
 add_library(algorithms
-            algorithm.c
+        algorithm.c
         array/array.c
         array/unordered_set.c
         ../data_structures/vector/vector.c
