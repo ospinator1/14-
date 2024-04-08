@@ -73,12 +73,6 @@ void test_findNonSpaceReverse() {
     assert(*findNonSpaceReverse(&str2[2], &str2[0]) == '\0');
 }
 
-char *findSpaceReverse(char *rbegin, const char *rend) {
-    while(rbegin>=rend && !isspace(*rbegin))
-        rbegin--;
-    return rbegin;
-}
-
 void test_findSpaceReverse() {
     char *str = "1234567890";;
     char *str1 = "ABCDE";
@@ -87,7 +81,16 @@ void test_findSpaceReverse() {
     assert(findSpaceReverse(&str1[5],&str1[0])==&str1[-1]);
     assert(findSpaceReverse(&str2[10], &str2[0]) == &str2[2]);
 }
-
+int strcmp(const char *lhs, const char *rhs){}
+void test_strcmp(){
+    char *str="Geeks";
+    char *str1="Geeks";
+    char *str2="Geek";
+    char *str3="I love matanalysis";
+    assert(strcmp(str,str1)==0);
+    assert(strcmp(str,str2)==1);
+    assert(strcmp(str,str3)==-1);
+}
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     test_findLength();

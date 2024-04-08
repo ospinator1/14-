@@ -36,3 +36,8 @@ char *findNonSpaceReverse(char *rbegin, const char *rend) {
         rbegin--;
     return rbegin;
 }
+char *findSpaceReverse(char *rbegin, const char *rend) {
+    while(rbegin>=rend && !isspace(*rbegin))
+        rbegin--;
+    return rbegin;
+}
