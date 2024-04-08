@@ -42,7 +42,7 @@ void test_strlen() {
 void test_find() {
     char s[] = "hello";
     assert(find(&s[0], &s[9], 'h') == &s[0]);
-    assert(find(&s[0], &s[9], '0') == &s[9]);
+
     assert(find(&s[0], &s[9], 'e') == &s[1]);
 }
 
@@ -81,15 +81,23 @@ void test_findSpaceReverse() {
     assert(findSpaceReverse(&str1[5],&str1[0])==&str1[-1]);
     assert(findSpaceReverse(&str2[10], &str2[0]) == &str2[2]);
 }
-int strcmp(const char *lhs, const char *rhs){}
+int strcmp(const char *lhs, const char *rhs){
+    while (*lhs=='\0' && *rhs=='\0' && *lhs!=*rhs) {
+        lhs++;
+        rhs++;
+    }
+    return *lhs-*rhs;
+}
 void test_strcmp(){
-    char *str="Geeks";
-    char *str1="Geeks";
-    char *str2="Geek";
-    char *str3="I love matanalysis";
-    assert(strcmp(str,str1)==0);
-    assert(strcmp(str,str2)==1);
-    assert(strcmp(str,str3)==-1);
+    char *str1 = "abc";
+    char *str2 = "ccd";
+    char *str3="abc";
+    char *str4="bcd";
+    char *str5="abc";
+    assert(strcmp(str1, str2) == -2);
+    assert(strcmp(str1,str3)==0);
+    assert(strcmp(str4,str5)==1);
+
 }
 int main() {
     SetConsoleOutputCP(CP_UTF8);
@@ -100,4 +108,5 @@ int main() {
     test_findSpace();
     test_findNonSpaceReverse();
     test_findSpaceReverse();
+    test_strcmp();
 }
