@@ -63,11 +63,6 @@ void test_findSpace() {
     assert(*findSpace(s2) == ' ');
 }
 
-char *findNonSpaceReverse(char *rbegin, const char *rend) {
-    while(rbegin>=rend && isspace(*rbegin))
-        rbegin--;
-    return rbegin;
-}
 
 void test_findNonSpaceReverse() {
     char *str = " 1234567890";;
@@ -78,7 +73,17 @@ void test_findNonSpaceReverse() {
     assert(*findNonSpaceReverse(&str2[2], &str2[0]) == '\0');
 }
 
+char *findSpaceReverse(char *rbegin, const char *rend) {
+}
 
+void test_findSpaceReverse() {
+    char *str = "1234567890";;
+    char *str1 = "123 123\t";
+    char *str2 = "AB DE";
+    assert(*findNonSpaceReverse(&str[10], &str[0]) == '\0');
+    assert(findNonSpaceReverse(&str1[7], &str1[0]) == &str1[1]);
+    assert(findNonSpaceReverse(&str2[2], &str2[0]) == &str2[3]);
+}
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
