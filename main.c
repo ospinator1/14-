@@ -2,51 +2,59 @@
 #include <windows.h>
 #include <assert.h>
 
-void test_findLength1(){
+void test_findLength1() {
     char str[] = "Hello";
-    char ptr = findLength(str);
-    assert(ptr==5);
+    assert(findLength(str) == 5);
 }
+
 void test_findLength2() {
     char str[] = "";
-    char ptr = findLength(str);
-    assert(ptr == 0);
+    assert(findLength(str) == 0);
 }
+
 void test_findLength3() {
     char str[] = "1111111111111111111111111222222222222222333333333333334444444444444445555";
-    char ptr= findLength(str);
-    assert(ptr!=50);
+    assert(findLength(str) != 50);
 }
-void test_findLength(){
+
+void test_findLength() {
     test_findLength1();
     test_findLength2();
     test_findLength3();
 }
 
-void test_strlen1(){
-    char s[]="\0";
-    char ptr= strlen_(s);
-    assert(ptr==0);
+void test_strlen1() {
+    char s[] = "\0";
+    assert(strlen_(s) == 0);
 }
-void test_strlen2(){
+
+void test_strlen2() {
     char s[10] = "Hell\t";
-    char ptr= strlen_(s);
-    assert(ptr==5);
+    assert(strlen_(s) == 5);
 }
-void test_strlen(){
+
+void test_strlen() {
     test_strlen1();
     test_strlen2();
 }
-char* find(char *begin);
 
-        void test_find(){
-    char s[]="Hello\0";
-    char *res=find(s);
-    assert(res=='H');
-    assert(res==s[1]);
+char* find(char *begin, char *end, int ch) {
+    while (begin != end && *begin != ch)
+        begin++;
+    return begin;
+
 }
+
+void test_find() {
+    char s[] = "hello";
+    assert(find(&s[0], &s[9], 'h') == &s[0]);
+    assert(find(&s[0], &s[9], '0') == &s[9]);
+    assert(find(&s[0], &s[9], 'e') == &s[1]);
+}
+
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     test_findLength();
     test_strlen();
+    test_find();
 }
