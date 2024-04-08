@@ -38,18 +38,22 @@ void test_strlen() {
     test_strlen2();
 }
 
-char* find(char *begin, char *end, int ch) {
-    while (begin != end && *begin != ch)
-        begin++;
-    return begin;
-
-}
 
 void test_find() {
     char s[] = "hello";
     assert(find(&s[0], &s[9], 'h') == &s[0]);
     assert(find(&s[0], &s[9], '0') == &s[9]);
     assert(find(&s[0], &s[9], 'e') == &s[1]);
+}
+
+char *findNonSpace(char *begin) {gi
+}
+
+void test_findNonSpace() {
+    char s[] = " 12345";
+    char s1[] = "12 34";
+    assert(findNonSpace(s) == &s[1]);
+    assert(findNonSpace(s) == "1");
 }
 
 int main() {
