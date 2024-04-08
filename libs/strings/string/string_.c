@@ -2,7 +2,7 @@
 // Created by Assa on 07.04.2024.
 //
 #include <stdio.h>
-
+#include <ctype.h>
 char findLength(char str[50]) {
     char length = printf("%s\n",str);
     return length - 1;
@@ -18,4 +18,10 @@ char* find(char *begin, char *end, int ch) {
         begin++;
     return begin;
 
+}
+char *findNonSpace(char *begin) {
+    while (*begin!='\0' && isspace(*begin)){
+        begin++;
+    }
+    return begin;
 }
