@@ -22,12 +22,7 @@ void test_findLength(){
     test_findLength2();
     test_findLength3();
 }
-int strlen_(const char *begin ){
-    char *end=begin;
-    while (*end!='\0')
-        end++;
-    return end-begin;
-}
+
 void test_strlen1(){
     char s[]="\0";
     char ptr= strlen_(s);
@@ -38,10 +33,20 @@ void test_strlen2(){
     char ptr= strlen_(s);
     assert(ptr==5);
 }
+void test_strlen(){
+    test_strlen1();
+    test_strlen2();
+}
+char* find(char *begin);
 
+        void test_find(){
+    char s[]="Hello\0";
+    char *res=find(s);
+    assert(res=='H');
+    assert(res==s[1]);
+}
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     test_findLength();
-    test_strlen1();
-    test_strlen2();
+    test_strlen();
 }

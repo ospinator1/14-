@@ -7,3 +7,9 @@ char findLength(char str[50]) {
     char length = printf("%s\n",str);
     return length - 1;
 }
+int strlen_(const char *begin ){
+    char *end=begin;
+    while (*end!='\0')
+        end++;
+    return end-begin;
+}
