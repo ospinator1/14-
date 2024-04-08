@@ -54,21 +54,26 @@ void test_findNonSpace() {
     assert(findNonSpace(s) == &s[1]);
     assert(*findNonSpace(s) == '1');
 }
-char* findSpace(char *begin){
-
+char *findSpace(char *begin){
+    while (*begin!='\0' && !isspace(*begin)) {
+        begin++;
+    }
+    return begin;
 }
 void test_findSpace(){
-    char s[]="12345";
+    char *s = "123456789";
     char s1[]="\t12344";
     char s2[]="12 34";
-    assert(*findSpace(s)=='\0');
-    assert(*findSpace(s)=='\t');
-    assert(*findSpace(s)==' ');
+    assert(*findSpace(s) == '\0');
+    assert(*findSpace(s1)=='\t');
+    assert(*findSpace(s2)==' ');
 }
+
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     test_findLength();
     test_strlen();
     test_find();
     test_findNonSpace();
+    test_findSpace();
 }
