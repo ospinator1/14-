@@ -1,10 +1,10 @@
 # ninja log v5
-1	69	7341979995355031	build.ninja	59ff6a47013c335d
+1	69	7342880524475141	build.ninja	59ff6a47013c335d
 3	28	7341909275354109	CMakeFiles/untitled7.dir/libs/strings/string/string.c.obj	f20a85c4eb057b8b
 2	64	7334821087617353	libs/algorithms/CMakeFiles/algorithms.dir/basic_functions/basic_functions.c.obj	38fb119486618be1
 2	34	7287366520356252	CMakeFiles/untitled7.dir/libs/algorithms/algorithm.c.obj	3db41308d9871a6
 6	75	7299616581779353	CMakeFiles/untitled7.dir/libs/data_structures/bitset/bitset.c.obj	867b4067f60b3602
-4	628	7342850289331284	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
+3	669	7342878454666379	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
 6	39	7287366520418401	libs/algorithms/CMakeFiles/algorithms.dir/algorithm.c.obj	9d641e0dcfb114a9
 7	79	7299616581825669	libs/data_structures/CMakeFiles/data_structures.dir/bitset/bitset.c.obj	c95ab1829b21c1cd
 5	62	7299681892310469	libs/algorithms/CMakeFiles/algorithms.dir/array/array.c.obj	a3a96741f0310dff
@@ -12,7 +12,7 @@
 4	63	7295411408653008	CMakeFiles/untitled7.dir/1main.c.obj	c37eb3565c3eb0d7
 4	51	7341907888636976	libs/data_structures/libdata_structures.a	ff8a02fe0b9f68a5
 5	52	7341907888636976	libs/algorithms/libalgorithms.a	164d95093c5c924a
-628	683	7342850289861324	untitled7.exe	627672cfa070219b
+669	723	7342878455186343	untitled7.exe	627672cfa070219b
 1	60	7299726696835931	libs/algorithms/CMakeFiles/algorithms.dir/array/ordered.c.obj	f94c9762a2f896e2
 2	60	7299702932176931	libs/algorithms/CMakeFiles/algorithms.dir/array/unordered_set.c.obj	c0c01e90a6c55bce
 2	50	7302146895167002	libs/algorithms/CMakeFiles/algorithms.dir/array/vector.c.obj	ad4743e132fa549c
@@ -23,12 +23,13 @@
 5	54	7339368511046183	CMakeFiles/untitled7.dir/libs/string/string_.c.obj	9e7ed16fd8c08446
 5	65	7341028194334320	libs/algorithms/CMakeFiles/algorithms.dir/Дискретка/дискретка.c.obj	91f298c48f03bd56
 5	66	7341028194334320	libs/data_structures/CMakeFiles/data_structures.dir/__/algorithms/Дискретка/дискретка.c.obj	22aef1130c75af98
-5	49	7342848840445440	CMakeFiles/untitled7.dir/libs/strings/string/string_.c.obj	7724cf82daee5257
-2	633	7342850606109151	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
-634	685	7342850606599191	untitled7.exe	627672cfa070219b
-2	637	7342850837960628	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
-637	688	7342850838452088	untitled7.exe	627672cfa070219b
-2	650	7342850999820076	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
-650	704	7342851000340084	untitled7.exe	627672cfa070219b
-3	627	7342851153492337	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
-627	678	7342851153982276	untitled7.exe	627672cfa070219b
+2	47	7342869925434357	CMakeFiles/untitled7.dir/libs/strings/string/string_.c.obj	7724cf82daee5257
+1	77	7342880524475141	build.ninja	59ff6a47013c335d
+3	670	7342880531323197	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
+670	724	7342880531833192	untitled7.exe	627672cfa070219b
+3	666	7342880676392115	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
+667	721	7342880676902127	untitled7.exe	627672cfa070219b
+3	662	7342880802355969	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
+662	717	7342880802876007	untitled7.exe	627672cfa070219b
+3	681	7342881076702472	CMakeFiles/untitled7.dir/main.c.obj	7b02f558eb1fc5f8
+681	734	7342881077202493	untitled7.exe	627672cfa070219b

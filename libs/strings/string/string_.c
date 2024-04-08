@@ -17,8 +17,8 @@ char* find(char *begin, char *end, int ch) {
     while (begin != end && *begin != ch)
         begin++;
     return begin;
-
 }
+
 char *findNonSpace(char *begin) {
     while (*begin!='\0' && isspace(*begin)){
         begin++;

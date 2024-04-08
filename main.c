@@ -64,17 +64,21 @@ void test_findSpace() {
 }
 
 char *findNonSpaceReverse(char *rbegin, const char *rend) {
-
+    while(rbegin>=rend && isspace(*rbegin))
+        rbegin--;
+    return rbegin;
 }
 
 void test_findNonSpaceReverse() {
-    char s[]=" 12345";
-    char s1[]="\t 12345\t";
-    char s2[]="\t\t\t\t";
-    assert(*findNonSpaceReverse(&s[10],&s[0])=='5');
-    assert(*findNonSpaceReverse(&s[10],&s[0])='5');
-    assert(*findNonSpaceReverse(&s[10],&s[0])='\0');
+    char *str = " 1234567890";;
+    char *str1 = "123 123\t";
+    char *str2 = "\t\t\t";
+    assert(*findNonSpaceReverse(&str[10], &str[0]) == '0');
+    assert(*findNonSpaceReverse(&str1[7], &str1[0]) == '3');
+    assert(*findNonSpaceReverse(&str2[2], &str2[0]) == '\0');
 }
+
+
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
@@ -83,4 +87,5 @@ int main() {
     test_find();
     test_findNonSpace();
     test_findSpace();
+    test_findNonSpaceReverse();
 }
