@@ -78,41 +78,43 @@ void test_findSpaceReverse() {
     char *str1 = "ABCDE";
     char *str2 = "AB DE";
     assert(*findSpaceReverse(&str[10], &str[0]) == '\0');
-    assert(findSpaceReverse(&str1[5],&str1[0])==&str1[-1]);
+    assert(findSpaceReverse(&str1[5], &str1[0]) == &str1[-1]);
     assert(findSpaceReverse(&str2[10], &str2[0]) == &str2[2]);
 }
-int strcmp(const char *lhs, const char *rhs){
-    while (*lhs=='\0' && *rhs=='\0' && *lhs!=*rhs) {
+
+int strcmp(const char *lhs, const char *rhs) {
+    while (*lhs == '\0' && *rhs == '\0' && *lhs != *rhs) {
         lhs++;
         rhs++;
     }
-    return *lhs-*rhs;
+    return *lhs - *rhs;
 }
-void test_strcmp(){
+
+void test_strcmp() {
     char *str1 = "abc";
     char *str2 = "ccd";
-    char *str3="abc";
-    char *str4="bcd";
-    char *str5="abc";
+    char *str3 = "abc";
+    char *str4 = "bcd";
+    char *str5 = "abc";
     assert(strcmp(str1, str2) == -2);
-    assert(strcmp(str1,str3)==0);
-    assert(strcmp(str4,str5)==1);
+    assert(strcmp(str1, str3) == 0);
+    assert(strcmp(str4, str5) == 1);
 }
-char* copy(const char *beginSource, const char *endSource,char *beginDestination){
+
+char *copy(const char *beginSource, const char *endSource, char *beginDestination) {
+    int size = endSource - beginSource;
+    memcpy(beginDestination, beginSource, size);
+    *(beginDestination + size) = '\0';
+    return beginDestination + size;
 }
-void test_copy(){
-    char *s="algebra";
-    char *s_copied[8];
-    copy(s,&s[7],(char *)s_copied);
-    assert(*s_copied[0]=='a');
-    assert(*s_copied[0]=='l');
-    assert(*s_copied[0]=='g');
-    assert(*s_copied[0]=='e');
-    assert(*s_copied[0]=='b');
-    assert(*s_copied[0]=='r');
-    assert(*s_copied[0]=='a');
-    assert(copy(s,&s[7],(char *)s_copied)==s_copied[7]);
+
+void test_copy() {
+    char *str = "12345";
+    char *str_copied[5];
+    copy(&str[0], &str[5], (char *) str_copied);
+    assert(strcmp(str, (const char *) str_copied)==0);
 }
+
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     test_findLength();
@@ -123,4 +125,5 @@ int main() {
     test_findNonSpaceReverse();
     test_findSpaceReverse();
     test_strcmp();
+    test_copy();
 }
