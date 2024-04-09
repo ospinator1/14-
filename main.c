@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <assert.h>
 #include <memory.h>
+#include <stdio.h>
 void test_findLength1() {
     char str[] = "Hello";
     assert(findLength(str) == 5);
@@ -101,12 +102,7 @@ void test_strcmp() {
     assert(strcmp(str4, str5) == 1);
 }
 
-char *copy(const char *beginSource, const char *endSource, char *beginDestination) {
-    int size = endSource - beginSource;
-    memcpy(beginDestination, beginSource, size);
-    *(beginDestination + size) = '\0';
-    return beginDestination + size;
-}
+
 
 void test_copy() {
     char *str = "12345";
@@ -114,7 +110,18 @@ void test_copy() {
     copy(&str[0], &str[5], (char *) str_copied);
     assert(strcmp(str, (const char *) str_copied)==0);
 }
+char* copyIf(char *beginSource, const char *endSource,
+             char *beginDestination, int (*f)(int)){
 
+}
+
+void test_copyIf(){
+    char *s="aBDL12KGHJ34";
+    char result[30];
+    copyIf(s,s+13,result,isdigit);
+    printf("%s",result);
+
+}
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     test_findLength();

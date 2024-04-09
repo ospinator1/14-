@@ -3,6 +3,7 @@
 //
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 char findLength(char str[50]) {
     char length = printf("%s\n",str);
     return length - 1;
@@ -40,4 +41,10 @@ char *findSpaceReverse(char *rbegin, const char *rend) {
     while(rbegin>=rend && !isspace(*rbegin))
         rbegin--;
     return rbegin;
+}
+char *copy(const char *beginSource, const char *endSource, char *beginDestination) {
+    int size = endSource - beginSource;
+    memcpy(beginDestination, beginSource, size);
+    *(beginDestination + size) = '\0';
+    return beginDestination + size;
 }
