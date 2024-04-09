@@ -1,7 +1,6 @@
 #include "libs/strings/string/string_.h"
 #include <windows.h>
 #include <assert.h>
-#include <memory.h>
 #include <stdio.h>
 
 void test_findLength1() {
@@ -111,42 +110,16 @@ void test_copy() {
     assert(strcmp(str, (const char *) str_copied) == 0);
 }
 
-char *copyIf(char *beginSource, const char *endSource, char *beginDestination, int (*f)(int)) {
-    while (beginSource != endSource) {
-        if (f(*beginSource)) {
-            *beginDestination = *beginSource;
-            beginDestination++;
-        }
-        beginSource++;
-    }
-    *beginDestination = '\0';
 
-    return beginDestination;
-
-}
 
 void test_copyIf() {
     char str[] = "Hello123d4";
     char result[20];
     copyIf(str, str + 10, result, isdigit);
-    printf("%s", result);
+    printf("%s\n", result);
 }
 
-int isLetter(int x) {
-    return (x >= 'a' && x <= 'z') || (x >= 'A' && x <= 'Z');
-}
 
-char *copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDestination, int (*f)(int)) {
-    while (rbeginSource != rendSource) {
-        if (f(*(rbeginSource - 1))) {
-            *beginDestination = *(rbeginSource - 1);
-            beginDestination++;
-        }
-        rbeginSource--;
-    }
-    beginDestination[*(rbeginSource - 1)] = '\0';
-    return beginDestination;
-}
 
 void test_copyIfReverse() {
     char str[] = "Hello123d4";
@@ -154,9 +127,7 @@ void test_copyIfReverse() {
     copyIfReverse(str + 10, str, result, isLetter);
     printf("%s", result);
 }
-
-int main() {
-    SetConsoleOutputCP(CP_UTF8);
+void test_string(){
     test_findLength();
     test_strlen();
     test_find();
@@ -167,7 +138,10 @@ int main() {
     test_strcmp();
     test_copy();
     test_copyIf();
-    printf("\n");
     test_copyIfReverse();
+}
+int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    test_string();
 
 }

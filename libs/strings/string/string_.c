@@ -48,3 +48,30 @@ char *copy(const char *beginSource, const char *endSource, char *beginDestinatio
     *(beginDestination + size) = '\0';
     return beginDestination + size;
 }
+char *copyIf(char *beginSource, const char *endSource, char *beginDestination, int (*f)(int)) {
+    while (beginSource != endSource) {
+        if (f(*beginSource)) {
+            *beginDestination = *beginSource;
+            beginDestination++;
+        }
+        beginSource++;
+    }
+    *beginDestination = '\0';
+
+    return beginDestination;
+}
+int isLetter(int x) {
+    return (x >= 'a' && x <= 'z') || (x >= 'A' && x <= 'Z');
+}
+
+char *copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDestination, int (*f)(int)) {
+    while (rbeginSource != rendSource) {
+        if (f(*(rbeginSource - 1))) {
+            *beginDestination = *(rbeginSource - 1);
+            beginDestination++;
+        }
+        rbeginSource--;
+    }
+    beginDestination[*(rbeginSource - 1)] = '\0';
+    return beginDestination;
+}
