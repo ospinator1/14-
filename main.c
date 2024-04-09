@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <memory.h>
 #include <stdio.h>
+
 void test_findLength1() {
     char str[] = "Hello";
     assert(findLength(str) == 5);
@@ -103,25 +104,35 @@ void test_strcmp() {
 }
 
 
-
 void test_copy() {
     char *str = "12345";
     char *str_copied[5];
     copy(&str[0], &str[5], (char *) str_copied);
-    assert(strcmp(str, (const char *) str_copied)==0);
+    assert(strcmp(str, (const char *) str_copied) == 0);
 }
-char* copyIf(char *beginSource, const char *endSource,
-             char *beginDestination, int (*f)(int)){
+
+char *copyIf(char *beginSource, const char *endSource, char *beginDestination, int (*f)(int)) {
+    while (beginSource != endSource) {
+        if (f(*beginSource)) {
+            *beginDestination = *beginSource;
+            beginDestination++;
+        }
+        beginSource++;
+    }
+    *beginDestination = '\0';
+
+    return beginDestination;
 
 }
 
-void test_copyIf(){
-    char *s="aBDL12KGHJ34";
-    char result[30];
-    copyIf(s,s+13,result,isdigit);
-    printf("%s",result);
-
+void test_copyIf() {
+    char str[] = "Hello123World456";
+    char result[20];
+     copyIf(str, str + 14, result, isdigit);
+    printf("%s", result);
 }
+
+
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     test_findLength();
@@ -133,4 +144,5 @@ int main() {
     test_findSpaceReverse();
     test_strcmp();
     test_copy();
+    test_copyIf();
 }
