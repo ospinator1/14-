@@ -126,12 +126,22 @@ char *copyIf(char *beginSource, const char *endSource, char *beginDestination, i
 }
 
 void test_copyIf() {
-    char str[] = "Hello123World456";
+    char str[] = "Hello123d4";
     char result[20];
-     copyIf(str, str + 14, result, isdigit);
+    copyIf(str, str + 5, result, isdigit);
     printf("%s", result);
 }
 
+int isLetter(int x) {
+    return (x >= 'a' && x <= 'z') || (x >= 'A' && x <= 'Z');
+}
+
+void test_copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDestination, int (*f)(int)) {
+    char str[] = "Hello123d4";
+    char result[20];
+    copyIfReverse(str, str + 10, result, isLetter);
+    printf("%s", result);
+}
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
