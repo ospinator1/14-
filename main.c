@@ -1,7 +1,7 @@
 #include "libs/strings/string/string_.h"
 #include <windows.h>
 #include <assert.h>
-
+#include <memory.h>
 void test_findLength1() {
     char str[] = "Hello";
     assert(findLength(str) == 5);
@@ -97,7 +97,21 @@ void test_strcmp(){
     assert(strcmp(str1, str2) == -2);
     assert(strcmp(str1,str3)==0);
     assert(strcmp(str4,str5)==1);
-
+}
+char* copy(const char *beginSource, const char *endSource,char *beginDestination){
+}
+void test_copy(){
+    char *s="algebra";
+    char *s_copied[8];
+    copy(s,&s[7],(char *)s_copied);
+    assert(*s_copied[0]=='a');
+    assert(*s_copied[0]=='l');
+    assert(*s_copied[0]=='g');
+    assert(*s_copied[0]=='e');
+    assert(*s_copied[0]=='b');
+    assert(*s_copied[0]=='r');
+    assert(*s_copied[0]=='a');
+    assert(copy(s,&s[7],(char *)s_copied)==s_copied[7]);
 }
 int main() {
     SetConsoleOutputCP(CP_UTF8);
