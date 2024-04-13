@@ -1,6 +1,5 @@
 #include "libs/strings/string/string_.h"
 #include <windows.h>
-#include "libs/strings/string/tasks/tasks1/tasks1.h"
 #include <stdio.h>
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
@@ -19,7 +18,31 @@ void assertString(const char *expected, char *got,
         fprintf(stderr, "%s - OK\n", funcName);
 }
 
-void removeExtraSpaces(char *s){
+void* removeExtraSpaces(char *s){
+    if(!s)
+        return NULL;
+    if(!*s)
+        return s;
+    char  *p=s ,*wp = s;
+    while(*p){
+        if(isspace(*p)){
+            if(wp>s)
+                *wp++=*p;
+            while (*p && isspace(*p))
+                p++;
+            if(!*p)
+                break;
+        }
+        if(*p=='.')
+            while (wp > s && isspace (*(wp - 1)))
+                wp--;
+        *wp++ = *p;
+        p++;
+    }
+    while (wp > s && isspace (*(wp - 1)))
+        wp--;
+        *wp=0;
+    return s;
 
 }
 void test_removeExtraSpaces1(){
@@ -42,7 +65,8 @@ void test_removeExtraSpaces(){
     test_removeExtraSpaces2();
     test_removeExtraSpaces3();
 }
+
 int main(){
-    test_removeNonLetters();
+    test_removeExtraSpaces();
 
 }
