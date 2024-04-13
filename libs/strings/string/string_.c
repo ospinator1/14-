@@ -4,9 +4,15 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-char findLength(char str[50]) {
-    char length = printf("%s\n",str);
-    return length - 1;
+int findLength(const char *str) {
+    int length = 0;
+
+    while (*str) {
+        length++;
+        str++;
+    }
+
+    return length;
 }
 int strlen_(const char *begin ){
     char *end=begin;

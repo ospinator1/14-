@@ -5,8 +5,16 @@
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 
-int getEndOfString(char *s){}
-void removeNonLetters(char *s){}
+char *getEndOfString(char *s){
+    char size= findLength(s);
+    return &s[size-1];
+}
+void removeNonLetters(char *s){
+    char *endSource = getEndOfString(s);
+    char *destination = copyIf(s, endSource, s, isgraph);
+    *destination = '\0';
+}
+
 
 void assertString(const char *expected, char *got,
                   char const *fileName, char const *funcName,
@@ -32,10 +40,15 @@ void test_removeNonLetters2(){
 
 }
 void test_removeNonLetters3(){
-    char s[]="24\t4w";
+    char s[]="244w\t";
     removeNonLetters(s);
     ASSERT_STRING("244w",s);
 }
+void test_removeNonLetters(){
+    test_removeNonLetters1();
+    test_removeNonLetters2();
+    test_removeNonLetters3();
+}
 int main(){
-
+    test_removeNonLetters();
 }
