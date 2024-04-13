@@ -68,7 +68,8 @@
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				2
 			]
 		},
 		{
@@ -91,6 +92,11 @@
 			"backtrace" : 1,
 			"path" : "libs/strings/string/string_.h",
 			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "libs/strings/string/test.cpp",
+			"sourceGroupIndex" : 0
 		}
 	],
 	"type" : "STATIC_LIBRARY"
