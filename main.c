@@ -1,19 +1,10 @@
 #include "libs/strings/string/string_.h"
 #include <windows.h>
-#include <assert.h>
+#include "libs/strings/string/tasks/tasks1/tasks1.h"
 #include <stdio.h>
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 
-char *getEndOfString(char *s){
-    char size= findLength(s);
-    return &s[size-1];
-}
-void removeNonLetters(char *s){
-    char *endSource = getEndOfString(s);
-    char *destination = copyIf(s, endSource, s, isgraph);
-    *destination = '\0';
-}
 
 
 void assertString(const char *expected, char *got,
@@ -28,27 +19,30 @@ void assertString(const char *expected, char *got,
         fprintf(stderr, "%s - OK\n", funcName);
 }
 
-void test_removeNonLetters1(){
-    char s[]="1234 ";
-    removeNonLetters(s);
-    ASSERT_STRING("1234",s);
-}
-void test_removeNonLetters2(){
-    char s[]=" ";
-    removeNonLetters(s);
-    ASSERT_STRING("",s);
+void removeExtraSpaces(char *s){
 
 }
-void test_removeNonLetters3(){
-    char s[]="244w\t";
-    removeNonLetters(s);
-    ASSERT_STRING("244w",s);
+void test_removeExtraSpaces1(){
+    char s[]="1     4     4    5     k";
+    removeExtraSpaces(s);
+    ASSERT_STRING("1 4 4 5 k",s);
 }
-void test_removeNonLetters(){
-    test_removeNonLetters1();
-    test_removeNonLetters2();
-    test_removeNonLetters3();
+void test_removeExtraSpaces2(){
+    char s[]="1 4 4 5 k";
+    removeExtraSpaces(s);
+    ASSERT_STRING("1 4 4 5 k",s);
+}
+void test_removeExtraSpaces3(){
+    char s[]="1 2 3     5   1\0";
+    removeExtraSpaces(s);
+    ASSERT_STRING("1 2 3 5 1\0",s);
+}
+void test_removeExtraSpaces(){
+    test_removeExtraSpaces1();
+    test_removeExtraSpaces2();
+    test_removeExtraSpaces3();
 }
 int main(){
     test_removeNonLetters();
+
 }

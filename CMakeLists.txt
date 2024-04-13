@@ -14,6 +14,8 @@ add_executable (untitled7 main.c
         libs/algorithms/algorithm.h
         libs/strings/string/string_.c
         libs/strings/string/string_.h
+        libs/strings/string/tasks/tasks1/tasks1.h
+        libs/strings/string/tasks/tasks1/tasks1.c
 )
 
 add_subdirectory(libs)
