@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include "../string/string_.h"
+#include <assert.h>
+#include <ctype.h>
+#include <windows.h>
 void test_findLength1() {
     char str[] = "Hello";
     assert(findLength(str) == 5);
@@ -111,7 +116,7 @@ void test_copyIf() {
     char str[] = "Hello123d4";
     char result[20];
     copyIf(str, str + 10, result, isdigit);
-    printf("%s\n", result);
+    assert(strcmp(result,"1234"));
 }
 
 

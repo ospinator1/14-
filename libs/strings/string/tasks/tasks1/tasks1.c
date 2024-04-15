@@ -16,6 +16,7 @@ void removeNonLetters(char *s){
 
 
 
+
 void test_removeNonLetters1(){
     char s[]="1234 ";
     removeNonLetters(s);

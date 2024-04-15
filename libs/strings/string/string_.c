@@ -66,6 +66,13 @@ char *copyIf(char *beginSource, const char *endSource, char *beginDestination, i
 
     return beginDestination;
 }
+int strcmp(const char *lhs, const char *rhs) {
+    while (*lhs != '\0' && *rhs != '\0' && *lhs == *rhs) {
+        lhs++;
+        rhs++;
+    }
+    return *lhs - *rhs;
+}
 int isLetter(int x) {
     return (x >= 'a' && x <= 'z') || (x >= 'A' && x <= 'Z');
 }
