@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#define MAX_STRING_SIZE 100
 int findLength(const char *str) {
     int length = 0;
 
@@ -88,3 +89,5 @@ char *copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDesti
     beginDestination[*(rbeginSource - 1)] = '\0';
     return beginDestination;
 }
+char stringBuffer[MAX_STRING_SIZE + 1];
+
