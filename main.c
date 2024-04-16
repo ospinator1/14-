@@ -1,6 +1,8 @@
 #include "libs/strings/string/string_.h"
 #include <windows.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include "libs/algorithms/basic_functions/basic_functions.h"
 
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
@@ -26,6 +28,45 @@ struct WordDescriptor {
     char *end;
 } WordDescriptor;
 
+void Reversit(char s[]) {
+    int i = 0;
+    for (i = 0; s[i]; i++);
+    for (int j = 0; j < i / 2; j++)
+        swap(&s[j], &s[i - 1 - j]);
+}
+
+bool getWordReverse(char *rbegin, char *rend, struct WordDescriptor *word) {
+    char *begin;
+    *rbegin = *begin;
+    char *end;
+    rend = end;
+    if (*word->begin == '\0')
+        return 0;
+    word->end = copyIfReverse(word->begin, word->end, word, isLetter);
+    return 1;
+}
+
+void test_digitToStartWithSaveWithoutDigit() {
+    char s[] = "bc";
+    char result[20];
+    printf("%d", getWordReverse(s + 10, s, result));
+
+}
+
+bool isPalindrome(char *str) {
+    char begin = 0, end = strlen_(str) - 1;
+
+    // traversing from both the ends
+    while (begin < end)
+
+        // not palindrome
+        if (str[begin++] != str[end--])
+            return false;
+
+    // palindrome
+    return true;
+}
+
 int getWord(char *beginSearch, struct WordDescriptor *word) {
     word->begin = findNonSpace(beginSearch);
     if (*word->begin == '\0')
@@ -34,89 +75,32 @@ int getWord(char *beginSearch, struct WordDescriptor *word) {
     return 1;
 }
 
-void digitToStartWithReverse(struct WordDescriptor word) {
-    char *endStringBuffer = copy(word.begin, word.end, _stringBuffer);
-    char *recPosition = copyIfReverse(endStringBuffer - 1, _stringBuffer - 1,
-                                      word.begin, isdigit);
-    copyIf(_stringBuffer, endStringBuffer, recPosition, isalpha);
-}
+char *OuputStringReplacingADigitWithASpace(char *src) {
+    char buffer[100];
 
-void digitToStartWithReverseForEveryWord(char *s) {
-    char *beginSearch = s;
-    struct WordDescriptor word;
-    while (getWord(beginSearch, &word)) {
-        digitToStartWithReverse(word);
-        beginSearch = word.end;
+    char *dst = buffer;
+
+    while (*src) {
+        if ('0' <= *src && *src <= '9') {
+            int count = *src - '0';
+            while (count-- > 0) {
+                *dst++ = ' ';
+            }
+        } else {
+            *dst++ = *src;
+        }
+        src++;
     }
-}
 
-void digitToStartWithSave(struct WordDescriptor word) {
-    char *endStringBuffer = copy(word.begin, word.end, _stringBuffer);
-    char *recPosition = copyIf(_stringBuffer, endStringBuffer, word.begin,
-                               isdigit);
-    copyIf(_stringBuffer, endStringBuffer, recPosition, isalpha);
-}
+    *dst = '\0';
 
-void digitToStartWithSaveForEveryWord(char *s) {
-    char *beginSearch = s;
-    struct WordDescriptor word;
-    while (getWord(beginSearch, &word)) {
-        digitToStartWithSave(word);
-        beginSearch = word.end;
-    }
-}
-
-void test_digitToStartWithReverseForEveryWordWithDigit() {
-    char s[] = "a12b34c56";
-    digitToStartWithReverseForEveryWord(s);
-    ASSERT_STRING("654321abc", s);
-}
-
-void test_digitToStartWithReverseForEveryWordWitoutDigit() {
-    char s[] = "bc";
-    digitToStartWithReverseForEveryWord(s);
-    ASSERT_STRING("bc", s);
-}
-
-void test_digitToStartWithReverseForEveryWordWitoutWordsAndDigit() {
-    char s[] = "";
-    digitToStartWithReverseForEveryWord(s);
-    ASSERT_STRING("", s);
-}
-
-void test_digitToStartWithSave1() {
-    char s[] = "bc21";
-    digitToStartWithSaveForEveryWord(s);
-    ASSERT_STRING("21bc", s);
-}
-
-void test_digitToStartWithSave2() {
-    char s[] = "b2c1";
-    digitToStartWithSaveForEveryWord(s);
-    ASSERT_STRING("21bc", s);
-}
-void test_digitToStartWithSaveWithoutDigit() {
-    char s[] = "bc";
-    digitToStartWithSaveForEveryWord(s);
-    ASSERT_STRING("bc", s);
-}
-void test_digitToStartWithSaveWithoutWord() {
-    char s[] = "21";
-    digitToStartWithSaveForEveryWord(s);
-    ASSERT_STRING("21", s);
-}
-void test_digitToStartWirhReverseForEveryWord() {
-    test_digitToStartWithReverseForEveryWordWithDigit();
-    test_digitToStartWithReverseForEveryWordWitoutDigit();
-    test_digitToStartWithReverseForEveryWordWitoutWordsAndDigit();
-}
-void test_digitToStartWithSave(){
-    test_digitToStartWithSave1();
-    test_digitToStartWithSave2();
-    test_digitToStartWithSaveWithoutDigit();
-    test_digitToStartWithSaveWithoutWord();
+    printf("Modified string: '%s'\n", buffer); // Выводим результат
+    return 0;
 }
 
 int main() {
+    char s[] = "aba1cdb";
 
+    printf("%s", OuputStringReplacingADigitWithASpace(s));
 }
+
