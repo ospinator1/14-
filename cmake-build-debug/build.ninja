@@ -352,6 +352,12 @@ build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks3/tasks3.c.obj: C_CO
   OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
   OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks3
 
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks4/tasks4.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks4/tasks4.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks4\tasks4.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks4
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target strings
@@ -360,7 +366,7 @@ build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks3/tasks3.c.obj: C_CO
 #############################################
 # Link the static library libs\strings\libstrings.a
 
-build libs/strings/libstrings.a: C_STATIC_LIBRARY_LINKER__strings_Debug libs/strings/CMakeFiles/strings.dir/string/string_.c.obj libs/strings/CMakeFiles/strings.dir/string/test.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks1/tasks1.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks2/tasks2.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks3/tasks3.c.obj
+build libs/strings/libstrings.a: C_STATIC_LIBRARY_LINKER__strings_Debug libs/strings/CMakeFiles/strings.dir/string/string_.c.obj libs/strings/CMakeFiles/strings.dir/string/test.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks1/tasks1.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks2/tasks2.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks3/tasks3.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks4/tasks4.c.obj
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
   POST_BUILD = cd .

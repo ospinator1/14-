@@ -2,11 +2,10 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "libs/algorithms/basic_functions/basic_functions.h"
+#include <assert.h>
 
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
-#define MAX_STRING_SIZE 120
 #define MAX_N_WORDS_IN_STRING 100
 #define MAX_WORD_SIZE 20
 char _stringBuffer[MAX_STRING_SIZE + 1];
@@ -28,12 +27,6 @@ struct WordDescriptor {
     char *end;
 } WordDescriptor;
 
-void Reversit(char s[]) {
-    int i = 0;
-    for (i = 0; s[i]; i++);
-    for (int j = 0; j < i / 2; j++)
-        swap(&s[j], &s[i - 1 - j]);
-}
 
 bool getWordReverse(char *rbegin, char *rend, struct WordDescriptor *word) {
     char *begin;
@@ -42,14 +35,14 @@ bool getWordReverse(char *rbegin, char *rend, struct WordDescriptor *word) {
     rend = end;
     if (*word->begin == '\0')
         return 0;
-    word->end = copyIfReverse(word->begin, word->end, word, isLetter);
+    word->end = copyIfReverse(word->begin, word->end, (char *) word, isLetter);
     return 1;
 }
 
 void test_digitToStartWithSaveWithoutDigit() {
     char s[] = "bc";
     char result[20];
-    printf("%d", getWordReverse(s + 10, s, result));
+    printf("%d", getWordReverse(s + 10, s, (struct WordDescriptor *) result));
 
 }
 
@@ -75,11 +68,9 @@ int getWord(char *beginSearch, struct WordDescriptor *word) {
     return 1;
 }
 
-char *OuputStringReplacingADigitWithASpace(char *src) {
+void *OuputStringReplacingADigitWithASpace(char *src) {
     char buffer[100];
-
     char *dst = buffer;
-
     while (*src) {
         if ('0' <= *src && *src <= '9') {
             int count = *src - '0';
@@ -91,16 +82,39 @@ char *OuputStringReplacingADigitWithASpace(char *src) {
         }
         src++;
     }
-
     *dst = '\0';
+    printf("Modified string: '%s'", buffer);
 
-    printf("Modified string: '%s'\n", buffer); // Выводим результат
-    return 0;
 }
-
+void test_OuputStringReplacingADigitWithASpace1(){
+    char s[100]="B C";
+    OuputStringReplacingADigitWithASpace(s);
+    ASSERT_STRING("B C",s);
+}
+void test_OuputStringReplacingADigitWithASpace2(){
+    char s[100]="1A2B1C3";
+    OuputStringReplacingADigitWithASpace(s);
+    ASSERT_STRING(" A  B C   ",s);
+}
+void test_OuputStringReplacingADigitWithASpace3(){
+    char s[100]="1";
+    OuputStringReplacingADigitWithASpace(s);
+    ASSERT_STRING(" ",s);
+}
+void test_OuputStringReplacingADigitWithASpace4(){
+    char s[100]="0";
+    OuputStringReplacingADigitWithASpace(s);
+    ASSERT_STRING("",s);
+}
+void test_OuputStringReplacingADigitWithASpace(){
+    test_OuputStringReplacingADigitWithASpace1();
+    test_OuputStringReplacingADigitWithASpace2();
+    test_OuputStringReplacingADigitWithASpace3();
+    test_OuputStringReplacingADigitWithASpace4();
+}
 int main() {
-    char s[] = "aba1cdb";
-
-    printf("%s", OuputStringReplacingADigitWithASpace(s));
+   char s[100]="B C";
+    OuputStringReplacingADigitWithASpace(s);
+    ASSERT_STRING("B C",s);
 }
 

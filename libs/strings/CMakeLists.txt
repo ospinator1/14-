@@ -7,4 +7,6 @@ add_library(strings
         string/tasks/tasks2/tasks2.c
         string/tasks/tasks2/tasks2.h
         string/tasks/tasks3/tasks3.c
-        string/tasks/tasks3/tasks3.h)
+        string/tasks/tasks3/tasks3.h
+        string/tasks/tasks4/tasks4.c
+        string/tasks/tasks4/tasks4.h)

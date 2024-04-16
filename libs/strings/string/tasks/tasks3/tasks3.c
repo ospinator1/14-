@@ -81,7 +81,7 @@ void test_digitToStartWithReverseForEveryWordWitoutDigit() {
     ASSERT_STRING("bc", s);
 }
 
-void test_digitToStartWithReverseForEveryWordWitoutWordsAndDigit() {
+void test_digitToStartWithReverseForEveryWordWithoutWordsAndDigit() {
     char s[] = "";
     digitToStartWithReverseForEveryWord(s);
     ASSERT_STRING("", s);
@@ -111,7 +111,7 @@ void test_digitToStartWithSaveWithoutWord() {
 void test_digitToStartWithReverseForEveryWord() {
     test_digitToStartWithReverseForEveryWordWithDigit();
     test_digitToStartWithReverseForEveryWordWitoutDigit();
-    test_digitToStartWithReverseForEveryWordWitoutWordsAndDigit();
+    test_digitToStartWithReverseForEveryWordWithoutWordsAndDigit();
 }
 void test_digitToStartWithSave(){
     test_digitToStartWithSave1();
