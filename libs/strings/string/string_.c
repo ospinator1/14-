@@ -85,10 +85,7 @@ char *copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDesti
     beginDestination[*(rbeginSource - 1)] = '\0';
     return beginDestination;
 }
-char *getEndOfString(char *s){
-    char size= findLength(s);
-    return &s[size-1];
-}
+
 void assertString(const char *expected, char *got,
                   char const *fileName, char const *funcName,
                   int line) {
@@ -101,7 +98,11 @@ void assertString(const char *expected, char *got,
         fprintf(stderr, "%s - OK\n", funcName);
 }
 
+typedef struct WordDescriptor {
+    char *begin; // позиция начала слова
+    char *end; // позиция первого символа, после последнего символа
 
+} WordDescriptor;
 bool getWordReverse(char *rbegin, char *rend,struct WordDescriptor *word) {
     word->end = findNonSpaceReverse(rbegin, rend) + 1;
     if (word->end == rend)
@@ -110,14 +111,4 @@ bool getWordReverse(char *rbegin, char *rend,struct WordDescriptor *word) {
     word->begin = findSpaceReverse(word->end, rend) + 1;
 
     return true;
-}
-int getWord(char *beginSearch, struct WordDescriptor *word) {
-    word->begin = findNonSpace(beginSearch);
-    if (*word->begin == '\0')
-        return 0;
-    word->end = findSpace(word->begin);
-    return 1;
-}
-int areWordsEqual(struct WordDescriptor w1, struct WordDescriptor w2) {
-    return strcmp(w1.begin, w2.begin);
 }

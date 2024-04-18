@@ -1,10 +1,10 @@
 
-#include "libs/strings/string/tasks/tasks5/tasks5.h"
+#include "libs/strings/string/tasks/tasks6/tasks6.h"
 #include "libs/strings/string/string_.h"
 
 
 
 int main() {
-    test_replaceWord1ToWord2();
+    test_isWhetherTheWordsOfTheGivenSentenceAreLexicographicallyOrdered();
     return 0;
 }
