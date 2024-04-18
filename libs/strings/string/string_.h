@@ -16,5 +16,9 @@ char *copy(const char *beginSource, const char *endSource, char *beginDestinatio
 char *copyIf(char *beginSource, const char *endSource, char *beginDestination, int (*f)(int));//записывает по адресу beginDestination элементы из фрагмента памяти начиная с beginSource заканчивая endSource, удовлетворяющие функции-предикату f. Функция  памяти.
 int isLetter(int x);
 char *copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDestination, int (*f)(int));//записывает по адресу beginDestination элементы из фрагмента памяти начиная с rbeginSource заканчивая rendSource, удовлетворяющие функции-предикату f. Функция возвращает значение beginDestination по окончанию работ функции.
-
+char _stringBuffer[MAX_STRING_SIZE + 1];
+struct WordDescriptor {
+    char *begin;
+    char *end;
+} WordDescriptor;
 #endif //UNTITLED7_STRING_H

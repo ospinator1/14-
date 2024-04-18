@@ -2,11 +2,7 @@ add_library(strings
         string/string_.c
         string/string_.h
         string/test.c
-        string/tasks/tasks1/tasks1.c
         string/tasks/tasks1/tasks1.h
-        string/tasks/tasks2/tasks2.c
         string/tasks/tasks2/tasks2.h
-        string/tasks/tasks3/tasks3.c
         string/tasks/tasks3/tasks3.h
-        string/tasks/tasks4/tasks4.c
         string/tasks/tasks4/tasks4.h)
