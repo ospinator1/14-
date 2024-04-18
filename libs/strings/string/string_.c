@@ -5,6 +5,9 @@
 #include <ctype.h>
 #include <string.h>
 #define MAX_STRING_SIZE 100
+#define ASSERT_STRING(expected, got) assertString(expected, got, \
+__FILE__, __FUNCTION__, __LINE__)
+
 int findLength(const char *str) {
     int length = 0;
 
@@ -89,5 +92,18 @@ char *copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDesti
     beginDestination[*(rbeginSource - 1)] = '\0';
     return beginDestination;
 }
-char stringBuffer[MAX_STRING_SIZE + 1];
-
+char *getEndOfString(char *s){
+    char size= findLength(s);
+    return &s[size-1];
+}
+void assertString(const char *expected, char *got,
+                  char const *fileName, char const *funcName,
+                  int line) {
+    if (strcmp(expected, got)) {
+        fprintf(stderr, "File %s\n", fileName);
+        fprintf(stderr, "%s - failed on line %d\n", funcName, line);
+        fprintf(stderr, "Expected: \"%s\"\n", expected);
+        fprintf(stderr, "Got: \"%s\"\n\n", got);
+    } else
+        fprintf(stderr, "%s - OK\n", funcName);
+}
