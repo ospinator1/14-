@@ -50,7 +50,7 @@ void printWordReverse(char *string){
                 printf("\n");
             }
 }
-void test_printWordReverse1(){
+void test_printWordReverse(){
     char s[]="abc bad";
     printWordReverse(s);
 }
