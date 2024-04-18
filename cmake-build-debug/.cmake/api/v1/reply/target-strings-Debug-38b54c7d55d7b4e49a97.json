@@ -86,7 +86,8 @@
 				8,
 				9,
 				10,
-				11
+				11,
+				12
 			]
 		}
 	],
@@ -152,6 +153,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "libs/strings/string/tasks/tasks9/tasks9.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "libs/strings/string/tasks/tasks10/tasks10.h",
 			"sourceGroupIndex" : 1
 		}
 	],
