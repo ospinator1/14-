@@ -8,4 +8,5 @@ add_library(strings
         string/tasks/tasks4/tasks4.h
         string/tasks/tasks5/tasks5.h
         string/tasks/tasks6/tasks6.h
-        string/tasks/tasks7/tasks7.h)
+        string/tasks/tasks7/tasks7.h
+        string/tasks/tasks8/tasks8.h)

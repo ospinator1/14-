@@ -11,7 +11,7 @@
 __FILE__, __FUNCTION__, __LINE__)
 
 
-
+char _stringBuffer[MAX_STRING_SIZE + 1];
 
 void replaceEachNumberWithSpaces(char *s) {
     char *buffer = _stringBuffer;
