@@ -4,20 +4,13 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdbool.h>
+#include "../../strings/string/string_.h"
 #define MAX_STRING_SIZE 100
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 
-int findLength(const char *str) {
-    int length = 0;
 
-    while (*str) {
-        length++;
-        str++;
-    }
-
-    return length;
-}
 int strlen_(const char *begin ){
     char *end=begin;
     while (*end!='\0')
@@ -106,4 +99,25 @@ void assertString(const char *expected, char *got,
         fprintf(stderr, "Got: \"%s\"\n\n", got);
     } else
         fprintf(stderr, "%s - OK\n", funcName);
+}
+
+
+bool getWordReverse(char *rbegin, char *rend,struct WordDescriptor *word) {
+    word->end = findNonSpaceReverse(rbegin, rend) + 1;
+    if (word->end == rend)
+        return false;
+
+    word->begin = findSpaceReverse(word->end, rend) + 1;
+
+    return true;
+}
+int getWord(char *beginSearch, struct WordDescriptor *word) {
+    word->begin = findNonSpace(beginSearch);
+    if (*word->begin == '\0')
+        return 0;
+    word->end = findSpace(word->begin);
+    return 1;
+}
+int areWordsEqual(struct WordDescriptor w1, struct WordDescriptor w2) {
+    return strcmp(w1.begin, w2.begin);
 }

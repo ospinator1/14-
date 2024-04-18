@@ -26,4 +26,6 @@ char *getEndOfString(char *s);
 void assertString(const char *expected, char *got,
                   char const *fileName, char const *funcName,
                   int line);
+int getWord(char *beginSearch, struct WordDescriptor *word);
+int areWordsEqual(struct WordDescriptor w1, struct WordDescriptor w2);
 #endif //UNTITLED7_STRING_H

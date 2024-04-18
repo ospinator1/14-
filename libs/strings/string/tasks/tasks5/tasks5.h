@@ -8,9 +8,7 @@
 #include <stdio.h>
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
-int areWordsEqual(struct WordDescriptor w1, struct WordDescriptor w2) {
-    return strcmp(w1.begin, w2.begin);
-}
+
 void replace(char *source,char *w1,char *w2) {
     size_t w1Size = strlen_(w1);
     size_t w2Size = strlen_(w2);

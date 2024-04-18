@@ -20,13 +20,7 @@ __FILE__, __FUNCTION__, __LINE__)
 
 
 
-int getWord(char *beginSearch, struct WordDescriptor *word) {
-    word->begin = findNonSpace(beginSearch);
-    if (*word->begin == '\0')
-        return 0;
-    word->end = findSpace(word->begin);
-    return 1;
-}
+
 
 void digitToStartWithReverse(struct WordDescriptor word) {
     char *endStringBuffer = copy(word.begin, word.end, _stringBuffer);

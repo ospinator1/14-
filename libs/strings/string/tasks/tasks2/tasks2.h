@@ -9,6 +9,7 @@
 //
 #include <windows.h>
 #include <stdio.h>
+#include "../../string_.h"
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 
@@ -37,7 +38,7 @@ void* removeExtraSpaces(char *s){
     }
     while (wp > s && isspace (*(wp - 1)))
         wp--;
-    *wp=0;
+    *wp='\0';
     return s;
 
 }
