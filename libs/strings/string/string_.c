@@ -113,3 +113,6 @@ bool getWordReverse(char *rbegin, char *rend,struct WordDescriptor *word) {
 
     return true;
 }
+char *getEndOfString(char *s) {
+    return s + strlen(s);
+}

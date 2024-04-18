@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "../../string_.h"
 #include <stdbool.h>
+#include <assert.h>
 bool isPalindrome(char *begin, char *end) {
     end--;
     while (end - begin > 0) {
@@ -35,5 +36,22 @@ int countPalindromes(char *string){
         isLastComma=*commaPos=='\0';
     }
     return count;
+}
+void test_countPalindromes1(){
+    char s[]="";
+    assert(countPalindromes(s)==0);
+}
+void test_countPalindromes2(){
+    char s[]="jdsfhksjdf,hfsflksdf";
+    assert(countPalindromes(s)==0);
+}
+void test_countPalindromes3(){
+    char s[]="aba,aba";
+    assert(countPalindromes(s)==2);
+}
+void test_countPalindromes(){
+    test_countPalindromes1();
+    test_countPalindromes2();
+    test_countPalindromes3();
 }
 #endif //UNTITLED7_TASKS8_H
