@@ -1,6 +1,3 @@
-//
-// Created by Assa on 18.04.2024.
-//
 
 #ifndef UNTITLED7_TASKS9_H
 #define UNTITLED7_TASKS9_H
@@ -41,5 +38,23 @@ void combiningTwoStrings(char *s, char *s1, char *s2) {
         }
     }
     *(beginCopy-1)='\0';
+}
+void test_combiningTwoStrings1(){
+    char s1[]="a b c";
+    char s2[]="d e f";
+    char s[15];
+    combiningTwoStrings(s,s1,s2);
+    ASSERT_STRING("a d b e c f",s);
+}
+void test_combiningTwoStrings2(){
+    char s1[]="a b c q z";
+    char s2[]="d e f";
+    char s[15];
+    combiningTwoStrings(s,s1,s2);
+    ASSERT_STRING("a d b e c f q z",s);
+}
+void test_combiningTwoStrings(){
+    test_combiningTwoStrings1();
+    test_combiningTwoStrings2();
 }
 #endif //UNTITLED7_TASKS9_H
