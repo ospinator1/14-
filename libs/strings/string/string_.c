@@ -103,6 +103,7 @@ typedef struct WordDescriptor {
     char *end; // позиция первого символа, после последнего символа
 
 } WordDescriptor;
+
 bool getWordReverse(char *rbegin, char *rend,struct WordDescriptor *word) {
     word->end = findNonSpaceReverse(rbegin, rend) + 1;
     if (word->end == rend)
