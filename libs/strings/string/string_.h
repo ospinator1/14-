@@ -39,4 +39,5 @@ bool isWordsEqual(const WordDescriptor word1, const WordDescriptor  word2);
 void free_string(char* string);
 void free_bag(BagOfWords * bag);
 void wordDescriptorToString(WordDescriptor word, char* dest);
+int getWord(char *beginSearch, WordDescriptor *word);
 #endif //UNTITLED7_STRING_H
