@@ -64,7 +64,7 @@ void free_bag(BagOfWords * bag) {
 
     bag->size = 0;
 }
-void word_descriptor_to_string(WordDescriptor word, char* dest) {
+void wordDescriptorToString(WordDescriptor word, char* dest) {
     if (word.begin == NULL && word.end == NULL)
         return;
 
@@ -76,7 +76,7 @@ void word_descriptor_to_string(WordDescriptor word, char* dest) {
 
     *dest = '\0';
 }
-WordDescriptor find_last_common_word(char* s1, char* s2) {
+WordDescriptor findLastCommonWord(char* s1, char* s2) {
     char* begin_search_1 = s1;
     char* begin_search_2 = s2;
 
@@ -104,5 +104,27 @@ WordDescriptor find_last_common_word(char* s1, char* s2) {
 
     return word;
 }
-
+void test_findLastCommonWord1(){
+    char s1[]="";
+    char s2[]="Гвардия Петра";
+    char dest[MAX_N_WORDS_IN_STRING]="";
+    WordDescriptor word= findLastCommonWord(s1,s2);
+    assert(word.begin == NULL && word.end == NULL);
+}
+void test_findLastCommonWord2(){
+    char s1[]="Гвардия Павла";
+    char s2[]="Гвардия Петра";
+    char dest[MAX_N_WORDS_IN_STRING]="";
+    WordDescriptor word= findLastCommonWord(s1,s2);
+    wordDescriptorToString(word,dest);
+    ASSERT_STRING("Гвардия",dest);
+}
+void test_findLastCommonWord3(){
+    char s1[]="Beauty Queen";
+    char s2[]="The Queen of Dreams";
+    char dest[MAX_N_WORDS_IN_STRING]="";
+    WordDescriptor word= findLastCommonWord(s1,s2);
+    wordDescriptorToString(word,dest);
+    ASSERT_STRING("Queen",dest);
+}
 #endif //UNTITLED7_TASKS12_H
