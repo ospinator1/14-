@@ -20,7 +20,7 @@ BagOfWords _bag;
 BagOfWords _bag2;
 char _stringBuffer[MAX_STRING_SIZE + 1];
 
-void get_word_except_last(char* source, char* dest) {
+void getWordExceptLast(char* source, char* dest) {
     char *beginSearch = source;
     while (getWordWithoutSpace(beginSearch, &_bag.words[_bag.size])) {
         beginSearch = _bag.words[_bag.size].end + 1;
@@ -43,5 +43,28 @@ void get_word_except_last(char* source, char* dest) {
     *rec_ptr='\0';
     free_bag(&_bag);
 }
+void test_getWordExceptLast1(){
+    char source[]="";
+    char dest[100]="";
+    getWordExceptLast(source,dest);
+    ASSERT_STRING("",dest);
+}
+void test_getWordExceptLast2(){
+    char source[]="word";
+    char dest[100]="";
+    getWordExceptLast(source,dest);
+    ASSERT_STRING("",dest);
+}
 
+void test_getWordExceptLast3(){
+    char source[]="Cherry Lady Cherry";
+    char dest[100]="";
+    getWordExceptLast(source,dest);
+    ASSERT_STRING("Lady",dest);
+}
+void test_getWordExceptLast(){
+    test_getWordExceptLast1();
+    test_getWordExceptLast2();
+    test_getWordExceptLast3();
+}
 #endif //UNTITLED7_TASKS15_H
