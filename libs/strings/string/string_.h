@@ -34,5 +34,9 @@ typedef struct BagOfWords {
     size_t size;
 } BagOfWords;
 
+bool getWordWithoutSpace(char* begin_search, WordDescriptor * word);
+bool isWordsEqual(const WordDescriptor word1, const WordDescriptor  word2);
+void free_string(char* string);
+void free_bag(BagOfWords * bag);
 
 #endif //UNTITLED7_STRING_H

@@ -13,4 +13,5 @@ add_library(strings
         string/tasks/tasks9/tasks9.h
         string/tasks/tasks10/tasks10.h
         string/tasks/tasks11/tasks11.h
-        string/tasks/tasks12/tasks12.h)
+        string/tasks/tasks12/tasks12.h
+        string/tasks/tasks13/tasks13.h)

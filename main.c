@@ -6,7 +6,7 @@
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
-    test_findLastCommonWord3();
+    test_findLastCommonWord();
     return 0;
 }
 

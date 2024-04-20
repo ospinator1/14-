@@ -111,3 +111,46 @@ bool getWordReverse(char *rbegin, char *rend,struct WordDescriptor *word) {
 char *getEndOfString(char *s) {
     return s + strlen(s);
 }
+bool getWordWithoutSpace(char* begin_search, WordDescriptor * word) {
+    word->begin = findNonSpace(begin_search);
+    if (*word->begin == '\0')
+        return false;
+
+    word->end = findSpace(word->begin) - 1;
+
+    return true;
+}
+
+bool isWordsEqual(const WordDescriptor word1, const WordDescriptor  word2) {
+    char* begin1 = word1.begin;
+    char* begin2 = word2.begin;
+
+    while (begin1 < word1.end && begin2 < word2.end) {
+        if (*begin1 != *begin2)
+            return false;
+
+        begin1++;
+        begin2++;
+    }
+
+    if (word1.end - begin1 > 0 || word2.end - begin2 > 0)
+        return false;
+
+    return true;
+}
+char _stringBuffer[MAX_STRING_SIZE + 1];
+void free_string(char* string) {
+    char* ptr = string;
+    while (*ptr) {
+        *ptr = '\0';
+        ptr++;
+    }
+}
+void free_bag(BagOfWords * bag) {
+    for (size_t i = 0; i < bag->size; i++) {
+        bag->words[i].begin = NULL;
+        bag->words[i].end = NULL;
+    }
+
+    bag->size = 0;
+}

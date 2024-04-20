@@ -20,50 +20,8 @@
 __FILE__, __FUNCTION__, __LINE__)
 
 
-bool getWordWithoutSpace(char* begin_search, WordDescriptor * word) {
-    word->begin = findNonSpace(begin_search);
-    if (*word->begin == '\0')
-        return false;
-
-    word->end = findSpace(word->begin) - 1;
-
-    return true;
-}
 BagOfWords _bag;
 BagOfWords _bag2;
-bool isWordsEqual(const WordDescriptor word1, const WordDescriptor  word2) {
-    char* begin1 = word1.begin;
-    char* begin2 = word2.begin;
-
-    while (begin1 < word1.end && begin2 < word2.end) {
-        if (*begin1 != *begin2)
-            return false;
-
-        begin1++;
-        begin2++;
-    }
-
-    if (word1.end - begin1 > 0 || word2.end - begin2 > 0)
-        return false;
-
-    return true;
-}
-char _stringBuffer[MAX_STRING_SIZE + 1];
-void free_string(char* string) {
-    char* ptr = string;
-    while (*ptr) {
-        *ptr = '\0';
-        ptr++;
-    }
-}
-void free_bag(BagOfWords * bag) {
-    for (size_t i = 0; i < bag->size; i++) {
-        bag->words[i].begin = NULL;
-        bag->words[i].end = NULL;
-    }
-
-    bag->size = 0;
-}
 void wordDescriptorToString(WordDescriptor word, char* dest) {
     if (word.begin == NULL && word.end == NULL)
         return;
@@ -89,7 +47,6 @@ WordDescriptor findLastCommonWord(char* s1, char* s2) {
         begin_search_2 = _bag2.words[_bag2.size].end + 1;
         _bag2.size++;
     }
-
     WordDescriptor word = {.begin = NULL, .end = NULL};
     for (int i = (int) _bag.size - 1; i >= 0; i--)
         for (int j = 0; j < _bag2.size; j++)
@@ -107,17 +64,16 @@ WordDescriptor findLastCommonWord(char* s1, char* s2) {
 void test_findLastCommonWord1(){
     char s1[]="";
     char s2[]="Гвардия Петра";
-    char dest[MAX_N_WORDS_IN_STRING]="";
     WordDescriptor word= findLastCommonWord(s1,s2);
     assert(word.begin == NULL && word.end == NULL);
 }
 void test_findLastCommonWord2(){
-    char s1[]="Гвардия Павла";
-    char s2[]="Гвардия Петра";
+    char s1[]="Pavel's Guard";
+    char s2[]="Peter's Guard";
     char dest[MAX_N_WORDS_IN_STRING]="";
     WordDescriptor word= findLastCommonWord(s1,s2);
     wordDescriptorToString(word,dest);
-    ASSERT_STRING("Гвардия",dest);
+    ASSERT_STRING("Guard",dest);
 }
 void test_findLastCommonWord3(){
     char s1[]="Beauty Queen";
@@ -126,5 +82,10 @@ void test_findLastCommonWord3(){
     WordDescriptor word= findLastCommonWord(s1,s2);
     wordDescriptorToString(word,dest);
     ASSERT_STRING("Queen",dest);
+}
+void test_findLastCommonWord(){
+    test_findLastCommonWord1();
+    test_findLastCommonWord2();
+    test_findLastCommonWord3();
 }
 #endif //UNTITLED7_TASKS12_H
