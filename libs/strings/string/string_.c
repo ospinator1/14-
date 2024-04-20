@@ -154,3 +154,15 @@ void free_bag(BagOfWords * bag) {
 
     bag->size = 0;
 }
+void wordDescriptorToString(WordDescriptor word, char* dest) {
+    if (word.begin == NULL && word.end == NULL)
+        return;
+
+    while (word.begin <= word.end) {
+        *dest = *word.begin;
+        word.begin++;
+        dest++;
+    }
+
+    *dest = '\0';
+}

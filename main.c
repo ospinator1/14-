@@ -3,12 +3,12 @@
 #include "libs/strings/string/string_.h"
 #include "libs/strings/string/tasks/tasks12/tasks12.h"
 #include "libs/strings/string/tasks/tasks15/tasks15.h"
+#include "libs/strings/string/tasks/tasks16/tasks16.h"
 #include <windows.h>
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
-    test_findLastCommonWord();
-    test_getWordExceptLast();
+    test_findPrecedingWord();
     return 0;
 }
 
