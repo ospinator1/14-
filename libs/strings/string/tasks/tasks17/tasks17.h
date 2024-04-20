@@ -22,6 +22,7 @@ char _stringBuffer[MAX_STRING_SIZE + 1];
 BagOfWords _bag;
 BagOfWords _bag2;
 
+
 bool isPalindromeWord(WordDescriptor *word) {
     char* end=word->end;
     char* begin=word->begin;
@@ -34,7 +35,7 @@ bool isPalindromeWord(WordDescriptor *word) {
     }
     return true;
 }
-void remove_palindrome_word(char *s){
+void removePalindromeWord(char *s){
     char* begin=_stringBuffer;
     char* end= copy(s,s+ strlen_(s),_stringBuffer);
     char* rec_ptr=s;
@@ -52,5 +53,31 @@ void remove_palindrome_word(char *s){
 
     free_string(_stringBuffer);
 }
+void test_removePalindromeWord1() {
+    char s[] = "";
+    removePalindromeWord(s);
+    ASSERT_STRING("", s);
+}
+void test_removePalindromeWord2() {
+    char s[] = "As pee sir, I see Pisa!";
+    removePalindromeWord(s);
+    ASSERT_STRING("As pee sir, see Pisa!", s);
+}
+void test_removePalindromeWord3(){
+    char s[] = "radar spotted the tank";
+    removePalindromeWord(s);
+    ASSERT_STRING("spotted the tank", s);
+}
+void  test_removePalindromeWord4(){
+    char s[] = "civic redder refer";
+    removePalindromeWord(s);
+    ASSERT_STRING("", s);
+}
 
+void test_removePalindromeWord(){
+    test_removePalindromeWord1();
+    test_removePalindromeWord2();
+    test_removePalindromeWord3();
+    test_removePalindromeWord4();
+}
 #endif //UNTITLED7_TASKS17_H
