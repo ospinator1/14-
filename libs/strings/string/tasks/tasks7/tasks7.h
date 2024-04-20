@@ -9,16 +9,7 @@
 #include <stdio.h>
 #include "../../string_.h"
 char _stringBuffer[MAX_STRING_SIZE + 1];
-typedef struct WordDescriptor {
-    char *begin; // позиция начала слова
-    char *end; // позиция первого символа, после последнего символа
 
-} WordDescriptor;
-
-typedef struct BagOfWords {
-    WordDescriptor words[MAX_N_WORDS_IN_STRING];
-    size_t size;
-} BagOfWords;
 
 void printWord(WordDescriptor word){
     char *endBuffer=copy(word.begin,word.end,_stringBuffer);

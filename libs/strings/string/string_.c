@@ -98,11 +98,6 @@ void assertString(const char *expected, char *got,
         fprintf(stderr, "%s - OK\n", funcName);
 }
 
-typedef struct WordDescriptor {
-    char *begin; // позиция начала слова
-    char *end; // позиция первого символа, после последнего символа
-
-} WordDescriptor;
 
 bool getWordReverse(char *rbegin, char *rend,struct WordDescriptor *word) {
     word->end = findNonSpaceReverse(rbegin, rend) + 1;

@@ -6,11 +6,7 @@
 #include "../../string_.h"
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
-typedef struct WordDescriptor {
-    char *begin; // позиция начала слова
-    char *end; // позиция первого символа, после последнего символа
 
-} WordDescriptor;
 int getWord(char *beginSearch, WordDescriptor *word) {
     word->begin = findNonSpace(beginSearch);
     if (*word->begin == '\0')

@@ -5,6 +5,8 @@
 #ifndef UNTITLED7_STRING_H
 #define UNTITLED7_STRING_H
 #define MAX_STRING_SIZE 100
+#define MAX_WORD_SIZE 20
+#define MAX_N_WORDS_IN_STRING 100
 char findLength(char str[50]);//находит длину строки
 int strlen_(const char *begin );// возвращает количество символов в строке (не cчитая ноль-символ)
 char* find(char *begin, char *end, int ch);//возвращает указательна первый элемент с кодом ch, расположенным на ленте памяти между адресами begin и end не включая end.
@@ -22,6 +24,15 @@ char *copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDesti
 char *getEndOfString(char *s);
 void assertString(const char *expected, char *got,char const *fileName, char const *funcName,int line);
 
+typedef struct WordDescriptor {
+    char *begin; // позиция начала слова
+    char *end; // позиция первого символа, после последнего символа
+
+} WordDescriptor;
+typedef struct BagOfWords {
+    WordDescriptor words[MAX_N_WORDS_IN_STRING];
+    size_t size;
+} BagOfWords;
 
 
 #endif //UNTITLED7_STRING_H
