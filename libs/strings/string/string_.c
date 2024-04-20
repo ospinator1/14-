@@ -138,7 +138,7 @@ bool isWordsEqual(const WordDescriptor word1, const WordDescriptor  word2) {
 
     return true;
 }
-char _stringBuffer[MAX_STRING_SIZE + 1];
+
 void free_string(char* string) {
     char* ptr = string;
     while (*ptr) {

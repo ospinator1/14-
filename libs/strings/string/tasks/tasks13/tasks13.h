@@ -23,23 +23,38 @@ char _stringBuffer[MAX_STRING_SIZE + 1];
 bool areEqualWordsInString(char* s){
     char *beginBuffer=_stringBuffer;
     copy(s,s+ strlen_(s),_stringBuffer);
-    while(getWordWithoutSpace(beginBuffer,&_bag.words)){
-        beginBuffer=_bag[_bag.size].end+2;
+    while(getWordWithoutSpace(beginBuffer,&_bag.words[_bag.size])){
+        beginBuffer=_bag.words[_bag.size].end+2;
         _bag.size++;
 
     }
     free_string(_stringBuffer);
     if(_bag.size<=1)
         return false;
-    for (int i = 0; i < _bag.size; ++i) {
-        for (int j = i+1; j < _bag.size; ++j) {
-            if(isWordsEqual(_bag.words[i],_bag.words[j]))
+    for (int i = 0; i < _bag.size; ++i)
+        for (int j = i+1; j < _bag.size; ++j)
+            if(isWordsEqual(_bag.words[i],_bag.words[j])) {
                 free_bag(&_bag);
-            return true;
-        }
-
-    }
+                return true;
+            }
     free_bag(&_bag);
     return false;
+}
+void test_areEqualWordsInString1(){
+    char s[]="American Boy";
+    assert(!areEqualWordsInString(s));
+}
+void test_areEqualWordsInString2(){
+    char s[]="Cherry Cherry Lady";
+    assert(areEqualWordsInString(s));
+}
+void test_areEqualWordsInString3(){
+    char s[]="";
+    assert(!areEqualWordsInString(s));
+}
+void test_areEqualWordsInString(){
+    test_areEqualWordsInString1();
+    test_areEqualWordsInString2();
+    test_areEqualWordsInString3();
 }
 #endif //UNTITLED7_TASKS13_H
