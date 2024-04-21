@@ -1,10 +1,3 @@
-//
-// Created by Assa on 18.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS6_H
-#define UNTITLED7_TASKS6_H
-
 #include "../../string_.h"
 #include <stdio.h>
 #include <stdbool.h>
@@ -13,6 +6,11 @@
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 
+
+
+int areWordsEqual(WordDescriptor w1, WordDescriptor w2) {
+    return strcmp(w1.begin, w2.begin);
+}
 
 bool isWhetherTheWordsOfTheGivenSentenceAreLexicographicallyOrdered(char *s) {
     char *beginSearch = s;
@@ -46,10 +44,8 @@ void test_isWhetherTheWordsOfTheGivenSentenceAreLexicographicallyOrdered3() {
     assert(isWhetherTheWordsOfTheGivenSentenceAreLexicographicallyOrdered(s) == 1);
 }
 
-void test_6() {
+void test_isWhetherTheWordsOfTheGivenSentenceAreLexicographicallyOrdered() {
     test_isWhetherTheWordsOfTheGivenSentenceAreLexicographicallyOrdered1();
     test_isWhetherTheWordsOfTheGivenSentenceAreLexicographicallyOrdered2();
     test_isWhetherTheWordsOfTheGivenSentenceAreLexicographicallyOrdered3();
 }
-
-#endif //UNTITLED7_TASKS6_H

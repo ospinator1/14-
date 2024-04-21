@@ -1,9 +1,3 @@
-//
-// Created by Assa on 18.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS7_H
-#define UNTITLED7_TASKS7_H
 #define MAX_N_WORDS_IN_STRING 100
 
 #include <stdio.h>
@@ -30,14 +24,12 @@ void getBagOfWords(BagOfWords *bag, char *s){
 void printWordReverse(char *string){
     BagOfWords w;
     getBagOfWords(&w,string);
-            for (int i = w.size-1; i >=0 ; --i) {
-                printWord(w.words[i]);
-                printf("\n");
-            }
+    for (int i = w.size-1; i >=0 ; --i) {
+        printWord(w.words[i]);
+        printf("\n");
+    }
 }
-void test_7(){
+void test_printWordReverse(){
     char s[]="abc bad";
     printWordReverse(s);
 }
-
-#endif //UNTITLED7_TASKS7_H

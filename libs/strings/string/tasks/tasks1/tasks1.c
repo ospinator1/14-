@@ -1,9 +1,3 @@
-//
-// Created by Assa on 13.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS1_H
-#define UNTITLED7_TASKS1_H
 #include "../../string_.h"
 #include <windows.h>
 #include <stdio.h>
@@ -33,10 +27,8 @@ void test_removeNonLetters3(){
     removeNonLetters(s);
     ASSERT_STRING("244w",s);
 }
-void test_1(){
+void test_removeNonLetters(){
     test_removeNonLetters1();
     test_removeNonLetters2();
     test_removeNonLetters3();
 }
-
-#endif //UNTITLED7_TASKS1_H

@@ -1,9 +1,3 @@
-//
-// Created by Assa on 18.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS8_H
-#define UNTITLED7_TASKS8_H
 #define MAX_N_WORDS_IN_STRING 100
 
 #include "../../string_.h"
@@ -48,9 +42,8 @@ void test_countPalindromes3(){
     char s[]="aba,aba";
     assert(countPalindromes(s)==2);
 }
-void test_8(){
+void test_countPalindromes(){
     test_countPalindromes1();
     test_countPalindromes2();
     test_countPalindromes3();
 }
-#endif //UNTITLED7_TASKS8_H

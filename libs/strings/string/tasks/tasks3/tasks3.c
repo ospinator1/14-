@@ -1,12 +1,3 @@
-//
-// Created by Assa on 15.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS3_H
-#define UNTITLED7_TASKS3_H
-//
-// Created by Assa on 15.04.2024.
-//
 #include "../../string_.h"
 #include <windows.h>
 #include <stdio.h>
@@ -97,4 +88,3 @@ void test_3_2(){
     test_digitToStartWithSaveWithoutDigit();
     test_digitToStartWithSaveWithoutWord();
 }
-#endif //UNTITLED7_TASKS3_H

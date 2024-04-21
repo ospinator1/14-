@@ -1,8 +1,4 @@
 
-
-#ifndef UNTITLED7_TASKS10_H
-#define UNTITLED7_TASKS10_H
-
 #include "../../string_.h"
 
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
@@ -49,9 +45,8 @@ void test_reverseWords3() {
     reverseWords(s);
     ASSERT_STRING("darkness of herald", s);
 }
-void test_10(){
+void test_reverseWords(){
     test_reverseWords1();
     test_reverseWords2();
     test_reverseWords3();
 }
-#endif //UNTITLED7_TASKS10_H

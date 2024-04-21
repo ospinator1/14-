@@ -1,9 +1,3 @@
-//
-// Created by Assa on 20.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS17_H
-#define UNTITLED7_TASKS17_H
 #include "../../string_.h"
 #include <stdio.h>
 #include <stdbool.h>
@@ -18,6 +12,7 @@
 #define MAX_WORD_SIZE 20
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
+char _stringBuffer[MAX_STRING_SIZE + 1];
 BagOfWords _bag;
 BagOfWords _bag2;
 
@@ -73,10 +68,9 @@ void  test_removePalindromeWord4(){
     ASSERT_STRING("", s);
 }
 
-void test_17(){
+void test_removePalindromeWord(){
     test_removePalindromeWord1();
     test_removePalindromeWord2();
     test_removePalindromeWord3();
     test_removePalindromeWord4();
 }
-#endif //UNTITLED7_TASKS17_H

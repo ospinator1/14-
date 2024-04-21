@@ -1,9 +1,3 @@
-//
-// Created by Assa on 20.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS16_H
-#define UNTITLED7_TASKS16_H
 
 #include "../../string_.h"
 #include <stdio.h>
@@ -94,11 +88,9 @@ void test_findPrecedingWord4() {
 }
 
 
-void test_16() {
+void test_findPrecedingWord() {
     test_findPrecedingWord1();
     test_findPrecedingWord2();
     test_findPrecedingWord3();
     test_findPrecedingWord4();
 }
-
-#endif //UNTITLED7_TASKS16_H

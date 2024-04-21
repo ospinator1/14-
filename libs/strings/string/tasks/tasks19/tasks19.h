@@ -63,7 +63,7 @@ void test_lettersBelongString4(){
     getWord("",&word);
     assert(!lettersBelongString(s,word));
 }
-void test_lettersBelongString(){
+void test_19(){
     test_lettersBelongString1();
     test_lettersBelongString2();
     test_lettersBelongString3();

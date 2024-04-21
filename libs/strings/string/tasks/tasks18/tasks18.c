@@ -1,10 +1,3 @@
-//
-// Created by Assa on 21.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS18_H
-#define UNTITLED7_TASKS18_H
-
 #include "../../string_.h"
 #include <stdio.h>
 #include <stdbool.h>
@@ -86,10 +79,9 @@ void  test_complementString4(){
     ASSERT_STRING("Herald of Darkness",s1);
     ASSERT_STRING(" Herald of Darkness",s2);
 }
-void test_18(){
+void test_complementString(){
     test_complementString1();
     test_complementString2();
     test_complementString3();
     test_complementString4();
 }
-#endif //UNTITLED7_TASKS18_H

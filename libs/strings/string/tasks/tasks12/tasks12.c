@@ -1,25 +1,15 @@
-//
-// Created by Assa on 19.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS12_H
-#define UNTITLED7_TASKS12_H
 
 
 #include "../../string_.h"
 #include <stdio.h>
-#include <stdbool.h>
+
 #include <assert.h>
-#include <memory.h>
-#include <string.h>
 #define MAX_STRING_SIZE 100
-#include <stdlib.h>
+
 
 #define MAX_WORD_SIZE 20
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
-
-
 BagOfWords _bag;
 BagOfWords _bag2;
 
@@ -72,9 +62,8 @@ void test_findLastCommonWord3(){
     wordDescriptorToString(word,dest);
     ASSERT_STRING("Queen",dest);
 }
-void test_12(){
+void test_findLastCommonWord(){
     test_findLastCommonWord1();
     test_findLastCommonWord2();
     test_findLastCommonWord3();
 }
-#endif //UNTITLED7_TASKS12_H

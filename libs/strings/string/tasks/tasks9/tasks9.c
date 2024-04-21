@@ -1,7 +1,4 @@
 
-#ifndef UNTITLED7_TASKS9_H
-#define UNTITLED7_TASKS9_H
-#include <stdio.h>
 #include <stdbool.h>
 #include "../../string_.h"
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
@@ -43,8 +40,7 @@ void test_combiningTwoStrings2(){
     combiningTwoStrings(s,s1,s2);
     ASSERT_STRING("a d b e c f q z",s);
 }
-void test_9(){
+void test_combiningTwoStrings(){
     test_combiningTwoStrings1();
     test_combiningTwoStrings2();
 }
-#endif //UNTITLED7_TASKS9_H

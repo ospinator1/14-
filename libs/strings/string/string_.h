@@ -7,6 +7,8 @@
 #define MAX_STRING_SIZE 100
 #define MAX_WORD_SIZE 20
 #define MAX_N_WORDS_IN_STRING 100
+#include <stdio.h>
+#include <stdbool.h>
 char findLength(char str[50]);//находит длину строки
 int strlen_(const char *begin );// возвращает количество символов в строке (не cчитая ноль-символ)
 char* find(char *begin, char *end, int ch);//возвращает указательна первый элемент с кодом ch, расположенным на ленте памяти между адресами begin и end не включая end.
@@ -39,5 +41,5 @@ bool isWordsEqual(const WordDescriptor word1, const WordDescriptor  word2);
 void free_string(char* string);
 void free_bag(BagOfWords * bag);
 void wordDescriptorToString(WordDescriptor word, char* dest);
-
+int getWord(char *beginSearch, WordDescriptor *word);
 #endif //UNTITLED7_STRING_H

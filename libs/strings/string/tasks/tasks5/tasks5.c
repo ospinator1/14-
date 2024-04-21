@@ -1,9 +1,4 @@
-//
-// Created by Assa on 18.04.2024.
-//
 
-#ifndef UNTITLED7_TASKS5_H
-#define UNTITLED7_TASKS5_H
 #include "../../string_.h"
 #include <stdio.h>
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
@@ -43,27 +38,24 @@ void replace(char *source,char *w1,char *w2) {
     *recPtr='\0';
 }
 
-void test_replaceWord1ToWord2_nonWords() {
+void test_replace1() {
     char s[] ="";
     replace(s, "Barcelona", "Madrid");
     ASSERT_STRING("", s);
 }
-void test_replaceWord1ToWord2_nonWord1() {
+void test_replace2() {
     char s[] ="Hello America";
     replace(s, "America", "Russia");
     ASSERT_STRING("Hello Russia", s);
 }
 
-void test_replaceWord1ToWord2_withWord1() {
+void test_replace3() {
     char s[] ="Alan Wake";
     replace(s, "Mike", "John");
     ASSERT_STRING("Alan Wake", s);
 }
-void test_5() {
-    test_replaceWord1ToWord2_nonWords();
-    test_replaceWord1ToWord2_nonWord1();
-    test_replaceWord1ToWord2_withWord1();
+void test_replaceWord1ToWord2() {
+   test_replace1();
+    test_replace2();
+    test_replace3();
 }
-
-
-#endif //UNTITLED7_TASKS5_H

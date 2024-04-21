@@ -1,11 +1,5 @@
 //
-// Created by Assa on 13.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS2_H
-#define UNTITLED7_TASKS2_H
-//
-// Created by Assa on 13.04.2024.
+// Created by Assa on 21.04.2024.
 //
 #include <windows.h>
 #include <stdio.h>
@@ -57,9 +51,8 @@ void test_removeExtraSpaces3(){
     removeExtraSpaces(s);
     ASSERT_STRING("1 2 3 5 1\0",s);
 }
-void test_2(){
+void test_removeExtraSpaces(){
     test_removeExtraSpaces1();
     test_removeExtraSpaces2();
     test_removeExtraSpaces3();
 }
-#endif //UNTITLED7_TASKS2_H

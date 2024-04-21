@@ -166,4 +166,10 @@ void wordDescriptorToString(WordDescriptor word, char* dest) {
 
     *dest = '\0';
 }
-
+int getWord(char *beginSearch, WordDescriptor *word) {
+    word->begin = findNonSpace(beginSearch);
+    if (*word->begin == '\0')
+        return 0;
+    word->end = findSpace(word->begin);
+    return 1;
+}

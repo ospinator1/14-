@@ -328,6 +328,120 @@ build libs/strings/CMakeFiles/strings.dir/string/test.c.obj: C_COMPILER__strings
   OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
   OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string
 
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks1/tasks1.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks1/tasks1.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks1\tasks1.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks1
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks3/tasks3.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks3/tasks3.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks3\tasks3.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks3
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks2/tasks2.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks2/tasks2.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks2\tasks2.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks2
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks4/tasks4.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks4/tasks4.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks4\tasks4.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks4
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks5/tasks5.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks5/tasks5.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks5\tasks5.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks5
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks6/tasks6.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks6/tasks6.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks6\tasks6.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks6
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks7/tasks7.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks7/tasks7.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks7\tasks7.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks7
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks8/tasks8.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks8/tasks8.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks8\tasks8.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks8
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks9/tasks9.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks9/tasks9.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks9\tasks9.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks9
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks10/tasks10.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks10/tasks10.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks10\tasks10.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks10
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks11/tasks11.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks11/tasks11.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks11\tasks11.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks11
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks12/tasks12.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks12/tasks12.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks12\tasks12.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks12
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks13/tasks13.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks13/tasks13.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks13\tasks13.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks13
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks14/tasks14.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks14/tasks14.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks14\tasks14.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks14
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks15/tasks15.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks15/tasks15.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks15\tasks15.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks15
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks16/tasks16.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks16/tasks16.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks16\tasks16.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks16
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks17/tasks17.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks17/tasks17.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks17\tasks17.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks17
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks18/tasks18.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks18/tasks18.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks18\tasks18.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks18
+
+build libs/strings/CMakeFiles/strings.dir/string/tasks/tasks19/tasks19.c.obj: C_COMPILER__strings_unscanned_Debug C$:/Users/Assa/CLionProjects/untitled7/libs/strings/string/tasks/tasks19/tasks19.c || cmake_object_order_depends_target_strings
+  DEP_FILE = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks19\tasks19.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
+  OBJECT_FILE_DIR = libs\strings\CMakeFiles\strings.dir\string\tasks\tasks19
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target strings
@@ -336,7 +450,7 @@ build libs/strings/CMakeFiles/strings.dir/string/test.c.obj: C_COMPILER__strings
 #############################################
 # Link the static library libs\strings\libstrings.a
 
-build libs/strings/libstrings.a: C_STATIC_LIBRARY_LINKER__strings_Debug libs/strings/CMakeFiles/strings.dir/string/string_.c.obj libs/strings/CMakeFiles/strings.dir/string/test.c.obj
+build libs/strings/libstrings.a: C_STATIC_LIBRARY_LINKER__strings_Debug libs/strings/CMakeFiles/strings.dir/string/string_.c.obj libs/strings/CMakeFiles/strings.dir/string/test.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks1/tasks1.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks3/tasks3.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks2/tasks2.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks4/tasks4.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks5/tasks5.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks6/tasks6.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks7/tasks7.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks8/tasks8.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks9/tasks9.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks10/tasks10.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks11/tasks11.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks12/tasks12.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks13/tasks13.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks14/tasks14.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks15/tasks15.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks16/tasks16.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks17/tasks17.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks18/tasks18.c.obj libs/strings/CMakeFiles/strings.dir/string/tasks/tasks19/tasks19.c.obj
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = libs\strings\CMakeFiles\strings.dir
   POST_BUILD = cd .

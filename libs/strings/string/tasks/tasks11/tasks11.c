@@ -1,14 +1,6 @@
-//
-// Created by Assa on 19.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS11_H
-#define UNTITLED7_TASKS11_H
-
 #include <stdbool.h>
 #include "../../string_.h"
 #include <assert.h>
-
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 #define MAX_WORD_SIZE 20
@@ -22,14 +14,11 @@ typedef enum word_before_first_word_with_a_return_code {
 
 bool isLettersInWord(WordDescriptor word, char letters) {
     char* start = word.begin;
-
     while (start != word.end) {
         if (*start == letters)
             return true;
-
         start++;
     }
-
     return false;
 }
 
@@ -57,7 +46,7 @@ word_before_first_word_with_a_return_code getWordBeforeFirstWordWithA(char* s, W
 }
 
 
-void test_11() {
+void test_11_all_test_get_before_first_word_with_a() {
     WordDescriptor word;
 
     char s1[] = "";
@@ -75,6 +64,3 @@ void test_11() {
 }
 
 
-
-
-#endif //UNTITLED7_TASKS11_H

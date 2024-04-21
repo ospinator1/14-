@@ -1,24 +1,15 @@
-//
-// Created by Assa on 20.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS15_H
-#define UNTITLED7_TASKS15_H
 #include "../../string_.h"
-#include <stdio.h>
-#include <stdbool.h>
 #include <assert.h>
-#include <memory.h>
-#include <string.h>
+
 #define MAX_STRING_SIZE 100
-#include <stdlib.h>
+
 
 #define MAX_WORD_SIZE 20
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 BagOfWords _bag;
 BagOfWords _bag2;
-
+char _stringBuffer[MAX_STRING_SIZE + 1];
 
 void getWordExceptLast(char* source, char* dest) {
     char *beginSearch = source;
@@ -62,9 +53,8 @@ void test_getWordExceptLast3(){
     getWordExceptLast(source,dest);
     ASSERT_STRING("Lady",dest);
 }
-void test_15(){
+void test_getWordExceptLast(){
     test_getWordExceptLast1();
     test_getWordExceptLast2();
     test_getWordExceptLast3();
 }
-#endif //UNTITLED7_TASKS15_H

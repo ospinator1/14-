@@ -1,9 +1,3 @@
-//
-// Created by Assa on 20.04.2024.
-//
-
-#ifndef UNTITLED7_TASKS14_H
-#define UNTITLED7_TASKS14_H
 #include "../../string_.h"
 #include <stdio.h>
 #include <stdbool.h>
@@ -18,7 +12,7 @@
 __FILE__, __FUNCTION__, __LINE__)
 BagOfWords _bag;
 BagOfWords _bag2;
-
+char _stringBuffer[MAX_STRING_SIZE + 1];
 
 int compare_letters(void* s1,void* s2){
     return *(char*)s1-*(char *) s2;
@@ -43,8 +37,8 @@ bool areIdenticalWordsInString(char* s) {
         for (size_t j = 0; j < _bag.size; ++j)
             if (isWordsEqual(_bag.words[i], _bag.words[j])){
                 free_bag(&_bag);
-    return true;
-}
+                return true;
+            }
     free_bag(&_bag);
     return false;
 }
@@ -60,9 +54,8 @@ void test_areIdenticalWordsInString3(){
     char s[]="Alan Wake";
     assert(areIdenticalWordsInString(s));
 }
-void test_14(){
+void test_areIdenticalWordsInString(){
     test_areIdenticalWordsInString1();
     test_areIdenticalWordsInString2();
     test_areIdenticalWordsInString3();
 }
-#endif //UNTITLED7_TASKS14_H

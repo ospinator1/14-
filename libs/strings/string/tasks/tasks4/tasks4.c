@@ -1,10 +1,6 @@
-
-#ifndef UNTITLED7_TASKS4_H
-#define UNTITLED7_TASKS4_H
-
 #include "../../string_.h"
 #include <windows.h>
-#include <stdio.h>
+
 
 
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
@@ -50,10 +46,8 @@ void test_replaceEachNumberWithSpaces_withDigits() {
     replaceEachNumberWithSpaces(s);
     ASSERT_STRING("ab  ", s);
 }
-void test_4() {
+void test_replaceEachNumberWithSpaces() {
     test_replaceEachNumberWithSpaces_nonWords();
     test_replaceEachNumberWithSpaces_nonDigits();
     test_replaceEachNumberWithSpaces_withDigits();
 }
-
-#endif

@@ -20,4 +20,23 @@ add_library(strings
         string/tasks/tasks16/tasks16.h
         string/tasks/tasks17/tasks17.h
         string/tasks/tasks18/tasks18.h
-        string/tasks/tasks19/tasks19.h)
+        string/tasks/tasks19/tasks19.h
+        string/tasks/tasks1/tasks1.c
+        string/tasks/tasks3/tasks3.c
+        string/tasks/tasks2/tasks2.c
+        string/tasks/tasks4/tasks4.c
+        string/tasks/tasks5/tasks5.c
+        string/tasks/tasks6/tasks6.c
+        string/tasks/tasks7/tasks7.c
+        string/tasks/tasks8/tasks8.c
+        string/tasks/tasks9/tasks9.c
+        string/tasks/tasks10/tasks10.c
+        string/tasks/tasks11/tasks11.c
+        string/tasks/tasks12/tasks12.c
+        string/tasks/tasks13/tasks13.c
+        string/tasks/tasks14/tasks14.c
+        string/tasks/tasks15/tasks15.c
+        string/tasks/tasks16/tasks16.c
+        string/tasks/tasks17/tasks17.c
+        string/tasks/tasks18/tasks18.c
+        string/tasks/tasks19/tasks19.c)
