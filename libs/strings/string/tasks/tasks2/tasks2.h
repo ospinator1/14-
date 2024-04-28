@@ -20,28 +20,7 @@ void* removeExtraSpaces(char *s){
         return NULL;
     if(!*s)
         return s;
-    char  *p=s ,*wp = s;
-    while(*p){
-        if(isspace(*p)){
-            if(wp>s)
-                *wp++=*p;
-            while (*p && isspace(*p))
-                p++;
-            if(!*p)
-                break;
-        }
-        if(*p=='.')
-            while (wp > s && isspace (*(wp - 1)))
-                wp--;
-        *wp++ = *p;
-        p++;
-    }
-    while (wp > s && isspace (*(wp - 1)))
-        wp--;
-    *wp='\0';
-    return s;
 
-}
 void test_removeExtraSpaces1(){
     char s[]=" Hi       my      name is  Leon   . ";
     removeExtraSpaces(s);

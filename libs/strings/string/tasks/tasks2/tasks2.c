@@ -11,8 +11,8 @@ __FILE__, __FUNCTION__, __LINE__)
 
 void* removeExtraSpaces(char *s){
     if(!s)
-        return NULL;
-    if(!*s)
+        return NULL;//проверяет, что строка не является нулевой //
+    if(!*s)//обрабатывает пустую строку //
         return s;
     char  *p=s ,*wp = s;
     while(*p){
