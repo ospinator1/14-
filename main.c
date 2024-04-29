@@ -1,136 +1,153 @@
 
 #include <stdbool.h>
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
 #include <assert.h>
 #include "libs/strings/string/string_.h"
+#include <ctype.h>
 
-void generate_operand(char *filename) {
-    srand(time(NULL));
+#define Letters 97
+char _stringBuffer[MAX_STRING_SIZE + 1];
 
-    FILE *file = fopen(filename, "w");
+int compare_letters(const void* s1, const void* s2) {
+    return *(const unsigned char*) s1 - *(const unsigned char*) s2;
+}
+
+void sort_word_letters(WordDescriptor * word) {
+    qsort(word->begin, word->end - word->begin + 1, sizeof(char), compare_letters);
+}
+
+
+bool letters_belong_word(WordDescriptor sub_word, WordDescriptor word) {
+    bool include[26] = {0};
+
+    char* start = word.begin;
+    char* end = word.end + 1;
+
+    while (start != end) {
+        if (isalpha(*start))
+            include[*start - Letters] = true;
+
+        start++;
+    }
+
+    while (sub_word.begin <= sub_word.end) {
+        if (!include[*sub_word.begin - Letters])
+            return false;
+
+        sub_word.begin++;
+    }
+
+    return true;
+}
+
+
+
+void generate_string(const char* filename, char* source_string) {
+    FILE* file = fopen(filename, "w");
     if (file == NULL) {
         printf("reading error\n");
         exit(1);
     }
-    int x1 = rand() % 10;
-    int x2 = rand() % 10;
-    int x3 = rand() % 10;
-    char operators[] = "-+*/";
-    char op1 = operators[rand() % 4];
-    char op2 = operators[rand() % 4];
-    bool one_operation = rand() % 2;
-    if (one_operation) {
-        fprintf(file, "(%d,%c,%d)", x1, op1, x2);
-    } else
-        fprintf(file, "(%d,%c,%d) %c %d", x1, op1, x2, op2, x3);
+
+    size_t string_length = strlen_(source_string);
+
+    for (size_t i = 0; i <= string_length; i++)
+        fprintf(file, "%c", source_string[i]);
+
     fclose(file);
 }
 
-void evaluate_expression(const char *filename) {
-    FILE *file = fopen(filename, "r+");
+
+void filter_word(const char* filename, char* source_word) {
+    FILE* file = fopen(filename, "r");
     if (file == NULL) {
         printf("reading error\n");
         exit(1);
     }
-    int x1, x2, x3;
-    char op1, op2;
-    char open_bracket, close_bracket;
-    float result;
-    int amount_element = fscanf(file, "%c %d %c %d %c %c %d", &open_bracket, &x1, &op1, &x2, &close_bracket, &op2, &x3);
-    bool two_operation = amount_element == 7 ? true : false;
-    switch (op1) {
-        case '+':
-            result = x1 + x2;
-            break;
-        case '-':
-            result = x1 - x2;
-            break;
-        case '*':
-            result = x1 * x2;
-            break;
-        case '/':
-            if (x2 == 0) {
-                (stderr, "Zero division");
-                exit(1);
-            }
-            result = x1 / x2;
-            break;
-        default:
-            fprintf(stderr, "unknown operation");
-            exit(1);
-    }
-    if (two_operation) {
-        switch (op2) {
-            case '+':
-                result += x3;
-                break;
-            case '-':
-                result -= x3;
-                break;
-            case '*':
-                result *= x3;
-                break;
-            case '/':
-                if (x3 == 0) {
-                    (stderr, "Zero division");
-                    exit(1);
-                }
-                result /= x3;
-                break;
-            default:
-                fprintf(stderr, "unknown operation");
-                exit(1);
-        }
 
-    }
     fseek(file, 0, SEEK_END);
-    fprintf(file, " = %.2f", result);
+    size_t length = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    if (length == 0)
+        return;
+
+    fread(_stringBuffer, sizeof(char), length, file);
+    _stringBuffer[length] = '\0';
+
+    fclose(file);
+
+  WordDescriptor word;
+   getWordWithoutSpace(source_word, &word);
+    sort_word_letters(&word);
+
+    BagOfWords words = {.size = 0};
+    char* begin_search = _stringBuffer;
+    while (getWordWithoutSpace(begin_search, &words.words[words.size])) {
+        begin_search = words.words[words.size].end + 1;
+        words.size++;
+    }
+
+    file = fopen(filename, "w");
+    if (file == NULL) {
+        printf("reading error\n");
+        exit(1);
+    }
+
+    for (size_t i = 0; i < words.size; i++) {
+        if (letters_belong_word(word, words.words[i])) {
+            while (words.words[i].begin <= words.words[i].end) {
+                fprintf(file, "%c", *words.words[i].begin);
+                words.words[i].begin++;
+            }
+            fprintf(file, " ");
+        }
+    }
+
+    fprintf(file, "%c", '\0');
+
 
     fclose(file);
 }
-
-void test_evaluate_expression_empty() {
-    /* если файл пуст, то будет выведено сообщение unknown operation */
+void test_filter_word_1_empty_file() {
+    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\4 tasks\\4_1.txt";
+    generate_string(filename, "");
+    char source_word[] = "source";
+    filter_word(filename, source_word);
+    FILE *file = fopen(filename, "r");
+    char data[10] = "";
+    fscanf(file, "%s", data);
+    fclose(file);
+    assert(strcmp(data, "") == 0);
 }
-
-void test_evaluate_expression_2_operation() {
-    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\3 tasks\\3_2.txt";
-    char expression[] = "(8 * 9)";
-    FILE *f = fopen(filename, "w");
-    fputs(expression, f);
-    fclose(f);
-    evaluate_expression("C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\3 tasks\\3_2.txt");
-    f = fopen(filename, "r");
-    char data[50] = "";
-    fgets(data, sizeof(data), f);
-    fclose(f);
-    char result[] = "(8*9)=72.0";
-    assert(strcmp(result, data));
+void test_filter_word_2() {
+    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\4 tasks\\4_2.txt";
+    generate_string(filename, "fkjsdfnkdjfn");
+    char source_word[] = "amogus";
+    filter_word(filename, source_word);
+    FILE *file = fopen(filename, "r");
+    char data[10] = "";
+    fscanf(file, "%s", data);
+    fclose(file);
+    assert(strcmp(data, "") == 0);
 }
-
-void test_evaluate_expression_3_operation() {
-    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\3 tasks\\3_3.txt";
-    char expression[] = "(8 * 9)+10";
-    FILE *f = fopen(filename, "w");
-    fputs(expression, f);
-    fclose(f);
-    evaluate_expression("C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\3 tasks\\3_3.txt");
-    f = fopen(filename, "r");
-    char data[50] = "";
-    fgets(data, sizeof(data), f);
-    fclose(f);
-    char result[] = "(8*9)+10=82.0";
-    assert(strcmp(result, data));
+void test_filter_word_3() {
+    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\4 tasks\\4_3.txt";
+    generate_string(filename, "Herald of Darkness");
+    char source_word[] = "Her";
+    filter_word(filename, source_word);
+    FILE *file = fopen(filename, "r");
+    char data[100] = "";
+    fscanf(file, "%s", data);
+    fclose(file);
+    assert(strcmp(data, "Herald") == 0);
 }
-
-void test_evaluate_expression() {
-    test_evaluate_expression_empty();
-    test_evaluate_expression_2_operation();
-    test_evaluate_expression_3_operation();
+void test_filter_word(){
+    test_filter_word_1_empty_file();
+    test_filter_word_2();
+    test_filter_word_3();
 }
-
 int main() {
-    test_evaluate_expression();
+    test_filter_word();
 }
