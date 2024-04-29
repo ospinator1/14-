@@ -51,5 +51,5 @@ int* back(vector *v);
 
 //возвращает указатель на нулевой элемент вектора.
 int* vector_front(vector* v);
-
+void deleteVector(vector *v);
 #endif

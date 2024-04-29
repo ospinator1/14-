@@ -36,8 +36,9 @@ void reverseWords(char *str) {
 }
 void test_reverseWords1(){
     char s[]="";
+    char result[]="";
     reverseWords(s);
-    ASSERT_STRING("",s);
+    ASSERT_STRING(result,s);
 }
 void test_reverseWords2(){
     char s[]="a b c d";

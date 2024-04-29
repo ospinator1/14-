@@ -1,116 +1,132 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "libs/data_structures/matrix/matrix.h"
 #include <assert.h>
-#include <assert.h>
-#include <time.h>
-void generate_random_matrix_file(const char* filename, size_t n) {
-    srand(time(NULL));
+#include "libs/strings/string/string_.h"
+#include "libs/data_structures/vector/vectorVoid.h"
 
-    FILE* file = fopen(filename, "w");
-    if (file == NULL) {
-        printf("reading error\n");
-        exit(1);
-    }
+typedef struct vector {
+    int *data ; // указатель на элементы вектора
+    size_t size ; // размер вектора
+    size_t capacity ; // вместимость вектора
+} vector ;
 
-    fprintf(file, "%lld\n", n);
-
-    for (size_t i = 0; i < n; i++) {
-        for (size_t j = 0; j < n; j++) {
-            fprintf(file, "%d ", rand() % 10);
-        }
-
-        fprintf(file, "\n");
-    }
-
-    fclose(file);
+int getVectorValue(vector *v, size_t i) {
+    return v->data[i];
 }
-
-
-void transpose_matrix_in_file(const char* filename) {
+void convert_float(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
         printf("reading error\n");
         exit(1);
     }
 
-    size_t n;
-    fscanf(file, "%lld", &n);
+    vectorVoid v = createVectorV(0, sizeof(float));
 
-    matrix matrix = getMemMatrix((int) n , (int) n);
+    while (!feof(file)) {
+        float x;
+        fscanf(file, "%f", &x);
 
-    for (size_t i = 0; i < n; i++)
-        for (size_t j = 0; j < n; j++)
-            fscanf(file, "%d", &matrix.values[i][j]);
+        pushBackV(&v, &x);
+    }
 
     fclose(file);
 
-    transposeSquareMatrix(&matrix);
 
     file = fopen(filename, "w");
-    if (file == NULL) {
-        printf("reading error\n");
-        exit(1);
+
+    for (size_t i = 0; i < v.size; i++) {
+        float x;
+        getVectorValueV(&v, i, &x);
+        fprintf(file, "%.2f ", x);
     }
 
-    fprintf(file, "%d\n", n);
-
-    for (size_t i = 0; i < n; i++) {
-        for (size_t j = 0; j < n; j++) {
-            fprintf(file, "%d ", matrix.values[i][j]);
-        }
-
-        fprintf(file, "\n");
-    }
 
     fclose(file);
-
-    freeMemMatrix(&matrix);
 }
 
-void test_matrix_transpose_2_unit_symmetric_matrix() {
-    const char filename[] = "C:\\Users\\Assa\\Desktop\\2_2.txt";
-    int n = 3;
-    matrix m = createMatrixFromArray((int[]) {1, 0, 0,
-                                                 0, 1, 0,
-                                                 0, 0, 1}, 3, 3);
+
+void test_convert_float_1_zero_quantity() {
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\2 tasks\\2_1.txt";
+
     FILE* file = fopen(filename, "w");
-
-    fprintf(file, "%d\n", n);
-
-    for (size_t i = 0; i < n; i++) {
-        for (size_t j = 0; j < n; j++) {
-            fprintf(file, "%d ", m.values[i][j]);
-        }
-
-        fprintf(file, "\n");
-    }
-
     fclose(file);
 
 
-    transpose_matrix_in_file(filename);
+    convert_float(filename);
 
-
-    int n_result;
-    matrix result_m = getMemMatrix(n, n);
 
     file = fopen(filename, "r");
 
-    fscanf(file, "%d\n", &n_result);
-
-    for (size_t i = 0; i < n; i++)
-        for (size_t j = 0; j < n; j++)
-            fscanf(file, "%d", &result_m.values[i][j]);
+    char data[10] = "";
+    fscanf(file, "%s", data);
 
     fclose(file);
 
-    assert(areTwoMatricesEqual(&m, &result_m));
-
-    freeMemMatrix(&m);
-    freeMemMatrix(&result_m);
+    assert(strcmp(data, "0.00") == 0);
 }
-int main() {
-    test_matrix_transpose_2_unit_symmetric_matrix();
 
+
+void test_convert_float_2_one_element() {
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\2 tasks\\2_2.txt";
+    float number = 10.123;
+    FILE* file = fopen(filename, "w");
+
+    fprintf(file, "%f", number);
+
+    fclose(file);
+
+
+    convert_float(filename);
+
+
+    file = fopen(filename, "r");
+
+    char data[10] = "";
+    fscanf_s(file, "%s", data);
+
+    fclose(file);
+    char check[10] = "10.12";
+
+    assert(strcmp(data, check) == 0);
+}
+
+
+void test_convert_float_3_more_element() {
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\2 tasks\\2_3.txt";
+
+    float f1 = 1.123123;
+    float f2 = 2.232323;
+    float f3 = 3.343434;
+
+
+
+    FILE* file = fopen(filename, "w");
+
+    fprintf(file, "%f %f %f", f1, f2,f3);
+
+    fclose(file);
+
+
+    convert_float(filename);
+
+    file = fopen(filename, "r");
+
+    char data[100] = "";
+    fgets(data, sizeof(data), file);
+
+    fclose(file);
+
+    char check[100] = "1.12 2.23 3.34 ";
+
+    assert(strcmp(data, check) == 0);
+}
+
+
+void test_convert_float() {
+    test_convert_float_1_zero_quantity();
+    test_convert_float_2_one_element();
+    test_convert_float_3_more_element();
+}
+int main(){
+    test_convert_float();
 }
