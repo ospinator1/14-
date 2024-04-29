@@ -9,9 +9,9 @@
 #include <time.h>
 #include <assert.h>
 
-#include "../../data_structures/matrix/matrix.h"
+#include "../../../data_structures/matrix/matrix.h"
 
-void generate_random_matrix_file(const char *filename, size_t n) {
+void generateRandomMatrixFile(const char *filename, size_t n) {
     srand(time(NULL));
 
     FILE *file = fopen(filename, "w");
@@ -72,12 +72,12 @@ void transpose_matrix_in_file(const char *filename) {
 
     fclose(file);
 
-    freeMemMatrix(&matrix);
+
 }
 
 
 void test_matrix_transpose_1_one_element_matrix() {
-    const char filename[] = "C:\\Users\\Assa\\Desktop\\1_1.txt";
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\1 tasks\\1_1.txt";
 
     int n = 1;
     int element = 5;
@@ -106,7 +106,7 @@ void test_matrix_transpose_1_one_element_matrix() {
 
 
 void test_matrix_transpose_2_unit_symmetric_matrix() {
-    const char filename[] = "C:\\Users\\Assa\\Desktop\\1_1.txt";
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\1 tasks\\1_2.txt";
     int n = 3;
     matrix m = createMatrixFromArray((int[]) {1, 0, 0,
                                               0, 1, 0,
@@ -145,13 +145,11 @@ void test_matrix_transpose_2_unit_symmetric_matrix() {
 
     assert(areTwoMatricesEqual(&m, &result_m));
 
-    freeMemMatrix(&m);
-    freeMemMatrix(&result_m);
 }
 
 
 void test_matrix_transpose_3_matrix() {
-    const char filename[] = "C:\\Users\\Assa\\Desktop\\1_1.txt";
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\1 tasks\\1_3.txt";
     int n = 3;
     matrix m = createMatrixFromArray((int[]) {1, 2, 3,
                                               4, 5, 6,
@@ -181,12 +179,7 @@ void test_matrix_transpose_3_matrix() {
     fclose(file);
     assert(areTwoMatricesEqual(&check_matrix, &result_m));
 
-    freeMemMatrix(&m);
-    freeMemMatrix(&result_m);
-    freeMemMatrix(&check_matrix);
-    return;
 }
-
 void test_matrix_transpose() {
     test_matrix_transpose_1_one_element_matrix();
     test_matrix_transpose_2_unit_symmetric_matrix();

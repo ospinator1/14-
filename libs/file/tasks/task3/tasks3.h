@@ -1,10 +1,15 @@
+//
+// Created by Assa on 29.04.2024.
+//
 
+#ifndef UNTITLED7_TASKS3_H
+#define UNTITLED7_TASKS3_H
 #include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "libs/strings/string/string_.h"
+#include "../../../strings/string/string_.h"
 
 void generate_operand(char *filename) {
     srand(time(NULL));
@@ -130,7 +135,4 @@ void test_evaluate_expression() {
     test_evaluate_expression_2_operation();
     test_evaluate_expression_3_operation();
 }
-
-int main() {
-    test_evaluate_expression();
-}
+#endif //UNTITLED7_TASKS3_H
