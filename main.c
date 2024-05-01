@@ -2,43 +2,28 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
-#include "libs/data_structures/vector/vectorVoid.h"
-#include <math.h>
+#include "libs/data_structures/vector/vector.h"
 #include "libs/strings/string/string_.h"
 
-struct monomial {
-    int degree;
-    double coefficient;
-};
-struct monomial;
-
-void generate_polynamial(const char *filename, int lines, int word, int max_word_size) {
+void generate_numbers_array(char *filename) {
     srand(time(NULL));
     FILE *file = fopen(filename, "wb");
     if (file == NULL) {
         printf("reading error\n");
         exit(1);
     }
-    int amount_polynamial = rand() % +2;
-    for (int i = 0; i < amount_polynamial; ++i) {
-        amount_polynamial = rand() % +1;
-        amount_polynamial = rand() % +2;
-        struct monomial mono;
-        for (int j = 0; j <= amount_polynamial; ++j) {
-            mono.degree = amount_polynamial - i;
-            mono.coefficient = 2.0 * rand() / RAND_MAX - 1.0;
-            fwrite(&mono, sizeof(struct monomial), 1, file);
-        }
+    int amount_numbers = (int) rand() % 10 + 1;
+    for (int i = 0; i < amount_numbers; ++i) {
+        int x = rand() % 200 - 100;
+        fwrite(&x, sizeof(int), 1, file);
+
     }
     fclose(file);
 }
 
-double get_monomial_value(struct monomial mono, double x) {
-    return pow(x, mono.degree) * mono.coefficient;
-}
-
-void remove_polynomial(const char* filename, double x) {
-    vectorVoid v = createVectorV(16, sizeof(struct monomial));
+void rearrange_numbers(const char* filename) {
+    vector positive_numbers = vector_create(2);
+    vector negative_numbers = vector_create(2);
 
     FILE* file = fopen(filename, "rb");
     if (file == NULL) {
@@ -46,9 +31,13 @@ void remove_polynomial(const char* filename, double x) {
         exit(1);
     }
 
-  struct  monomial mono;
-    while (fread(&mono, sizeof(struct monomial), 1, file) == 1)
-        pushBackV(&v, &mono);
+    int current_number;
+    while (fread(&current_number, sizeof(int), 1, file) == 1) {
+        if (current_number >= 0)
+            pushBack(&positive_numbers, current_number);
+        else
+            pushBack(&negative_numbers, current_number);
+    }
 
     fclose(file);
 
@@ -59,117 +48,154 @@ void remove_polynomial(const char* filename, double x) {
         exit(1);
     }
 
-   struct monomial m;
-    vectorVoid temp = createVectorV(8, sizeof(struct monomial));
-    double result = 0;
-    for (size_t i = 0; i < v.size; i++) {
-        getVectorValueV(&v, i, &m);
-        pushBackV(&temp, &m);
-        result += get_monomial_value(m, x);
+    for (int i = 0; i < positive_numbers.size; i++)
+        fwrite(positive_numbers.data + i, sizeof(int), 1, file);
 
-        if (m.degree == 0) {
-            if (fabs(result) >= 0.001) {
-              struct  monomial temp_mono;
-                for (size_t j = 0; j < temp.size; j++) {
-                    getVectorValueV(&temp, j, &temp_mono);
-                    fwrite(&temp_mono, sizeof(struct monomial), 1, file);
-                }
-            }
+    for (int i = 0; i < negative_numbers.size; i++)
+        fwrite(negative_numbers.data + i, sizeof(int), 1, file);
 
-            result = 0;
-        }
-    }
-
-
+    deleteVector(&positive_numbers);
+    deleteVector(&negative_numbers);
     fclose(file);
 }
-
-void print_polynamial(char *filename) {
+void print_numbers_array(const char* filename) {
     FILE *file = fopen(filename, "rb");
     if (file == NULL) {
         printf("reading error\n");
         exit(1);
     }
-    struct monomial mono;
-    while (fread(&mono, sizeof(struct monomial), 1, file) == 1) {
-        printf("%5.2lf * x^%lld + ", mono.coefficient, mono.degree);
-        if (mono.degree == 0)
-            printf("\b\b \n");
-    }
-    fclose(file);
+
+    int x;
+    while (fread(&x, sizeof(int), 1, file))
+        printf("%d ", x);
+    printf("\n");
 }
 
-void test_remove_polynomial_empty_file() {
-    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\6 tasks\\6_1.txt";
+    void test_rearrange_numbers_1_empty_file() {
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\7 tasks\\7_1.txt";
+
     FILE *file = fopen(filename, "wb");
     fclose(file);
-    remove_polynomial(filename, 1.0);
-    file = fopen(filename, "rb");
-    char data[100] = "";
-    fscanf(file, "%s", data);
-    fclose(file);
-    assert(strcmp(data, "") == 0);
-}
 
-void test_remove_polynomial_2() {
-    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\6 tasks\\6_2.txt";
-    double x = 2.0;
-    struct monomial x1 = {.coefficient=3.0, .degree=2.0};
-    struct monomial x2 = {.coefficient=10, .degree=-2};
-    struct monomial x3 = {.coefficient=0, .degree=0};
-    FILE *file = fopen(filename, "wb");
-    fwrite(&x1, sizeof(struct monomial), 1, file);
-    fwrite(&x2, sizeof(struct monomial), 1, file);
-    fwrite(&x3, sizeof(struct monomial), 1, file);
-    fclose(file);
-  remove_polynomial(filename, x);
-    file = fopen(filename, "rb");
-    struct monomial res_x1;
-    fread(&res_x1, sizeof( struct monomial), 1, file);
-   struct monomial res_x2;
-    fread(&res_x2, sizeof( struct monomial), 1, file);
-
-
-    struct monomial res_x3;
-    fread(&res_x3, sizeof( struct monomial), 1, file);
-    fclose(file);
-    assert(x1.coefficient - res_x1.coefficient <= 0.0001 && x1.degree == res_x1.degree);
-    assert(x2.coefficient - res_x2.coefficient <= 0.0001 && x2.degree == res_x2.degree);
-    assert(x3.coefficient - res_x3.coefficient <= 0.0001 && x3.degree == res_x3.degree);
-}
-
-void test_remove_true_polynomial_3_true_expression() {
-    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\6 tasks\\6_3.txt";
-
-    double x = 1.0;
-    struct monomial x2 = {.coefficient = 1.0, .degree = 2};
-   struct monomial x1 = {.coefficient = -2.0, .degree = 1};
-  struct  monomial x3 = {.coefficient = 1.0, .degree = 0};
-
-    FILE* file = fopen(filename, "rb");
-
-    fwrite(&x2, sizeof(struct monomial), 1, file);
-    fwrite(&x1, sizeof(struct monomial), 1, file);
-    fwrite(&x3, sizeof(struct monomial), 1, file);
-
-    fclose(file);
-
-    remove_polynomial(filename, x);
+    rearrange_numbers(filename);
 
     file = fopen(filename, "rb");
 
-    char data[100] = "";
-    fscanf(file, "%s", data);
+    char data[10] = "";
+    fread(data, sizeof(data), 1, file);
 
     fclose(file);
 
     assert(strcmp(data, "") == 0);
 }
-void test_polynamial(){
-    test_remove_polynomial_empty_file();
-    test_remove_polynomial_2();
-    test_remove_true_polynomial_3_true_expression();
+
+
+void test_rearrange_numbers_2_only_negative_numbers() {
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\7 tasks\\7_2.txt";
+
+    int x1 = -1;
+    int x2 = -2;
+    int x3 = -3;
+
+    FILE *file = fopen(filename, "wb");
+
+    fwrite(&x1, sizeof(int), 1, file);
+    fwrite(&x2, sizeof(int), 1, file);
+    fwrite(&x3, sizeof(int), 1, file);
+
+    fclose(file);
+
+    rearrange_numbers(filename);
+
+    file = fopen(filename, "rb");
+
+    int res_x1, res_x2, res_x3;
+    fread(&res_x1, sizeof(int), 1, file);
+    fread(&res_x2, sizeof(int), 1, file);
+    fread(&res_x3, sizeof(int), 1, file);
+
+    fclose(file);
+
+    assert(x1 == res_x1);
+    assert(x2 == res_x2);
+    assert(x3 == res_x3);
 }
+
+
+void test_rearrange_numbers_3_only_positive_numbers() {
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\7 tasks\\7_3.txt";
+
+    int x1 = 1;
+    int x2 = 2;
+    int x3 = 3;
+
+    FILE *file = fopen(filename, "wb");
+
+    fwrite(&x1, sizeof(int), 1, file);
+    fwrite(&x2, sizeof(int), 1, file);
+    fwrite(&x3, sizeof(int), 1, file);
+
+    fclose(file);
+
+    rearrange_numbers(filename);
+
+    file = fopen(filename, "rb");
+
+    int res_x1, res_x2, res_x3;
+    fread(&res_x1, sizeof(int), 1, file);
+    fread(&res_x2, sizeof(int), 1, file);
+    fread(&res_x3, sizeof(int), 1, file);
+
+    fclose(file);
+
+    assert(x1 == res_x1);
+    assert(x2 == res_x2);
+    assert(x3 == res_x3);
+}
+
+
+void test_rearrange_numbers_4_mixed_numbers() {
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\7 tasks\\7_4.txt";
+
+    int x1 = -1;
+    int x2 = 2;
+    int x3 = -3;
+    int x4 = 3;
+
+    FILE *file = fopen(filename, "wb");
+
+    fwrite(&x1, sizeof(int), 1, file);
+    fwrite(&x2, sizeof(int), 1, file);
+    fwrite(&x3, sizeof(int), 1, file);
+    fwrite(&x4, sizeof(int), 1, file);
+
+    fclose(file);
+
+    rearrange_numbers(filename);
+
+    file = fopen(filename, "rb");
+
+    int res_x1, res_x2, res_x3, res_x4;
+    fread(&res_x1, sizeof(int), 1, file);
+    fread(&res_x2, sizeof(int), 1, file);
+    fread(&res_x3, sizeof(int), 1, file);
+    fread(&res_x4, sizeof(int), 1, file);
+
+    fclose(file);
+
+    assert(res_x1 == x2);
+    assert(res_x2 == x4);
+    assert(res_x3 == x1);
+    assert(res_x4 == x3);
+}
+
+void test_rearrange_numbers() {
+    test_rearrange_numbers_1_empty_file();
+    test_rearrange_numbers_2_only_negative_numbers();
+    test_rearrange_numbers_3_only_positive_numbers();
+    test_rearrange_numbers_4_mixed_numbers();
+}
+
 int main() {
-    test_remove_true_polynomial_3_true_expression();
+    test_rearrange_numbers();
 }
