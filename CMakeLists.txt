@@ -19,6 +19,7 @@ add_executable (untitled7 main.c
         libs/file/tasks/task2/tasks2.h
         libs/file/tasks/task3/tasks3.h
         libs/file/tasks/task4/task4.h
+        "libs/file/tasks/tasks/task5.h"
 )
 
 add_subdirectory(libs)
