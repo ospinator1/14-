@@ -34,13 +34,13 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 27,
+				"line" : 28,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 28,
+				"line" : 29,
 				"parent" : 0
 			}
 		]
@@ -148,7 +148,8 @@
 				12,
 				13,
 				14,
-				15
+				15,
+				16
 			]
 		}
 	],
@@ -237,6 +238,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "libs/file/tasks/tasks/task5.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "libs/file/tasks/task7/tasks7.h",
 			"sourceGroupIndex" : 1
 		}
 	],
