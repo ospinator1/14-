@@ -3,323 +3,165 @@
 #include <time.h>
 #include <assert.h>
 #include "libs/data_structures/vector/vector.h"
-#include "libs/data_structures/matrix/matrix.h"
 #include <windows.h>
-void generate_non_symmetric_matrix(const char* filename) {
+#include "libs/strings/string/string_.h"
+#define MAX_LENGTH_STRING 200
+#define MAX_AMOUNT_SPORTSMAN 20
+#include <math.h>
+
+
+typedef struct sportsman {
+    char name[MAX_LENGTH_STRING];
+    double best_result;
+} sportsman;
+
+
+static void generate_name(char *s) {
+    int name_length = rand() % 30 + 5;
+
+    char *rec_ptr = s;
+    for (int i = 0; i < name_length; i++) {
+        *rec_ptr = rand() % 26 + 97;
+        rec_ptr++;
+    }
+    *rec_ptr = '\0';
+}
+
+
+void generate_team(const char *filename, const int n) {
     srand(time(NULL));
 
-    FILE* file = fopen(filename, "wb");
+    FILE *file = fopen(filename, "wb");
+    if (file == NULL) {
+        printf("reading error\n");
+        exit(1);
+    }
+    for (int i = 0; i < n; i++) {
+        sportsman s;
+        generate_name(s.name);
+        s.best_result = (double) rand() / 100;
+        fwrite(&s, sizeof(sportsman), 1, file);
+    }
+    fclose(file);
+}
+
+
+void sort_sportsman(sportsman sm[], const int n) {
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n - i - 1; j++)
+            if (sm[j].best_result < sm[j + 1].best_result) {
+                sportsman temp = sm[j];
+                sm[j] = sm[j + 1];
+                sm[j + 1] = temp;
+            }
+}
+
+void getBestTeam(const char *filename, const int n) {
+    FILE *file = fopen(filename, "rb");
     if (file == NULL) {
         printf("reading error\n");
         exit(1);
     }
 
-    int n = rand() % 2 + 2;
-    fwrite(&n, sizeof(int), 1, file);
+    sportsman *team = (sportsman *) malloc(MAX_AMOUNT_SPORTSMAN * sizeof(sportsman));
 
-    int amount_matrix = rand() % 3 + 1;
-
-    for (int k = 0; k < amount_matrix; k++) {
-        int matrix[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                matrix[i][j] = rand() % 100;
-            }
-        }
-        fwrite(matrix, sizeof(int), n * n, file);
+    sportsman *rec_ptr = team;
+    int amount_sportsman = 0;
+    while (fread(rec_ptr, sizeof(sportsman), 1, file) == 1) {
+        rec_ptr++;
+        amount_sportsman++;
     }
 
     fclose(file);
-}
 
 
-int is_symmetric(int n, int matrix[n][n]) {
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            if (matrix[i][j] != matrix[j][i])
-                return 0;
-    return 1;
-}
-
-
-void swap(int* a, int* b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-
-void transpose(int n, int matrix[n][n]) {
-    for (int i = 0; i < n; i++)
-        for (int j = i + 1; j < n; j++)
-            swap(&matrix[i][j], &matrix[j][i]);
-}
-
-void transpose_non_symmetric_matrix(const char* filename) {
-    FILE* file = fopen(filename, "r+b");
-    if (file == NULL) {
-        printf("Ошибка при открытии файла.\n");
-        return;
-    }
-
-    int n;
-    if (fread(&n, sizeof(int), 1, file) != 1) {
-        printf("Ошибка при чтении порядка матрицы.\n");
-        fclose(file);
-        return;
-    }
-
-    while(1) {
-        int matrix[n][n];
-        size_t read_count = fread(matrix, sizeof(int), n * n, file);
-        if (read_count != n * n) {
-            if (feof(file)) {
-                break;
-            } else {
-                printf("Ошибка при чтении матрицы.\n");
-                break;
-            }
-        }
-
-        if (!is_symmetric(n, matrix)) {
-            transpose(n, matrix);
-            fseek(file, -(long int)read_count * sizeof(int), SEEK_CUR);
-            fwrite(matrix, sizeof(int), read_count, file);
-            fseek(file, (long int)read_count * sizeof(int), SEEK_CUR); // Перемещаем указатель вперед
-        }
-    }
-
-    fclose(file);
-}
-
-void print_bin_file_matrix(const char* filename) {
-    FILE* file = fopen(filename, "rb");
+    file = fopen(filename, "wb");
     if (file == NULL) {
         printf("reading error\n");
         exit(1);
     }
 
-    int n;
-    fread(&n, sizeof(int), 1, file);
+    sort_sportsman(team, amount_sportsman);
 
-    if (n == 0)
-        return;
+    int amount_in_team = amount_sportsman >= n ? n : amount_sportsman;
 
-    while (!feof(file)) {
-        int matrix[n][n];
-        if (fread(matrix, sizeof(int), n * n, file) != n * n)
-            break;
+    for (int i = 0; i < amount_in_team; i++) {
+        fwrite(team + i, sizeof(sportsman), 1, file);
+    }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                printf("%d ", matrix[i][j]);
-            }
-            printf("\n");
-        }
+    free(team);
+    fclose(file);
+}
+
+void print_team(char *filename) {
+    FILE *file = fopen(filename, "rb");
+    if (file == NULL) {
+        printf("reading error\n");
+        exit(1);
+    }
+    sportsman s;
+    while (fread(&s, sizeof(sportsman), 1, file) == 1) {
+        printf("%s %lf", s.name, s.best_result);
         printf("\n");
+
     }
-
     fclose(file);
 }
-
-void test_transpose_non_symmetric_matrix_1_empty_matrix() {
-    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\8 tasks\\8_1.txt";
-
-    int n = 0;
-    FILE* file = fopen(filename, "wb");
-
-    fwrite(&n, sizeof(int), 1, file);
-
+void test_getBestTeam_empty(){
+    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\9 tasks\\9_1.txt";
+    FILE *file= fopen(filename,"wb");
     fclose(file);
-
-
+    getBestTeam(filename,0);
     file = fopen(filename, "rb");
-
-    int res_n;
-    fread(&res_n, sizeof(int), 1, file);
-
+    char data[100] = "";
+    fread(data, sizeof(data), 1, file);
     fclose(file);
-
-    assert(n == res_n);
+    assert(strcmp(data, "") == 0);
 }
 
-
-void test_transpose_non_symmetric_matrix_2_one_matrices() {
-    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\8 tasks\\8_2.txt";
-
-    int n = 1;
-    int x1 = 1;
-    int x2 = 10;
-
-    FILE* file = fopen(filename, "wb");
-
-    fwrite(&n, sizeof(int), 1, file);
-    fwrite(&x1, sizeof(int), 1, file);
-    fwrite(&x2, sizeof(int), 1, file);
-
+void test_getBestTeam_1() {
+    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\9 tasks\\9_2.txt";
+    FILE *file = fopen(filename, "wb");
+    sportsman sportsman1 = {.name="Alex", .best_result=10.5};
+    sportsman sportsman2 = {.name="Alan", .best_result=10.0};
+    fwrite(&sportsman1, sizeof(sportsman), 1, file);
+    fwrite(&sportsman2, sizeof(sportsman), 1, file);
     fclose(file);
-
-    int res_n, res_x1, res_x2;
+    getBestTeam(filename, 3);
     file = fopen(filename, "rb");
-
-    fread(&res_n, sizeof(int), 1, file);
-    fread(&res_x1, sizeof(int), 1, file);
-    fread(&res_x2, sizeof(int), 1, file);
-
+    sportsman result_s1, result_s2;
+    fread(&result_s1, sizeof(sportsman), 1, file);
+    fread(&result_s2, sizeof(sportsman), 1, file);
     fclose(file);
-
-    assert(res_n == n);
-    assert(res_x1 == x1);
-    assert(res_x2 == x2);
+    assert(strcmp((const char *) &sportsman1.name, (const char *) &result_s1.name) == 0 &&
+           fabs(sportsman1.best_result - result_s1.best_result) <= 0.001);
+    assert(strcmp((const char *) &sportsman1.name, (const char *) &result_s1.name) == 0 &&
+           fabs(sportsman1.best_result - result_s1.best_result) <= 0.001);
 }
 
-
-void test_transpose_non_symmetric_matrix_3_symmetric_matrix() {
-    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\8 tasks\\8_3.txt";
-
-    FILE* file = fopen(filename, "wb");
-
-    int n = 3;
-    matrix m = createMatrixFromArray((int[]) {1, 0, 0,
-                                                 0, 1, 0,
-                                                 0, 0, 1}, 3, 3);
-
-    fwrite(&n, sizeof(int), 1, file);
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            fwrite(&m.values[i][j], sizeof(int), 1, file);
-
+void test_getBestTeam_2(){
+    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\9 tasks\\9_3.txt";
+    FILE *file = fopen(filename, "wb");
+    sportsman sportsman1 = {.name="Alex", .best_result=10.5};
+    sportsman sportsman2 = {.name="Alan", .best_result=10.0};
+    fwrite(&sportsman1, sizeof(sportsman), 1, file);
+    fwrite(&sportsman2, sizeof(sportsman), 1, file);
     fclose(file);
-
-    transpose_non_symmetric_matrix(filename);
-
+    getBestTeam(filename, 1);
     file = fopen(filename, "rb");
-
-    int res_n;
-    fread(&res_n, sizeof(int), 1, file);
-    matrix res_m = getMemMatrix(res_n, res_n);
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            fread(&res_m.values[i][j], sizeof(int), 1, file);
+    sportsman result_s1;
+    fread(&result_s1, sizeof(sportsman), 1, file);
 
     fclose(file);
-
-    assert(areTwoMatricesEqual(&res_m, &m));
-
-
+    assert(strcmp((const char *) &sportsman1.name, (const char *) &result_s1.name) == 0 &&
+           fabs(sportsman1.best_result - result_s1.best_result) <= 0.001);
 }
-
-
-void test_transpose_non_symmetric_matrix_4_non_symmetric_matrix() {
-    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\8 tasks\\8_4.txt";
-
-    FILE* file = fopen(filename, "wb");
-
-    int n = 3;
-    matrix m = createMatrixFromArray((int[]) {1, 2, 3,
-                                                 4, 5, 6,
-                                                 7, 8, 9}, 3, 3);
-
-    fwrite(&n, sizeof(int), 1, file);
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            fwrite(&m.values[i][j], sizeof(int), 1, file);
-
-    fclose(file);
-
-    transpose_non_symmetric_matrix(filename);
-
-    file = fopen(filename, "rb");
-
-    int res_n;
-    fread(&res_n, sizeof(int), 1, file);
-    matrix res_m = getMemMatrix(res_n, res_n);
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            fread(&res_m.values[i][j], sizeof(int), 1, file);
-
-    fclose(file);
-
-    matrix check = createMatrixFromArray((int[]) {1, 4, 7,
-                                                     2, 5, 8,
-                                                     3, 6, 9}, 3, 3);
-
-    assert(res_n == n);
-    assert(areTwoMatricesEqual(&res_m, &check));
-
-
+void test_getBestTeam(){
+    test_getBestTeam_empty();
+    test_getBestTeam_1();
+    test_getBestTeam_2();
 }
-
-
-void test_transpose_non_symmetric_matrix_5_mixed_matrix() {
-    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\8 tasks\\8_5.txt";
-
-    FILE* file = fopen(filename, "wb");
-
-    int n = 3;
-    matrix m1 = createMatrixFromArray((int[]) {1, 0, 0,
-                                                  0, 1, 0,
-                                                  0, 0, 1}, 3, 3);
-
-    matrix m2 = createMatrixFromArray((int[]) {1, 2, 3,
-                                                  4, 5, 6,
-                                                  7, 8, 9}, 3, 3);
-
-    fwrite(&n, sizeof(int), 1, file);
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            fwrite(&m1.values[i][j], sizeof(int), 1, file);
-
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            fwrite(&m2.values[i][j], sizeof(int), 1, file);
-
-    fclose(file);
-
-    transpose_non_symmetric_matrix(filename);
-
-    file = fopen(filename, "rb");
-
-    int res_n;
-    matrix check1 = createMatrixFromArray((int[]) {1, 0, 0,
-                                                      0, 1, 0,
-                                                      0, 0, 1}, 3, 3);
-    matrix check2 = createMatrixFromArray((int[]) {1, 4, 7,
-                                                      2, 5, 8,
-                                                      3, 6, 9}, 3, 3);
-
-    fread(&res_n, sizeof(int), 1, file);
-
-    matrix res_m1 = getMemMatrix(res_n, res_n);
-    matrix res_m2 = getMemMatrix(res_n, res_n);
-
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            fread(&res_m1.values[i][j], sizeof(int), 1, file);
-
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            fread(&res_m2.values[i][j], sizeof(int), 1, file);
-
-    fclose(file);
-
-    assert(res_n == n);
-    assert(areTwoMatricesEqual(&res_m1, &check1));
-    assert(areTwoMatricesEqual(&res_m2, &check2));
-
-
-}
-
-
-void test_transpose_non_symmetric_matrix() {
-    test_transpose_non_symmetric_matrix_1_empty_matrix();
-    test_transpose_non_symmetric_matrix_2_one_matrices();
-    test_transpose_non_symmetric_matrix_3_symmetric_matrix();
-    test_transpose_non_symmetric_matrix_4_non_symmetric_matrix();
-    test_transpose_non_symmetric_matrix_5_mixed_matrix();
-}
-
 int main() {
     SetConsoleOutputCP(CP_UTF8);
-    test_transpose_non_symmetric_matrix();
+    test_getBestTeam();
 }
