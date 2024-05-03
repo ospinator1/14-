@@ -16,7 +16,7 @@ void generateFloat(const char* filename, int n) {
 
     FILE* file = fopen(filename, "w");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
 
@@ -28,7 +28,7 @@ void generateFloat(const char* filename, int n) {
 void convert_float(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
 
@@ -56,24 +56,16 @@ void convert_float(const char* filename) {
     fclose(file);
 }
 
-
 void test_convert_float_1_zero_quantity() {
     const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\2 tasks\\2_1.txt";
 
     FILE* file = fopen(filename, "w");
     fclose(file);
-
-
     convert_float(filename);
-
-
     file = fopen(filename, "r");
-
     char data[10] = "";
     fscanf(file, "%s", data);
-
     fclose(file);
-
     assert(strcmp(data, "0.00") == 0);
 }
 
@@ -82,54 +74,31 @@ void test_convert_float_2_one_element() {
     const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\2 tasks\\2_2.txt";
     float number = 10.123;
     FILE* file = fopen(filename, "w");
-
     fprintf(file, "%f", number);
-
     fclose(file);
-
-
     convert_float(filename);
-
-
     file = fopen(filename, "r");
-
     char data[10] = "";
     fscanf_s(file, "%s", data);
-
     fclose(file);
     char check[10] = "10.12";
-
     assert(strcmp(data, check) == 0);
 }
 
-
 void test_convert_float_3_more_element() {
     const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\2 tasks\\2_3.txt";
-
     float f1 = 1.123123;
     float f2 = 2.232323;
     float f3 = 3.343434;
-
-
-
     FILE* file = fopen(filename, "w");
-
     fprintf(file, "%f %f %f", f1, f2,f3);
-
     fclose(file);
-
-
     convert_float(filename);
-
     file = fopen(filename, "r");
-
     char data[100] = "";
     fgets(data, sizeof(data), file);
-
     fclose(file);
-
     char check[100] = "1.12 2.23 3.34 ";
-
     assert(strcmp(data, check) == 0);
 }
 

@@ -15,7 +15,7 @@ void generate_numbers_array(char *filename) {
     srand(time(NULL));
     FILE *file = fopen(filename, "wb");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
     int amount_numbers = (int) rand() % 10 + 1;
@@ -33,7 +33,7 @@ void rearrange_numbers(const char* filename) {
 
     FILE* file = fopen(filename, "rb");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
 
@@ -50,7 +50,7 @@ void rearrange_numbers(const char* filename) {
 
     file = fopen(filename, "wb");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
 
@@ -67,7 +67,7 @@ void rearrange_numbers(const char* filename) {
 void print_numbers_array(const char* filename) {
     FILE *file = fopen(filename, "rb");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
 
@@ -115,7 +115,6 @@ void test_rearrange_numbers_2_only_negative_numbers() {
 
 void test_rearrange_numbers_3_only_positive_numbers() {
     const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\7 tasks\\7_3.txt";
-
     int x1 = 1;
     int x2 = 2;
     int x3 = 3;
@@ -130,9 +129,7 @@ void test_rearrange_numbers_3_only_positive_numbers() {
     fread(&res_x1, sizeof(int), 1, file);
     fread(&res_x2, sizeof(int), 1, file);
     fread(&res_x3, sizeof(int), 1, file);
-
     fclose(file);
-
     assert(x1 == res_x1);
     assert(x2 == res_x2);
     assert(x3 == res_x3);
@@ -158,9 +155,7 @@ void test_rearrange_numbers_4_mixed_numbers() {
     fread(&res_x2, sizeof(int), 1, file);
     fread(&res_x3, sizeof(int), 1, file);
     fread(&res_x4, sizeof(int), 1, file);
-
     fclose(file);
-
     assert(res_x1 == x2);
     assert(res_x2 == x4);
     assert(res_x3 == x1);

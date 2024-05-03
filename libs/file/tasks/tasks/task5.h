@@ -34,29 +34,21 @@ void generate_text(const char *filename, int lines, int word, int max_word_size)
         fprintf(file, "\n");
     }
     fclose(file);
-
 }
 
 void leave_longest_word(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
-
-
     char buff[MAX_LINE_SIZE] = "";
     char* rec_ptr = _stringBuffer;
-
     fgets(buff, sizeof(buff), file);
-
     size_t length = strlen_(buff);
     length = length == 0 ? 1 : length;
-
     rec_ptr = copy(buff, buff + length - 1, rec_ptr);
     *rec_ptr++ = ' ';
-
-
     size_t amount_word_in_line = 0;
     char* begin_search = _stringBuffer;
     while (getWordWithoutSpace(begin_search, &_bag.words[_bag.size])) {
@@ -64,8 +56,6 @@ void leave_longest_word(const char* filename) {
         amount_word_in_line++;
         _bag.size++;
     }
-
-
     while (fgets(buff, sizeof(buff), file)) {
         rec_ptr = copy(buff, buff + strlen_(buff) - 1, rec_ptr);
         *rec_ptr++ = ' ';
@@ -75,16 +65,12 @@ void leave_longest_word(const char* filename) {
             _bag.size++;
         }
     }
-
     fclose(file);
-
-
     file = fopen(filename, "w");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
-
     for (size_t i = 0; i < _bag.size; i += amount_word_in_line) {
         WordDescriptor word_max_length = _bag.words[i];
         size_t max_length = word_max_length.end - word_max_length.begin + 1;
@@ -97,7 +83,6 @@ void leave_longest_word(const char* filename) {
                 max_length = current_length;
             }
         }
-
         char* write_ptr = word_max_length.begin;
         while (write_ptr <= word_max_length.end) {
             fprintf(file, "%c", *write_ptr);
@@ -106,7 +91,6 @@ void leave_longest_word(const char* filename) {
 
         fprintf(file, "\n");
     }
-
     free_bag(&_bag);
     fclose(file);
 }
@@ -129,30 +113,20 @@ void test_printf_long_word_2_one_element(){
     char line1[] = "abcd";
     char line2[] = "efg";
     char line3[] = "hi";
-
     FILE* file = fopen(filename, "w");
-
     fprintf(file, "%s \n", line1);
     fprintf(file, "%s \n", line2);
     fprintf(file, "%s \n", line3);
-
     fclose(file);
-
     leave_longest_word(filename);
-
     file = fopen(filename, "r");
-
     char res_line1[10] = "";
     fscanf(file, "%s\n", res_line1);
-
     char res_line2[10] = "";
     fscanf(file, "%s\n", res_line2);
-
     char res_line3[10] = "";
     fscanf(file, "%s\n", res_line3);
-
     fclose(file);
-
     assert(strcmp(line1, res_line1) == 0);
     assert(strcmp(line2, res_line2) == 0);
     assert(strcmp(line3, res_line3) == 0);
@@ -162,38 +136,26 @@ void test_printf_long_word_3_more_element() {
     char line1[] = "Herald of Darkness ";
     char line2[] = "Alan Wake ";
     char line3[] =  "Old Gods of Asgard";
-
-
     FILE* file = fopen(filename, "w");
-
     fputs(line1, file);
     fprintf(file, "\n");
     fputs(line2, file);
     fprintf(file, "\n");
     fputs(line3, file);
     fprintf(file, "\n");
-
     fclose(file);
-
     leave_longest_word(filename);
-
     file = fopen(filename, "r");
-
     char res_line1[20] = " ";
     fscanf(file, "%s\n", res_line1);
-
     char res_line2[10] = " ";
     fscanf(file, "%s\n", res_line2);
-
     char res_line3[10] = " ";
     fscanf(file, "%s\n", res_line3);
-
     fclose(file);
-
     char check1[] = "Darkness";
     char check2[] = "Alan";
     char check3[] = "Asgard";
-
     assert(strcmp(check1, res_line1) == 0);
     assert(strcmp(check2, res_line2) == 0);
     assert(strcmp(check3, res_line3) == 0);

@@ -33,13 +33,12 @@ static void generate_name(char *s) {
     *rec_ptr = '\0';
 }
 
-
 void generate_team(const char *filename, const int n) {
     srand(time(NULL));
 
     FILE *file = fopen(filename, "wb");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
     for (int i = 0; i < n; i++) {
@@ -50,7 +49,6 @@ void generate_team(const char *filename, const int n) {
     }
     fclose(file);
 }
-
 
 void sort_sportsman(sportsman sm[], const int n) {
     for (int i = 0; i < n; i++)
@@ -65,36 +63,27 @@ void sort_sportsman(sportsman sm[], const int n) {
 void getBestTeam(const char *filename, const int n) {
     FILE *file = fopen(filename, "rb");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
-
     sportsman *team = (sportsman *) malloc(MAX_AMOUNT_SPORTSMAN * sizeof(sportsman));
-
     sportsman *rec_ptr = team;
     int amount_sportsman = 0;
     while (fread(rec_ptr, sizeof(sportsman), 1, file) == 1) {
         rec_ptr++;
         amount_sportsman++;
     }
-
     fclose(file);
-
-
     file = fopen(filename, "wb");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
-
     sort_sportsman(team, amount_sportsman);
-
     int amount_in_team = amount_sportsman >= n ? n : amount_sportsman;
-
     for (int i = 0; i < amount_in_team; i++) {
         fwrite(team + i, sizeof(sportsman), 1, file);
     }
-
     free(team);
     fclose(file);
 }
@@ -102,14 +91,13 @@ void getBestTeam(const char *filename, const int n) {
 void print_team(char *filename) {
     FILE *file = fopen(filename, "rb");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("ошибка чтения\n");
         exit(1);
     }
     sportsman s;
     while (fread(&s, sizeof(sportsman), 1, file) == 1) {
         printf("%s %lf", s.name, s.best_result);
         printf("\n");
-
     }
     fclose(file);
 }
@@ -124,7 +112,6 @@ void test_getBestTeam_empty(){
     fclose(file);
     assert(strcmp(data, "") == 0);
 }
-
 void test_getBestTeam_1() {
     char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\9 tasks\\9_2.txt";
     FILE *file = fopen(filename, "wb");
@@ -144,7 +131,6 @@ void test_getBestTeam_1() {
     assert(strcmp((const char *) &sportsman1.name, (const char *) &result_s1.name) == 0 &&
            fabs(sportsman1.best_result - result_s1.best_result) <= 0.001);
 }
-
 void test_getBestTeam_2(){
     char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\9 tasks\\9_3.txt";
     FILE *file = fopen(filename, "wb");

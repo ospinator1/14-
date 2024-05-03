@@ -23,41 +23,32 @@ void sort_word_letters(WordDescriptor * word) {
     qsort(word->begin, word->end - word->begin + 1, sizeof(char), compare_letters);
 }
 
-
 bool letters_belong_word(WordDescriptor sub_word, WordDescriptor word) {
     bool include[26] = {0};
-
     char* start = word.begin;
     char* end = word.end + 1;
-
     while (start != end) {
         if (isalpha(*start))
             include[*start - Letters] = true;
 
         start++;
     }
-
     while (sub_word.begin <= sub_word.end) {
         if (!include[*sub_word.begin - Letters])
             return false;
 
         sub_word.begin++;
     }
-
     return true;
 }
-
-
 
 void generate_string(const char* filename, char* source_string) {
     FILE* file = fopen(filename, "w");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
-
-    size_t string_length = strlen_(source_string);
-
+    int string_length = strlen_(source_string);
     for (size_t i = 0; i <= string_length; i++)
         fprintf(file, "%c", source_string[i]);
 
@@ -68,22 +59,17 @@ void generate_string(const char* filename, char* source_string) {
 void filter_word(const char* filename, char* source_word) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошиька чтения\n");
         exit(1);
     }
-
     fseek(file, 0, SEEK_END);
     size_t length = ftell(file);
     fseek(file, 0, SEEK_SET);
-
     if (length == 0)
         return;
-
     fread(_stringBuffer, sizeof(char), length, file);
     _stringBuffer[length] = '\0';
-
     fclose(file);
-
     WordDescriptor word;
     getWordWithoutSpace(source_word, &word);
     sort_word_letters(&word);
@@ -94,13 +80,11 @@ void filter_word(const char* filename, char* source_word) {
         begin_search = words.words[words.size].end + 1;
         words.size++;
     }
-
     file = fopen(filename, "w");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
-
     for (size_t i = 0; i < words.size; i++) {
         if (letters_belong_word(word, words.words[i])) {
             while (words.words[i].begin <= words.words[i].end) {
@@ -110,10 +94,7 @@ void filter_word(const char* filename, char* source_word) {
             fprintf(file, " ");
         }
     }
-
     fprintf(file, "%c", '\0');
-
-
     fclose(file);
 }
 void test_filter_word_1_empty_file() {

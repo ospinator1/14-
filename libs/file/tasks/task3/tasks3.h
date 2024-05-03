@@ -16,7 +16,7 @@ void generate_operand(char *filename) {
 
     FILE *file = fopen(filename, "w");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
     int x1 = rand() % 10;
@@ -36,7 +36,7 @@ void generate_operand(char *filename) {
 void evaluate_expression(const char *filename) {
     FILE *file = fopen(filename, "r+");
     if (file == NULL) {
-        printf("reading error\n");
+        printf("Ошибка чтения\n");
         exit(1);
     }
     int x1, x2, x3;
