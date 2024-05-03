@@ -2,166 +2,334 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
-#include "libs/data_structures/vector/vector.h"
+#include "libs/data_structures/vector/vectorVoid.h"
 #include <windows.h>
 #include "libs/strings/string/string_.h"
+
 #define MAX_LENGTH_STRING 200
-#define MAX_AMOUNT_SPORTSMAN 20
-#include <math.h>
 
 
-typedef struct sportsman {
-    char name[MAX_LENGTH_STRING];
-    double best_result;
-} sportsman;
+typedef struct product {
+    char product_name[MAX_LENGTH_STRING];
+    int unit_price;
+    int total_cost;
+    int quantity;
+} product;
 
 
-static void generate_name(char *s) {
-    int name_length = rand() % 30 + 5;
-
-    char *rec_ptr = s;
-    for (int i = 0; i < name_length; i++) {
-        *rec_ptr = rand() % 26 + 97;
-        rec_ptr++;
-    }
-    *rec_ptr = '\0';
-}
+typedef struct order {
+    char order_name[MAX_LENGTH_STRING];
+    int quantity;
+} order;
 
 
-void generate_team(const char *filename, const int n) {
+void generate_product_and_order(const char* filename1, const char* filename2) {
     srand(time(NULL));
 
-    FILE *file = fopen(filename, "wb");
-    if (file == NULL) {
+    FILE* file1 = fopen(filename1, "wb");
+    if (file1 == NULL) {
         printf("reading error\n");
         exit(1);
     }
-    for (int i = 0; i < n; i++) {
-        sportsman s;
-        generate_name(s.name);
-        s.best_result = (double) rand() / 100;
-        fwrite(&s, sizeof(sportsman), 1, file);
+
+    FILE* file2 = fopen(filename2, "wb");
+    if (file2 == NULL) {
+        printf("reading error\n");
+        exit(1);
     }
-    fclose(file);
-}
 
+    int amount_product = rand() % 15 + 1;
+    int amount_order = amount_product % 2 + 1;
 
-void sort_sportsman(sportsman sm[], const int n) {
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n - i - 1; j++)
-            if (sm[j].best_result < sm[j + 1].best_result) {
-                sportsman temp = sm[j];
-                sm[j] = sm[j + 1];
-                sm[j + 1] = temp;
+    for (int i = 0; i < amount_product; i++) {
+        product pr;
+        order od;
+
+        pr.unit_price = rand() % 100 + 1;
+        pr.quantity = rand() % 20 + 1;
+        pr.total_cost = pr.unit_price * pr.quantity;
+
+        int name_length = rand() % 10 + 1;
+        char* product_rec_ptr = pr.product_name;
+        char* order_rec_ptr = od.order_name;
+
+        for (int j = 0; j < name_length; j++) {
+            char ch = rand() % 26 + 97;
+
+            *product_rec_ptr = ch;
+            product_rec_ptr++;
+
+            if (amount_order > 0) {
+                *order_rec_ptr = ch;
+                order_rec_ptr++;
             }
+        }
+
+        *product_rec_ptr = '\0';
+        if (amount_order > 0) {
+            *order_rec_ptr = '\0';
+            od.quantity = rand() % 25 + 1;
+        }
+
+        fwrite(&pr, sizeof(product), 1, file1);
+        if (amount_order > 0)
+            fwrite(&od, sizeof(order), 1, file2);
+
+        amount_order--;
+    }
+
+    fclose(file1);
+    fclose(file2);
 }
 
-void getBestTeam(const char *filename, const int n) {
-    FILE *file = fopen(filename, "rb");
-    if (file == NULL) {
+
+void update_product(const char* filename1, const char* filename2) {
+    vectorVoid v1 = createVectorV(16, sizeof(product));
+    vectorVoid v2 = createVectorV(16, sizeof(order));
+
+    FILE* file1 = fopen(filename1, "rb");
+    if (file1 == NULL) {
         printf("reading error\n");
         exit(1);
     }
 
-    sportsman *team = (sportsman *) malloc(MAX_AMOUNT_SPORTSMAN * sizeof(sportsman));
+    product pr;
+    while (fread(&pr, sizeof(product), 1, file1) == 1)
+        pushBackV(&v1, &pr);
 
-    sportsman *rec_ptr = team;
-    int amount_sportsman = 0;
-    while (fread(rec_ptr, sizeof(sportsman), 1, file) == 1) {
-        rec_ptr++;
-        amount_sportsman++;
-    }
-
-    fclose(file);
+    fclose(file1);
 
 
-    file = fopen(filename, "wb");
-    if (file == NULL) {
+    FILE* file2 = fopen(filename2, "rb");
+    if (file2 == NULL) {
         printf("reading error\n");
         exit(1);
     }
 
-    sort_sportsman(team, amount_sportsman);
+    order od;
+    while (fread(&od, sizeof(order), 1, file2) == 1)
+        pushBackV(&v2, &od);
 
-    int amount_in_team = amount_sportsman >= n ? n : amount_sportsman;
+    for (size_t i = 0; i < v1.size; i++) {
+        product curr_pr;
+        getVectorValueV(&v1, i, &curr_pr);
+        for (size_t j = 0; j < v2.size; j++) {
+            order curr_od;
+            getVectorValueV(&v2, j, &curr_od);
 
-    for (int i = 0; i < amount_in_team; i++) {
-        fwrite(team + i, sizeof(sportsman), 1, file);
+            if (strcmp(curr_pr.product_name, curr_od.order_name) == 0) {
+                curr_pr.quantity = pr.quantity > od.quantity ? pr.quantity - od.quantity : 0;
+                curr_pr.total_cost = pr.unit_price * curr_pr.quantity;
+                setVectorValueV(&v1, i, &curr_pr);
+            }
+        }
     }
 
-    free(team);
-    fclose(file);
+    file1 = fopen(filename1, "wb");
+
+    for (size_t i = 0; i < v1.size; i++) {
+        product read_pr;
+        getVectorValueV(&v1, i, &read_pr);
+        if (read_pr.quantity != 0)
+            fwrite(&read_pr, sizeof(product), 1, file1);
+    }
+
+    fclose(file1);
+    fclose(file2);
 }
 
-void print_team(char *filename) {
-    FILE *file = fopen(filename, "rb");
-    if (file == NULL) {
+
+void print_product_and_order(const char* filename1, const char* filename2) {
+    printf("Product: \n");
+
+    FILE* file1 = fopen(filename1, "rb");
+    if (file1 == NULL) {
         printf("reading error\n");
         exit(1);
     }
-    sportsman s;
-    while (fread(&s, sizeof(sportsman), 1, file) == 1) {
-        printf("%s %lf", s.name, s.best_result);
-        printf("\n");
 
+    product pr;
+    while (fread(&pr, sizeof(product), 1, file1) == 1) {
+        printf("name: %s unit price: %d total cost: %d quantity: %d\n", pr.product_name, pr.unit_price, pr.total_cost, pr.quantity);
     }
-    fclose(file);
+
+    fclose(file1);
+
+
+    printf("Order: \n");
+
+    FILE* file2 = fopen(filename2, "rb");
+    if (file2 == NULL) {
+        printf("reading error\n");
+        exit(1);
+    }
+
+    order od;
+    while (fread(&od, sizeof(order), 1, file2) == 1)
+        printf("name: %s quantity: %d\n", od.order_name, od.quantity);
+
+    fclose(file2);
 }
-void test_getBestTeam_empty(){
-    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\9 tasks\\9_1.txt";
-    FILE *file= fopen(filename,"wb");
+
+void test_update_product_empty(){
+    char filename1[]="C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\10 tasks\\2 empty file\\10_1.txt";
+    char filename2[]="C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\10 tasks\\2 empty file\\10_2.txt";
+    FILE *file= fopen(filename1,"wb");
     fclose(file);
-    getBestTeam(filename,0);
-    file = fopen(filename, "rb");
-    char data[100] = "";
+    file=fopen(filename2,"wb");
+    fclose(file);
+    update_product(filename1,filename2);
+    char data1[10] = "";
+    file = fopen(filename1, "rb");
+    fread(data1, sizeof(data1), 1, file);
+    fclose(file);
+    char data2[10] = "";
+    file = fopen(filename1, "rb");
+    fread(data2, sizeof(data2), 1, file);
+    fclose(file);
+    assert(strcmp(data1, "") == 0);
+    assert(strcmp(data2, "") == 0);
+}
+void test_update_product_1_empty(){
+    char filename1[]="C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\10 tasks\\first empty file\\10_1.txt";
+    char filename2[]="C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\10 tasks\\first empty file\\10_2.txt";
+    FILE* file = fopen(filename1, "wb");
+    fclose(file);
+    file = fopen(filename2, "wb");
+    order or = {.order_name="name", .quantity = 4};
+    fwrite(&or, sizeof(order), 1, file);
+    fclose(file);
+    update_product(filename1, filename2);
+    char data[10] = "";
+    file = fopen(filename1, "rb");
     fread(data, sizeof(data), 1, file);
     fclose(file);
+    file = fopen(filename2, "rb");
+    order res_or;
+    fread(&res_or, sizeof(order), 1, file);
+    fclose(file);
+    assert(strcmp(data, "") == 0);
+    assert(strcmp(or.order_name, res_or.order_name) == 0 && or.quantity == res_or.quantity);
+}
+void test_update_product_2_empty(){
+    const char filename1[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\10 tasks\\second empty file\\10_1.txt";
+    const char filename2[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\10 tasks\\second empty file\\10_2.txt";
+
+    FILE* file = fopen(filename1, "wb");
+    product pr = {.product_name="good product", .unit_price=5, .total_cost=20, .quantity=2};
+    fwrite(&pr, sizeof(product), 1, file);
+    fclose(file);
+
+    file = fopen(filename2, "wb");
+    fclose(file);
+
+    update_product(filename1, filename2);
+
+    file = fopen(filename1, "rb");
+    product res_pr;
+    fread(&res_pr, sizeof(product), 1, file);
+    fclose(file);
+
+    file = fopen(filename2, "rb");
+    char data[10] = "";
+    fread(data, sizeof(data), 1, file);
+    fclose(file);
+
+    assert(strcmp(pr.product_name, res_pr.product_name) == 0);
+    assert(pr.unit_price == res_pr.unit_price);
+    assert(pr.total_cost == res_pr.total_cost);
+    assert(pr.quantity == res_pr.quantity);
     assert(strcmp(data, "") == 0);
 }
+void test_update_product_3_order_less_product(){
+    const char filename1[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\10 tasks\\order less product\\10_1.txt";
+    const char filename2[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\10 tasks\\order less product\\10_2.txt";
+    product pr1 = {.product_name="name1", .unit_price=10, .total_cost=30, .quantity=3};
+    product pr2 = {.product_name="name2", .unit_price=20, .total_cost=240, .quantity=12};
+    order od = {.order_name="name2", .quantity=10};
 
-void test_getBestTeam_1() {
-    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\9 tasks\\9_2.txt";
-    FILE *file = fopen(filename, "wb");
-    sportsman sportsman1 = {.name="Alex", .best_result=10.5};
-    sportsman sportsman2 = {.name="Alan", .best_result=10.0};
-    fwrite(&sportsman1, sizeof(sportsman), 1, file);
-    fwrite(&sportsman2, sizeof(sportsman), 1, file);
+    FILE* file = fopen(filename1, "wb");
+    fwrite(&pr1, sizeof(product), 1, file);
+    fwrite(&pr2, sizeof(product), 1, file);
     fclose(file);
-    getBestTeam(filename, 3);
-    file = fopen(filename, "rb");
-    sportsman result_s1, result_s2;
-    fread(&result_s1, sizeof(sportsman), 1, file);
-    fread(&result_s2, sizeof(sportsman), 1, file);
+
+    file = fopen(filename2, "wb");
+    fwrite(&od, sizeof(order), 1, file);
     fclose(file);
-    assert(strcmp((const char *) &sportsman1.name, (const char *) &result_s1.name) == 0 &&
-           fabs(sportsman1.best_result - result_s1.best_result) <= 0.001);
-    assert(strcmp((const char *) &sportsman1.name, (const char *) &result_s1.name) == 0 &&
-           fabs(sportsman1.best_result - result_s1.best_result) <= 0.001);
+
+    update_product(filename1, filename2);
+
+    product res_pr1, res_pr2;
+    order res_od;
+
+    file = fopen(filename1, "rb");
+    fread(&res_pr1, sizeof(product), 1, file);
+    fread(&res_pr2, sizeof(product), 1, file);
+    fclose(file);
+
+    file = fopen(filename2, "rb");
+    fread(&res_od, sizeof(order), 1, file);
+    fclose(file);
+
+    assert(strcmp(pr1.product_name, res_pr1.product_name) == 0);
+    assert(pr1.unit_price == res_pr1.unit_price);
+    assert(pr1.total_cost == res_pr1.total_cost);
+    assert(pr1.quantity == res_pr1.quantity);
+
+    assert(strcmp(pr2.product_name, res_pr2.product_name) == 0);
+    assert(pr2.unit_price == res_pr2.unit_price);
+    assert(res_pr2.total_cost == 40);
+    assert(res_pr2.quantity == 2);
+
+    assert(strcmp(od.order_name, res_od.order_name) == 0 && od.quantity == res_od.quantity);
 }
 
-void test_getBestTeam_2(){
-    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\9 tasks\\9_3.txt";
-    FILE *file = fopen(filename, "wb");
-    sportsman sportsman1 = {.name="Alex", .best_result=10.5};
-    sportsman sportsman2 = {.name="Alan", .best_result=10.0};
-    fwrite(&sportsman1, sizeof(sportsman), 1, file);
-    fwrite(&sportsman2, sizeof(sportsman), 1, file);
-    fclose(file);
-    getBestTeam(filename, 1);
-    file = fopen(filename, "rb");
-    sportsman result_s1;
-    fread(&result_s1, sizeof(sportsman), 1, file);
 
+void test_update_product_4_order_more_product() {
+    const char filename1[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\10 tasks\\order more product\\10_1.txt";
+    const char filename2[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\10 tasks\\order more product\\10_2.txt";
+
+    product pr1 = {.product_name="Milk", .unit_price=10, .total_cost=30, .quantity=3};
+    product pr2 = {.product_name="name2", .unit_price=20, .total_cost=40, .quantity=2};
+    order od = {.order_name="name2", .quantity=10};
+
+    FILE* file = fopen(filename1, "wb");
+    fwrite(&pr1, sizeof(product), 1, file);
+    fwrite(&pr2, sizeof(product), 1, file);
     fclose(file);
-    assert(strcmp((const char *) &sportsman1.name, (const char *) &result_s1.name) == 0 &&
-           fabs(sportsman1.best_result - result_s1.best_result) <= 0.001);
+
+    file = fopen(filename2, "wb");
+    fwrite(&od, sizeof(order), 1, file);
+    fclose(file);
+
+    update_product(filename1, filename2);
+
+    product res_pr;
+    order res_od;
+
+    file = fopen(filename1, "rb");
+    fread(&res_pr, sizeof(product), 1, file);
+    fclose(file);
+
+    file = fopen(filename2, "rb");
+    fread(&res_od, sizeof(order), 1, file);
+    fclose(file);
+
+    assert(strcmp(pr1.product_name, res_pr.product_name) == 0);
+    assert(pr1.unit_price == res_pr.unit_price);
+    assert(pr1.total_cost == res_pr.total_cost);
+    assert(pr1.quantity == res_pr.quantity);
+    assert(strcmp(od.order_name, res_od.order_name) == 0 && od.quantity == res_od.quantity);
+
 }
-void test_getBestTeam(){
-    test_getBestTeam_empty();
-    test_getBestTeam_1();
-    test_getBestTeam_2();
+void test_update_product(){
+    test_update_product_empty();
+    test_update_product_1_empty();
+    test_update_product_2_empty();
+    test_update_product_3_order_less_product();
+    test_update_product_4_order_more_product();
 }
 int main() {
     SetConsoleOutputCP(CP_UTF8);
-    test_getBestTeam();
+   test_update_product();
 }
