@@ -12,6 +12,11 @@ float abs1(float z) {
     return x;
 }
 
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
 
 int min2(int a,int b){
     if(a<b){

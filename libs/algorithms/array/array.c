@@ -16,25 +16,7 @@ void outputArray_ ( const int * const a , const size_t n ) {
     printf ("\n") ;
 }
 
-void append_ (int * const a , size_t * const n , const int value ) {
-    a [* n ] = value ;
-    (* n ) ++;
-}
 
-void insert_ (int * const a , size_t * const n , const size_t pos ,
-              const int value ) {
-    assert ( pos < * n ) ;
-    if (* n != 0) {
-        size_t lowBound = ( pos == 0) ? SIZE_MAX : pos ;
-        (* n ) ++;
-        for ( size_t i = * n ; i != lowBound ; i --)
-            a [ i ] = a [ i - 1];
-        a [ pos ] = value ;
-    } else {
-        (* n ) ++;
-        a [ pos ] = value ;
-    }
-}
 
 void deleteByPosSaveOrder_ (int *a , size_t *n , const size_t pos ) {
     for ( size_t i = pos ; i < * n - 1; i ++)
@@ -96,32 +78,3 @@ void forEach_ ( const int * source , int * dest , const size_t n , const int (*p
         dest [ i ] = predicate ( source [ i ]) ;
 }
 
-size_t binarySearch_ ( const int *a , size_t n , int x ) {
-    size_t left = 0;
-    size_t right = n - 1;
-    while ( left <= right ) {
-        size_t middle = left + ( right - left ) / 2;
-        if ( a [ middle ] < x )
-            left = middle + 1;
-        else if ( a [ middle ] > x )
-            right = middle - 1;
-        else
-            return middle ;
-    }
-    return SIZE_MAX ;
-}
-
-size_t binarySearchMoreOrEqual_ ( const int *a , size_t n , int x ) {
-    if ( a [0] >= x )
-        return 0;
-    size_t left = 0;
-    size_t right = n ;
-    while ( right - left > 1) {
-        size_t middle = left + ( right - left ) / 2;
-        if ( a [ middle ] < x )
-            left = middle ;
-        else
-            right = middle ;
-    }
-    return right ;
-}

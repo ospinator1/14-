@@ -55,7 +55,6 @@ void generate_string(const char* filename, char* source_string) {
     fclose(file);
 }
 
-
 void filter_word(const char* filename, char* source_word) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
@@ -97,6 +96,7 @@ void filter_word(const char* filename, char* source_word) {
     fprintf(file, "%c", '\0');
     fclose(file);
 }
+
 void test_filter_word_1_empty_file() {
     char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\4 tasks\\4_1.txt";
     generate_string(filename, "");
@@ -108,6 +108,7 @@ void test_filter_word_1_empty_file() {
     fclose(file);
     assert(strcmp(data, "") == 0);
 }
+
 void test_filter_word_2() {
     char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\4 tasks\\4_2.txt";
     generate_string(filename, "fkjsdfnkdjfn");
@@ -119,6 +120,7 @@ void test_filter_word_2() {
     fclose(file);
     assert(strcmp(data, "") == 0);
 }
+
 void test_filter_word_3() {
     char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\4 tasks\\4_3.txt";
     generate_string(filename, "Herald of Darkness");
@@ -130,6 +132,7 @@ void test_filter_word_3() {
     fclose(file);
     assert(strcmp(data, "Herald") == 0);
 }
+
 void test_filter_word(){
     test_filter_word_1_empty_file();
     test_filter_word_2();

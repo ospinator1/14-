@@ -36,7 +36,7 @@ void generate_text(const char *filename, int lines, int word, int max_word_size)
     fclose(file);
 }
 
-void leave_longest_word(const char* filename) {
+void printf_long_word(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
         printf("Ошибка чтения\n");
@@ -100,7 +100,7 @@ void test_printf_long_word_empty(){
     char filename[]="C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\5 tasks\\5_1.txt";
     FILE *file= fopen(filename,"w");
     fclose(file);
-    leave_longest_word(filename);
+    printf_long_word(filename);
     file= fopen(filename,"r");
     char data[100]="";
     fprintf(file,"s",data);
@@ -118,7 +118,7 @@ void test_printf_long_word_2_one_element(){
     fprintf(file, "%s \n", line2);
     fprintf(file, "%s \n", line3);
     fclose(file);
-    leave_longest_word(filename);
+    printf_long_word(filename);
     file = fopen(filename, "r");
     char res_line1[10] = "";
     fscanf(file, "%s\n", res_line1);
@@ -144,7 +144,7 @@ void test_printf_long_word_3_more_element() {
     fputs(line3, file);
     fprintf(file, "\n");
     fclose(file);
-    leave_longest_word(filename);
+    printf_long_word(filename);
     file = fopen(filename, "r");
     char res_line1[20] = " ";
     fscanf(file, "%s\n", res_line1);

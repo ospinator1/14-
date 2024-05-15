@@ -72,7 +72,7 @@ void transpose_non_symmetric_matrix(const char *filename) {
         fclose(file);
         return;
     }
-    while (1) {
+    while (feof(file)) {
         int matrix[n][n];
         size_t read_count = fread(matrix, sizeof(int), n * n, file);
         if (read_count != n * n) {
@@ -85,9 +85,9 @@ void transpose_non_symmetric_matrix(const char *filename) {
         }
         if (!is_symmetric(n, matrix)) {
             transpose(n, matrix);
-            fseek(file, -(long int) read_count * sizeof(int), SEEK_CUR);
+            fseek(file, - read_count * sizeof(int), SEEK_CUR);
             fwrite(matrix, sizeof(int), read_count, file);
-            fseek(file, (long int) read_count * sizeof(int), SEEK_CUR); // Перемещаем указатель вперед
+            fseek(file,  read_count * sizeof(int), SEEK_CUR); // Перемещаем указатель вперед
         }
     }
     fclose(file);
