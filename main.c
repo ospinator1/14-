@@ -1,57 +1,51 @@
-#include <stdio.h>
-#define c 3
-#define r 4
+#include "libs/data_structures/matrix/matrix.h"
+#include <malloc.h>
+#include <assert.h>
 
-int count_Live_neighbors(int board[c][r], int row, int col) {
-    int count = 0;
-    for (int i = row - 1; i <= row + 1; i++) {
-        for (int j = col - 1; j <= col + 1; j++) {
-            if (i >= 0 && i < c && j >= 0 && j < r && !(i == row && j == col)) {
-                count += board[i][j];
-            }
-        }
-    }
-
-    return count;
+int cmp(const void *a, const void *b) {
+    return *(unsigned int *) a - *(unsigned int *) b;
 }
 
-void game_life(int board[c][r]) {
-    int nextBoard[c][r];
-    for (int i = 0; i < c; ++i) {
-        for (int j = 0; j < r; ++j) {
-            int liveNeighbors = count_Live_neighbors(board, i, j);
-
-            if (board[i][j] == 1) {
-                if (liveNeighbors < 2 || liveNeighbors > 3) {
-                    nextBoard[i][j] = 0;
-                } else {
-                    nextBoard[i][j] = 1;
-                }
-            } else {
-                if (liveNeighbors == 3) {
-                    nextBoard[i][j] = 1;
-                } else {
-                    nextBoard[i][j] = 0;
-                }
+int get_median_in_area(matrix *m, const int i, const int j, const int filter) {
+    int border = filter * 2 + 1;
+    int *temp = (int *) malloc((border * border) * sizeof(int));
+    int size = 0;
+    for (int row_i = i - filter; row_i <= i + filter; ++row_i)
+        for (int col_j = 0; col_j <= j + filter; ++col_j)
+            if (row_i != i || col_j != j) {
+                temp[size] = m->values[row_i][col_j];
+                size++;
             }
-        }
-    }
-    for (int i = 0; i < c; i++) {
-        for (int j = 0; j < r; j++) {
-            board[i][j] = nextBoard[i][j];
-        }
-    }
+    qsort(temp, size, sizeof(int), cmp);
+    int result = (temp[size / 2 - 1] + temp[size / 2]) / 2;
+    free(temp);
+    return result;
+
 }
+
+void median_filter(matrix m,int n,int filter) {
+    filter /= 2;
+    for (int i = filter; i < n - filter; i++)
+        for (int j = filter; j < n - filter; j++)
+            m.values[i][j] = get_median_in_area(&m, i, j, filter);
+}
+
 void test() {
-    int board[c][r] = {{0, 1, 0},{0, 0, 1},{1, 1, 1},{0, 0, 0}};
-    game_life(board);
-    int check[c][r] = {{0, 0, 0},{1, 0, 1},{0, 1, 1},{0, 1, 0}};
-    for (int i = 0; i < c; i++)
-        for (int j = 0; j < r; j++)
-            if (board[i][j] != check[i][j])
-                printf("Matrices are different\n");
+    int n = 3;
+    int filter = 3;
+    matrix m = createMatrixFromArray((int[]) {10, 20, 30,
+                                              25, 35, 45,
+                                              15, 25, 35}, n, n);
+    median_filter(m,n,filter);
+    matrix check = createMatrixFromArray((int[]) {10, 20, 30,
+                                                  25, 25, 45,
+                                                  15, 25, 35}, n, n);
+    assert(n == 3);
+    assert(filter == 3);
+    assert(areTwoMatricesEqual(&m, &check));
 
 }
+
 int main() {
     test();
 }
