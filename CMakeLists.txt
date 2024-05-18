@@ -28,6 +28,7 @@ add_executable (untitled7 main.c
         "libs/generalized tasks of the semester/tasks1.h"
         "libs/generalized tasks of the semester/tasks2.h"
         "libs/generalized tasks of the semester/tasks3.h"
+        "libs/generalized tasks of the semester/tasks4.h"
 )
 
 add_subdirectory(libs)

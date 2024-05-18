@@ -34,13 +34,13 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 34,
+				"line" : 35,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 35,
+				"line" : 36,
 				"parent" : 0
 			}
 		]
@@ -155,7 +155,8 @@
 				19,
 				20,
 				21,
-				22
+				22,
+				23
 			]
 		}
 	],
@@ -279,6 +280,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "libs/generalized tasks of the semester/tasks3.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "libs/generalized tasks of the semester/tasks4.h",
 			"sourceGroupIndex" : 1
 		}
 	],
