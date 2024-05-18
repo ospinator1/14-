@@ -4,141 +4,163 @@
 
 #ifndef UNTITLED7_TASKS4_H
 #define UNTITLED7_TASKS4_H
-#include "../data_structures/vector/vectorVoid.h"
-#include <malloc.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
-#include <ctype.h>
-#include "../strings/string/string_.h"
-#include <string.h>
-#define STATS_HEADER "cpdomains = ["
-#define STATS_END "]"
-#define ASSERT_STRING(expected, got) assertString(expected, got, \
-__FILE__, __FUNCTION__, __LINE__)
-typedef struct DomainRecord {
-    long counter;
-    WordDescriptor domain;
-} DomainRecord;
-typedef struct DomainCounter {
-    long counter;
-    char domain[255];
-} DomainCounter;
-int compareDomainCounterNames(const void *domainCounterPtr1, const void *domainCounterPtr2) {
-    DomainRecord *domainCounter1 = (DomainRecord *)domainCounterPtr1;
-    DomainRecord *domainCounter2 = (DomainRecord *)domainCounterPtr2;
-    WordDescriptor word1 = domainCounter1->domain;
-    WordDescriptor word2 = domainCounter2->domain;
-
-    unsigned long len1 = word1.end - word1.begin;
-    unsigned long len2 = word2.end - word2.begin;
-    unsigned long min_len = len1;
-    if (min_len > len2) {
-        min_len = len2;
-    }
-
-    int res = memcmp(word1.begin, word2.begin, min_len);
-
-    if (res == 0) {
-        if (len1 != len2) {
-            res = len1 > len2 ? 1 : -1;
-        }
-    }
-    return res;
+#include "../strings//string/string_.h"
+#define MAX_LENGTH_DOMAIN 128
+#define MAX_DOMAIN 64
+typedef struct domain {
+    char name[MAX_LENGTH_DOMAIN];
+    int amount;
+} domain;
+typedef struct domains {
+    domain data[MAX_DOMAIN];
+    size_t size;
+} domains;
+char _stringBuffer[MAX_STRING_SIZE + 1];
+BagOfWords _bag;
+BagOfWords _bag2;
+int get_word_to_dot(char* begin_search, WordDescriptor * word) {
+    word->begin = findNonSpace(begin_search);
+    if (*word->begin == '\0')
+        return false;
+    size_t len = strlen_(begin_search);
+    word->end = find(word->begin, word->begin + len, '.');
+    if (word->end == word->begin + len || *word->end == '\n')
+        word->end -= 2;
+    return true;
 }
-
-void parsedDomainStat(vectorVoid *data, char *start, char *end) {
-    int count = 0;
-    for (char *i = start; i <= end; ++i) {
-        if (isdigit(*i)) {
-            count = strtol(i, &start, 10);
-            break;
-        }
-    }
-    char *endPtr = end;
-    for (char *i = end; i <= start; ++i) {
-        if (*i == '"') {
-            *endPtr = *i;
-            endPtr--;
-            continue;
-        }
-        if ((*i == '.') || (*i == ' ')) {
-            WordDescriptor word = {i + 1, endPtr};
-            DomainRecord domain = {count, word};
-            pushBackV(data, &domain);
-        }
-        if (*i == ' ') {
-            break;
-        }
-    }
-
+void push_domain_in_domains(domains* ds, domain* d) {
+    ds->data[ds->size].amount = d->amount;
+    copy(d->name, d->name + strlen_(d->name) + 1, ds->data[ds->size].name);
+    ds->size++;
 }
-vectorVoid ShowStats(char *stats){
-    char *idx_start=strstr(stats, STATS_HEADER);
-    char *idx_end= strstr(stats,STATS_END);
-    if((idx_start==NULL)|| (idx_end==NULL)){
-        fprintf(stderr,"Error input data");
-        exit(1);
-    }
-    vectorVoid data= createVectorV(0, sizeof(DomainRecord));
-    idx_start+= sizeof(STATS_HEADER);
-    idx_end= idx_end- sizeof(STATS_END)+1;
-    char *token=idx_start;
-    int starttoken=0;
-    while (idx_start!=idx_end){
-        if(*idx_start!=' '){
-            starttoken=1;
-        }
-        if(*idx_start==','){
-            parsedDomainStat(&data,token,idx_start-1);
-            starttoken=0;
-        }
-        idx_start++;
-        if (!starttoken) {
-            token = idx_start;
-        }
-    }
-    parsedDomainStat(&data,token,idx_start-1);
-    qsort(data.data,data.size, sizeof(DomainRecord),compareDomainCounterNames);
-    vectorVoid group= createVectorV(0, sizeof(DomainCounter));
-    DomainRecord domain;
-    DomainRecord prev_domain;
-    getVectorValueV(&data,0,&prev_domain);
-    int sum=prev_domain.counter;
-    for (int i = 1; i < data.size+1; ++i) {
-        if(i!=data.size){
-            getVectorValueV(&data, i, &domain);
-            if (compareDomainCounterNames(&prev_domain, &domain) == 0) {
-                sum += domain.counter;
-                continue;
+void merge_equal_domains(domains* ds) {
+    for (int i = 0; i < ds->size; i++)
+        for (int j = i + 1; j < ds->size; j++) {
+            //printf("%d %d %s %s \n\n", ds->data[i].amount, ds->data[j].amount, ds->data[i].name, ds->data[j].name);
+            if (strcmp(ds->data[i].name, ds->data[j].name) == 0 && ds->data[i].amount >= 0 && ds->data[j].amount >= 0) {
+                ds->data[i].amount += ds->data[j].amount;
+                ds->data[j].amount = -1;
             }
         }
-        DomainCounter domainCounter = {sum};
-        copy(prev_domain.domain.begin, prev_domain.domain.end, domainCounter.domain);
-        pushBackV(&group, &domainCounter);
-
-        prev_domain = domain;
-        sum = prev_domain.counter;
-    }
-
-    return group;
-
 }
-void test(){
-    char *stats="cpdomains = [\"900 google.mail.com\", \"50 yahoo.com\", \"1 intel.mail.com\", \"5 wiki.org\"]\0";
-    vectorVoid res = ShowStats(stats);
-
-    DomainCounter expDomains[] = {{951, "com"}, {900, "google.mail.com"},
-                                  {1, "intel.mail.com"}, {901, "mail.com"},
-                                  {5, "org"}, {5, "wiki.org"},
-                                  {50, "yahoo.com"}};
-    for (int i = 0; i < res.size; i++) {
-        DomainCounter domain;
-        getVectorValueV(&res, i, &domain);
-        assert(expDomains[i].counter == domain.counter);
-        ASSERT_STRING(expDomains[i].domain, domain.domain);
+void _get_domains(char* s, domains* ds) {
+    char* read_ptr = s;
+    WordDescriptor amount_as_text, name_domain;
+    getWordWithoutSpace(read_ptr, &amount_as_text);
+    read_ptr = amount_as_text.end + 1;
+    getWordWithoutSpace(read_ptr, &name_domain);
+    int k = 1;
+    int amount = 0;
+    read_ptr = amount_as_text.end;
+    while (read_ptr >= amount_as_text.begin) {
+        amount += k * (*read_ptr - '0');
+        k *= 10;
+        read_ptr--;
     }
+    read_ptr = name_domain.begin;
+    _bag.size = 0;
+    while (get_word_to_dot(read_ptr, &_bag.words[_bag.size])) {
+        read_ptr = _bag.words[_bag.size].end + 1;
+        _bag.size++;
+    }
+    for (int i = 0; i < _bag.size; i++) {
+        domain d = {.amount = amount};
+        char* begin = d.name;
+        begin = copy(_bag.words[i].begin, _bag.words[i].end + 1, begin);
+        for (int j = i + 1; j < _bag.size; j++)
+            begin = copy(_bag.words[j].begin, _bag.words[j].end + 1, begin);
+        push_domain_in_domains(ds, &d);
+    }
+    free_bag(&_bag);
+}
+void get_domains(const char* filename) {
+    FILE* file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("reading error\n");
+        exit(1);
+    }
+    domains ds = {.size = 0};
+    while (fgets(_stringBuffer, 256, file)) {
+        _get_domains(_stringBuffer, &ds);
+        free_string(_stringBuffer);
+    }
+    merge_equal_domains(&ds);
+    fclose(file);
+    file = fopen(filename, "w");
+    if (file == NULL) {
+        printf("reading error\n");
+        exit(1);
+    }
+    for (int i = 0; i < ds.size; i++) {
+        if (ds.data[i].amount >= 0)
+            fprintf(file, "%d %s\n", ds.data[i].amount, ds.data[i].name);
+    }
+    fclose(file);
+}
+void test_get_domains_1_empty_file() {
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 20\\tasks 4\\1.txt";
+    FILE* file = fopen(filename, "w");
+    fclose(file);
+    get_domains(filename);
+    file = fopen(filename, "r");
+    char dest[100] = "";
+    fscanf(file, "%s", dest);
+    fclose(file);
+    assert(strcmp(dest, "") == 0);
+}
+void test_get_domains_2_one_domain() {
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 20\\tasks 4\\2.txt";
+    FILE* file = fopen(filename, "w");
+    char s[100] = "900 discuss.codeforces.com";
+    fprintf(file, "%s\n", s);
+    fclose(file);
+    get_domains(filename);
+    file = fopen(filename, "r");
+    char dest1[100] = "";
+    char dest2[100] = "";
+    char dest3[100] = "";
+    fgets(dest1, sizeof(dest1), file);
+    fgets(dest2, sizeof(dest2), file);
+    fgets(dest3, sizeof(dest3), file);
+    fclose(file);
+    assert(strcmp(dest1, "900 discuss.codeforces.com\n") == 0);
+    assert(strcmp(dest2, "900 codeforces.com\n") == 0);
+    assert(strcmp(dest3, "900 com\n") == 0);
+}
+void test_get_domains_3_more_domain() {
+    const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 20\\tasks 4\\3.txt";
+    FILE* file = fopen(filename, "w");
+    char s1[100] = "900 discuss.codeforces.com";
+    char s2[100] = "69 mail.com";
+    fprintf(file, "%s\n", s1);
+    fprintf(file, "%s\n", s2);
+    fclose(file);
+    get_domains(filename);
+    file = fopen(filename, "r");
+    char dest1[100] = "";
+    char dest2[100] = "";
+    char dest3[100] = "";
+    char dest4[100] = "";
+    fgets(dest1, sizeof(dest1), file);
+    fgets(dest2, sizeof(dest2), file);
+    fgets(dest3, sizeof(dest3), file);
+    fgets(dest4, sizeof(dest4), file);
+    fclose(file);
+    assert(strcmp(dest1, "900 discuss.codeforces.com\n") == 0);
+    assert(strcmp(dest2, "900 codeforces.com\n") == 0);
+    assert(strcmp(dest3, "969 com\n") == 0);
+    assert(strcmp(dest4, "69 mail.com\n") == 0);
+}
+void test_get_domains() {
+    test_get_domains_1_empty_file();
+    test_get_domains_2_one_domain();
+    test_get_domains_3_more_domain();
 }
 
 int main() {
-    test();
+    test_get_domains();
 }
 #endif //UNTITLED7_TASKS4_H
