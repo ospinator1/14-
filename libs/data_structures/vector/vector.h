@@ -14,7 +14,7 @@ typedef struct vector {
 } vector;
 
 // возвращает структуру-дескриптор вектор из n значений
-vector vector_create(size_t capacity);
+vector createVector(size_t capacity);
 
 //изменяет количество памяти, выделенное под хранение элементов вектора
 void reserve(vector *v, size_t newCapacity);
