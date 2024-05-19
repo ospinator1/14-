@@ -1,9 +1,5 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "cppcoreguidelines-narrowing-conversions"
-//
-// Created by Assa on 18.05.2024.
-//
-
 #ifndef UNTITLED7_TASKS6_H
 #define UNTITLED7_TASKS6_H
 #include "../strings/string/string_.h"

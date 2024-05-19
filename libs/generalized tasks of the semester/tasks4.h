@@ -1,7 +1,3 @@
-//
-// Created by Assa on 18.05.2024.
-//
-
 #ifndef UNTITLED7_TASKS4_H
 #define UNTITLED7_TASKS4_H
 #include <stdio.h>
@@ -10,6 +6,7 @@
 #include "../strings//string/string_.h"
 #define MAX_LENGTH_DOMAIN 128
 #define MAX_DOMAIN 64
+
 typedef struct domain {
     char name[MAX_LENGTH_DOMAIN];
     int amount;
@@ -18,9 +15,10 @@ typedef struct domains {
     domain data[MAX_DOMAIN];
     size_t size;
 } domains;
-char _stringBuffer[MAX_STRING_SIZE + 1];
-BagOfWords _bag;
-BagOfWords _bag2;
+char stringBuffer[MAX_STRING_SIZE + 1];
+BagOfWords bag;
+
+
 int get_word_to_dot(char* begin_search, WordDescriptor * word) {
     word->begin = findNonSpace(begin_search);
     if (*word->begin == '\0')
@@ -31,11 +29,13 @@ int get_word_to_dot(char* begin_search, WordDescriptor * word) {
         word->end -= 2;
     return true;
 }
+
 void push_domain_in_domains(domains* ds, domain* d) {
     ds->data[ds->size].amount = d->amount;
     copy(d->name, d->name + strlen_(d->name) + 1, ds->data[ds->size].name);
     ds->size++;
 }
+
 void merge_equal_domains(domains* ds) {
     for (int i = 0; i < ds->size; i++)
         for (int j = i + 1; j < ds->size; j++) {
@@ -46,6 +46,7 @@ void merge_equal_domains(domains* ds) {
             }
         }
 }
+
 void _get_domains(char* s, domains* ds) {
     char* read_ptr = s;
     WordDescriptor amount_as_text, name_domain;
@@ -61,20 +62,20 @@ void _get_domains(char* s, domains* ds) {
         read_ptr--;
     }
     read_ptr = name_domain.begin;
-    _bag.size = 0;
-    while (get_word_to_dot(read_ptr, &_bag.words[_bag.size])) {
-        read_ptr = _bag.words[_bag.size].end + 1;
-        _bag.size++;
+    bag.size = 0;
+    while (get_word_to_dot(read_ptr, &bag.words[bag.size])) {
+        read_ptr = bag.words[bag.size].end + 1;
+        bag.size++;
     }
-    for (int i = 0; i < _bag.size; i++) {
+    for (int i = 0; i < bag.size; i++) {
         domain d = {.amount = amount};
         char* begin = d.name;
-        begin = copy(_bag.words[i].begin, _bag.words[i].end + 1, begin);
-        for (int j = i + 1; j < _bag.size; j++)
-            begin = copy(_bag.words[j].begin, _bag.words[j].end + 1, begin);
+        begin = copy(bag.words[i].begin, bag.words[i].end + 1, begin);
+        for (int j = i + 1; j < bag.size; j++)
+            begin = copy(bag.words[j].begin, bag.words[j].end + 1, begin);
         push_domain_in_domains(ds, &d);
     }
-    free_bag(&_bag);
+    free_bag(&bag);
 }
 void get_domains(const char* filename) {
     FILE* file = fopen(filename, "r");
@@ -83,9 +84,9 @@ void get_domains(const char* filename) {
         exit(1);
     }
     domains ds = {.size = 0};
-    while (fgets(_stringBuffer, 256, file)) {
-        _get_domains(_stringBuffer, &ds);
-        free_string(_stringBuffer);
+    while (fgets(stringBuffer, 256, file)) {
+        _get_domains(stringBuffer, &ds);
+        free_string(stringBuffer);
     }
     merge_equal_domains(&ds);
     fclose(file);
@@ -100,6 +101,7 @@ void get_domains(const char* filename) {
     }
     fclose(file);
 }
+
 void test_get_domains_1_empty_file() {
     const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 20\\tasks 4\\1.txt";
     FILE* file = fopen(filename, "w");
@@ -111,6 +113,7 @@ void test_get_domains_1_empty_file() {
     fclose(file);
     assert(strcmp(dest, "") == 0);
 }
+
 void test_get_domains_2_one_domain() {
     const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 20\\tasks 4\\2.txt";
     FILE* file = fopen(filename, "w");
@@ -130,6 +133,7 @@ void test_get_domains_2_one_domain() {
     assert(strcmp(dest2, "900 codeforces.com\n") == 0);
     assert(strcmp(dest3, "900 com\n") == 0);
 }
+
 void test_get_domains_3_more_domain() {
     const char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 20\\tasks 4\\3.txt";
     FILE* file = fopen(filename, "w");

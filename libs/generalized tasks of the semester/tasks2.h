@@ -1,10 +1,8 @@
-//
-// Created by Assa on 17.05.2024.
-//
-
 #ifndef UNTITLED7_TASKS2_H
 #define UNTITLED7_TASKS2_H
+
 #include <stdio.h>
+
 #define c 3
 #define r 4
 
@@ -17,7 +15,6 @@ int count_Live_neighbors(int board[c][r], int row, int col) {
             }
         }
     }
-
     return count;
 }
 
@@ -26,7 +23,6 @@ void game_life(int board[c][r]) {
     for (int i = 0; i < c; ++i) {
         for (int j = 0; j < r; ++j) {
             int liveNeighbors = count_Live_neighbors(board, i, j);
-
             if (board[i][j] == 1) {
                 if (liveNeighbors < 2 || liveNeighbors > 3) {
                     nextBoard[i][j] = 0;
@@ -48,17 +44,26 @@ void game_life(int board[c][r]) {
         }
     }
 }
+
 void test() {
-    int board[c][r] = {{0, 1, 0},{0, 0, 1},{1, 1, 1},{0, 0, 0}};
+    int board[c][r] = {{0, 1, 0},
+                       {0, 0, 1},
+                       {1, 1, 1},
+                       {0, 0, 0}};
     game_life(board);
-    int check[c][r] = {{0, 0, 0},{1, 0, 1},{0, 1, 1},{0, 1, 0}};
+    int check[c][r] = {{0, 0, 0},
+                       {1, 0, 1},
+                       {0, 1, 1},
+                       {0, 1, 0}};
     for (int i = 0; i < c; i++)
         for (int j = 0; j < r; j++)
             if (board[i][j] != check[i][j])
                 printf("Matrices are different\n");
 
 }
+
 int main() {
     test();
 }
+
 #endif //UNTITLED7_TASKS2_H

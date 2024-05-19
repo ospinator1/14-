@@ -1,14 +1,10 @@
-//
-// Created by Assa on 17.05.2024.
-//
-
 #ifndef UNTITLED7_TASKS1_H
 #define UNTITLED7_TASKS1_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
-
 #include "..//data_structures/matrix/matrix.h"
 
 typedef struct coord {
@@ -18,9 +14,8 @@ typedef struct coord {
     int col2;
 } coord;
 
-
-void fill_matrix(const char* filename) {
-    FILE* file = fopen(filename, "rb");
+void fill_matrix(const char *filename) {
+    FILE *file = fopen(filename, "rb");
     int n;
     fread(&n, sizeof(int), 1, file);
     matrix m = getMemMatrix(n, n);
@@ -28,7 +23,7 @@ void fill_matrix(const char* filename) {
         for (int j = 0; j < n; j++)
             m.values[i][j] = 0;
     coord c;
-    while(fread(&c, sizeof(coord), 1, file) == 1)
+    while (fread(&c, sizeof(coord), 1, file) == 1)
         for (int i = c.row1; i <= c.row2; i++)
             for (int j = c.col1; j <= c.col2; j++)
                 m.values[i][j]++;
@@ -43,13 +38,10 @@ void fill_matrix(const char* filename) {
 }
 
 void test_fill_matrix() {
-    const char* filename = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\1 tasks\\1_2.txt";
-
-    FILE* file = fopen(filename, "wb");
-
+    char filename[] = "C:\\Users\\Assa\\CLionProjects\\untitled7\\text labs 19\\1 tasks\\1_2.txt";
+    FILE *file = fopen(filename, "wb");
     int n = 3;
     fwrite(&n, sizeof(int), 1, file);
-
     coord c1 = {1, 1, 2, 2};
     coord c2 = {0, 0, 1, 1};
     fwrite(&c1, sizeof(coord), 1, file);
@@ -71,7 +63,9 @@ void test_fill_matrix() {
         printf("\n");
     }
 }
-int main(){
+
+int main() {
     test_fill_matrix();
 }
+
 #endif //UNTITLED7_TASKS1_H

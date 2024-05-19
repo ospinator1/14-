@@ -1,12 +1,9 @@
-//
-// Created by Assa on 19.05.2024.
-//
-
 #ifndef UNTITLED7_TASKS10_H
 #define UNTITLED7_TASKS10_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+
 FILE *file;
 int N;
 void handle_sigint(__attribute__((unused)) int sig) {
@@ -17,6 +14,7 @@ void handle_sigint(__attribute__((unused)) int sig) {
         else
             exit(0);
 }
+
 int main(int argc, char *argv[]) {
     if (argc != 3) {
         printf("Usage: %s <filename> <N>\n", argv[0]);

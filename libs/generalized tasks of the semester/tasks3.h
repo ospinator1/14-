@@ -1,7 +1,3 @@
-//
-// Created by Assa on 18.05.2024.
-//
-
 #ifndef UNTITLED7_TASKS3_H
 #define UNTITLED7_TASKS3_H
 #include "../data_structures/matrix/matrix.h"
@@ -29,7 +25,7 @@ int get_median_in_area(matrix *m, const int i, const int j, const int filter) {
 
 }
 
-void median_filter(matrix m,int n,int filter) {
+void median_filter(matrix m, int n, int filter) {
     filter /= 2;
     for (int i = filter; i < n - filter; i++)
         for (int j = filter; j < n - filter; j++)
@@ -42,7 +38,7 @@ void test() {
     matrix m = createMatrixFromArray((int[]) {10, 20, 30,
                                               25, 35, 45,
                                               15, 25, 35}, n, n);
-    median_filter(m,n,filter);
+    median_filter(m, n, filter);
     matrix check = createMatrixFromArray((int[]) {10, 20, 30,
                                                   25, 25, 45,
                                                   15, 25, 35}, n, n);
@@ -55,4 +51,5 @@ void test() {
 int main() {
     test();
 }
+
 #endif //UNTITLED7_TASKS3_H

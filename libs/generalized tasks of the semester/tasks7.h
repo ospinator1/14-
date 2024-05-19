@@ -1,7 +1,3 @@
-//
-// Created by Assa on 18.05.2024.
-//
-
 #ifndef UNTITLED7_TASKS7_H
 #define UNTITLED7_TASKS7_H
 #include "../strings/string/string_.h"
